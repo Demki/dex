@@ -31,13 +31,17 @@
     }
   </style>
   <script>
+    let checked = 0;
     function clicked(e) {
       if (e.className === "checked") {
         e.className = "";
+        checked--;
       }
       else {
         e.className = "checked";
+        checked++;
       }
+      document.getElementById("x").innerText = checked;
     }
   </script>
 </head>
@@ -73,6 +77,7 @@
     <item onclick="clicked(this)">?</item>
     <item onclick="clicked(this)">!</item>
   </list>
+  <count>#: <number id="x">0</number></count>
 </body>
 
 </html>
