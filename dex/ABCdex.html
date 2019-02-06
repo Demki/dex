@@ -14,7 +14,7 @@
       color:black;
     }
 
-    item {
+    #list > div {
       cursor: default;
       -webkit-touch-callout: none;
       -webkit-user-select: none;
@@ -27,7 +27,7 @@
       font-family: unownregular ,'Courier New', Courier, monospace;
     }
 
-    list {
+    #list {
       display: grid;
       grid-template-columns: repeat(8, 1.2em);
       grid-gap: 1px;
@@ -51,37 +51,37 @@
 </head>
 
 <body>
-  <list>
-    <item onclick="clicked(this)">A</item>
-    <item onclick="clicked(this)">B</item>
-    <item onclick="clicked(this)">C</item>
-    <item onclick="clicked(this)">D</item>
-    <item onclick="clicked(this)">E</item>
-    <item onclick="clicked(this)">F</item>
-    <item onclick="clicked(this)">G</item>
-    <item onclick="clicked(this)">H</item>
-    <item onclick="clicked(this)">I</item>
-    <item onclick="clicked(this)">J</item>
-    <item onclick="clicked(this)">K</item>
-    <item onclick="clicked(this)">L</item>
-    <item onclick="clicked(this)">M</item>
-    <item onclick="clicked(this)">N</item>
-    <item onclick="clicked(this)">O</item>
-    <item onclick="clicked(this)">P</item>
-    <item onclick="clicked(this)">Q</item>
-    <item onclick="clicked(this)">R</item>
-    <item onclick="clicked(this)">S</item>
-    <item onclick="clicked(this)">T</item>
-    <item onclick="clicked(this)">U</item>
-    <item onclick="clicked(this)">V</item>
-    <item onclick="clicked(this)">W</item>
-    <item onclick="clicked(this)">X</item>
-    <item onclick="clicked(this)">Y</item>
-    <item onclick="clicked(this)">Z</item>
-    <item onclick="clicked(this)">?</item>
-    <item onclick="clicked(this)">!</item>
-  </list>
-  <count>#: <number id="x">0</number></count>
+  <div id="list">
+    <div onclick="clicked(this)">A</div>
+    <div onclick="clicked(this)">B</div>
+    <div onclick="clicked(this)">C</div>
+    <div onclick="clicked(this)">D</div>
+    <div onclick="clicked(this)">E</div>
+    <div onclick="clicked(this)">F</div>
+    <div onclick="clicked(this)">G</div>
+    <div onclick="clicked(this)">H</div>
+    <div onclick="clicked(this)">I</div>
+    <div onclick="clicked(this)">J</div>
+    <div onclick="clicked(this)">K</div>
+    <div onclick="clicked(this)">L</div>
+    <div onclick="clicked(this)">M</div>
+    <div onclick="clicked(this)">N</div>
+    <div onclick="clicked(this)">O</div>
+    <div onclick="clicked(this)">P</div>
+    <div onclick="clicked(this)">Q</div>
+    <div onclick="clicked(this)">R</div>
+    <div onclick="clicked(this)">S</div>
+    <div onclick="clicked(this)">T</div>
+    <div onclick="clicked(this)">U</div>
+    <div onclick="clicked(this)">V</div>
+    <div onclick="clicked(this)">W</div>
+    <div onclick="clicked(this)">X</div>
+    <div onclick="clicked(this)">Y</div>
+    <div onclick="clicked(this)">Z</div>
+    <div onclick="clicked(this)">?</div>
+    <div onclick="clicked(this)">!</div>
+  </div>
+  <div>#: <span id="x">0</span></div>
 </body>
 
 </html>
