@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>ABC dex</title>
+  <style>
+    .checked {
+      background-color: red;
+    }
+
+    item {
+      cursor: default;
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      -khtml-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      border: 1px solid black;
+      text-align: center;
+    }
+
+    list {
+      display: grid;
+      grid-template-columns: repeat(8, 1em);
+      grid-gap: 1px;
+
+    }
+  </style>
+  <script>
+    function clicked(e) {
+      if (e.className === "checked") {
+        e.className = "";
+      }
+      else {
+        e.className = "checked";
+      }
+    }
+  </script>
+</head>
+
+<body>
+  <list>
+    <item onclick="clicked(this)">A</item>
+    <item onclick="clicked(this)">B</item>
+    <item onclick="clicked(this)">C</item>
+    <item onclick="clicked(this)">D</item>
+    <item onclick="clicked(this)">E</item>
+    <item onclick="clicked(this)">F</item>
+    <item onclick="clicked(this)">G</item>
+    <item onclick="clicked(this)">H</item>
+    <item onclick="clicked(this)">I</item>
+    <item onclick="clicked(this)">J</item>
+    <item onclick="clicked(this)">K</item>
+    <item onclick="clicked(this)">L</item>
+    <item onclick="clicked(this)">M</item>
+    <item onclick="clicked(this)">N</item>
+    <item onclick="clicked(this)">O</item>
+    <item onclick="clicked(this)">P</item>
+    <item onclick="clicked(this)">Q</item>
+    <item onclick="clicked(this)">R</item>
+    <item onclick="clicked(this)">S</item>
+    <item onclick="clicked(this)">T</item>
+    <item onclick="clicked(this)">U</item>
+    <item onclick="clicked(this)">V</item>
+    <item onclick="clicked(this)">W</item>
+    <item onclick="clicked(this)">X</item>
+    <item onclick="clicked(this)">Y</item>
+    <item onclick="clicked(this)">Z</item>
+    <item onclick="clicked(this)">?</item>
+    <item onclick="clicked(this)">!</item>
+  </list>
+</body>
+
+</html>
