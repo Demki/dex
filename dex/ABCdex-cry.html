@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>ABC dex</title>
+  <!--unown font by Arien Epic https://www.dafont.com/unown.font -->
+  <link rel="stylesheet" href="stylesheet.css"/>
+  <style>
+    #list {
+      font-family: unownregular ,'Courier New', Courier, monospace;
+      text-align: center;
+      user-select: none;
+      display: grid;
+      grid-template-columns: repeat(8, 1.2em);
+      grid-gap: 1px;
+      counter-reset: ucount;
+    }
+
+    #list input {
+      display: none;
+    }
+
+    #list label {
+      display: block;
+      transition: box-shadow .250s ease-in;
+    }
+    
+    input:checked~label{
+      counter-increment: ucount;
+      box-shadow: inset 0 0 0 1.25em red;
+      font-weight: bold;
+    }
+
+    #list > div {
+      cursor: default;
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      -khtml-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      border: 1px solid black;
+    }
+
+    #x::after{
+      content: counter(ucount);
+    }
+
+  </style>
+</head>
+
+<body>
+  <div id="list">
+    <div><input type="checkbox" id="A"><label for="A">A</label></div>
+    <div><input type="checkbox" id="B"><label for="B">B</label></div>
+    <div><input type="checkbox" id="C"><label for="C">C</label></div>
+    <div><input type="checkbox" id="D"><label for="D">D</label></div>
+    <div><input type="checkbox" id="E"><label for="E">E</label></div>
+    <div><input type="checkbox" id="F"><label for="F">F</label></div>
+    <div><input type="checkbox" id="G"><label for="G">G</label></div>
+    <div><input type="checkbox" id="H"><label for="H">H</label></div>
+    <div><input type="checkbox" id="I"><label for="I">I</label></div>
+    <div><input type="checkbox" id="J"><label for="J">J</label></div>
+    <div><input type="checkbox" id="K"><label for="K">K</label></div>
+    <div><input type="checkbox" id="L"><label for="L">L</label></div>
+    <div><input type="checkbox" id="M"><label for="M">M</label></div>
+    <div><input type="checkbox" id="N"><label for="N">N</label></div>
+    <div><input type="checkbox" id="O"><label for="O">O</label></div>
+    <div><input type="checkbox" id="P"><label for="P">P</label></div>
+    <div><input type="checkbox" id="Q"><label for="Q">Q</label></div>
+    <div><input type="checkbox" id="R"><label for="R">R</label></div>
+    <div><input type="checkbox" id="S"><label for="S">S</label></div>
+    <div><input type="checkbox" id="T"><label for="T">T</label></div>
+    <div><input type="checkbox" id="U"><label for="U">U</label></div>
+    <div><input type="checkbox" id="V"><label for="V">V</label></div>
+    <div><input type="checkbox" id="W"><label for="W">W</label></div>
+    <div><input type="checkbox" id="X"><label for="X">X</label></div>
+    <div><input type="checkbox" id="Y"><label for="Y">Y</label></div>
+    <div><input type="checkbox" id="Z"><label for="Z">Z</label></div>
+  </div>
+  <div>#: <span id="x"></span></div>
+</body>
+
+</html>
