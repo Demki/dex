@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>ABC dex</title>
+  <!--unown font by Arien Epic https://www.dafont.com/unown.font -->
+  <link rel="stylesheet" href="stylesheet.css" />
+  <style>
+    #list {
+      text-align: center;
+      user-select: none;
+      display: grid;
+      grid-template-columns: repeat(auto-fill,minmax(50px,max-content));
+      grid-gap: 3px;
+      counter-reset: ucount;
+    }
+
+    #list input {
+      display: none;
+    }
+
+    #list label {
+      display: block;
+      transition: box-shadow .250s ease-in;
+    }
+
+    input:checked~label {
+      counter-increment: ucount;
+      box-shadow: inset 0 0 0 100px red;
+      font-weight: bold;
+    }
+
+    #list>div {
+      cursor: default;
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      -khtml-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      border: 1px solid black;
+      display:grid;
+      grid-template-rows: 1fr auto;
+    }
+
+    #x::after {
+      content: counter(ucount);
+    }
+  </style>
+</head>
+
+<body>
+  <div id="list">
+    <div><input type="checkbox" id="Draco"><label for="Draco">
+        <img src="plates/Draco.png" alt="Draco" />
+        <div>Draco</div>
+      </label></div>
+    <div><input type="checkbox" id="Dread"><label for="Dread">
+        <img src="plates/Dread.png" alt="Dread" />
+        <div>Dread</div>
+      </label></div>
+    <div><input type="checkbox" id="Earth"><label for="Earth">
+        <img src="plates/Earth.png" alt="Earth" />
+        <div>Earth</div>
+      </label></div>
+    <div><input type="checkbox" id="Fist"><label for="Fist">
+        <img src="plates/Fist.png" alt="Fist" />
+        <div>Fist</div>
+      </label></div>
+    <div><input type="checkbox" id="Flame"><label for="Flame">
+        <img src="plates/Flame.png" alt="Flame" />
+        <div>Flame</div>
+      </label></div>
+    <div><input type="checkbox" id="Icicle"><label for="Icicle">
+        <img src="plates/Icicle.png" alt="Icicle" />
+        <div>Icicle</div>
+      </label></div>
+    <div><input type="checkbox" id="Insect"><label for="Insect">
+        <img src="plates/Insect.png" alt="Insect" />
+        <div>Insect</div>
+      </label></div>
+    <div><input type="checkbox" id="Iron"><label for="Iron">
+        <img src="plates/Iron.png" alt="Iron" />
+        <div>Iron</div>
+      </label></div>
+    <div><input type="checkbox" id="Meadow"><label for="Meadow">
+        <img src="plates/Meadow.png" alt="Meadow" />
+        <div>Meadow</div>
+      </label></div>
+    <div><input type="checkbox" id="Mind"><label for="Mind"><img src="plates/Mind.png" alt="Mind" />
+        <div>Mind</div>
+      </label></div>
+    <div><input type="checkbox" id="Sky"><label for="Sky"><img src="plates/Sky.png" alt="Sky" />
+        <div>Sky</div>
+      </label></div>
+    <div><input type="checkbox" id="Splash"><label for="Splash"><img src="plates/Splash.png" alt="Splash" />
+        <div>Splash</div>
+      </label></div>
+    <div><input type="checkbox" id="Spooky"><label for="Spooky"><img src="plates/Spooky.png" alt="Spooky" />
+        <div>Spooky</div>
+      </label></div>
+    <div><input type="checkbox" id="Stone"><label for="Stone"><img src="plates/Stone.png" alt="Stone" />
+        <div>Stone</div>
+      </label></div>
+    <div><input type="checkbox" id="Toxic"><label for="Toxic"><img src="plates/Toxic.png" alt="Toxic" />
+        <div>Toxic</div>
+      </label></div>
+    <div><input type="checkbox" id="Zap"><label for="Zap"><img src="plates/Zap.png" alt="Zap" />
+        <div>Zap</div>
+      </label></div>
+  </div>
+  <div id="count">#: <span id="x"></span></div>
+</body>
+
+</html>
