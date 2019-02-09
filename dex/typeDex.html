@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Plate dex</title>
+  <style>
+    #content {
+      padding: 10px;
+      border: 1px solid grey;
+      resize: both;
+      overflow: auto;
+    }
+
+    #list {
+      text-align: center;
+      user-select: none;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(max-content, 80px));
+      grid-gap: 3px;
+      counter-reset: ucount;
+    }
+
+    #list input {
+      display: none;
+    }
+
+    #list label {
+      padding: 3px;
+      display: block;
+      transition: box-shadow .250s ease-in;
+    }
+
+    input:checked~label {
+      counter-increment: ucount;
+      box-shadow: inset 0 0 0 100px red;
+      font-weight: bold;
+    }
+
+    #list>div {
+      cursor: default;
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      -khtml-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      border: 1px solid black;
+    }
+
+    #x::after {
+      content: counter(ucount);
+    }
+  </style>
+</head>
+
+<body>
+  <div id="content">
+    <div id="list">
+      <div><input type="checkbox" id="Dragon"><label for="Dragon">
+          <img src="types/Dragon.png" alt="Dragon" />
+        </label></div>
+      <div><input type="checkbox" id="Dark"><label for="Dark">
+          <img src="types/Dark.png" alt="Dark" />
+        </label></div>
+      <div><input type="checkbox" id="Ground"><label for="Ground">
+          <img src="types/Ground.png" alt="Ground" />
+        </label></div>
+      <div><input type="checkbox" id="Fighting"><label for="Fighting">
+          <img src="types/Fighting.png" alt="Fighting" />
+        </label></div>
+      <div><input type="checkbox" id="Fire"><label for="Fire">
+          <img src="types/Fire.png" alt="Fire" />
+        </label></div>
+      <div><input type="checkbox" id="Ice"><label for="Ice">
+          <img src="types/Ice.png" alt="Ice" />
+        </label></div>
+      <div><input type="checkbox" id="Bug"><label for="Bug">
+          <img src="types/Bug.png" alt="Bug" />
+        </label></div>
+      <div><input type="checkbox" id="Steel"><label for="Steel">
+          <img src="types/Steel.png" alt="Steel" />
+        </label></div>
+      <div><input type="checkbox" id="Grass"><label for="Grass">
+          <img src="types/Grass.png" alt="Grass" />
+        </label></div>
+      <div><input type="checkbox" id="Psychic"><label for="Psychic">
+          <img src="types/Psychic.png" alt="Psychic" />
+        </label></div>
+      <div><input type="checkbox" id="Flying"><label for="Flying">
+          <img src="types/Flying.png" alt="Flying" />
+        </label></div>
+      <div><input type="checkbox" id="Water"><label for="Water">
+          <img src="types/Water.png" alt="Water" />
+        </label></div>
+      <div><input type="checkbox" id="Ghost"><label for="Ghost">
+          <img src="types/Ghost.png" alt="Ghost" />
+        </label></div>
+      <div><input type="checkbox" id="Rock"><label for="Rock">
+          <img src="types/Rock.png" alt="Rock" />
+        </label></div>
+      <div><input type="checkbox" id="Poison"><label for="Poison">
+          <img src="types/Poison.png" alt="Poison" />
+        </label></div>
+      <div><input type="checkbox" id="Electric"><label for="Electric">
+          <img src="types/Electric.png" alt="Electric" />
+        </label></div>
+      <div><input type="checkbox" id="Normal"><label for="Normal">
+          <img src="types/Normal.png" alt="Normal" />
+        </label></div>
+    </div>
+    <div id="count">#: <span id="x"></span></div>
+  </div>
+
+</body>
+
+</html>
