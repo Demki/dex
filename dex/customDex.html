@@ -24,9 +24,9 @@
       return values.split('\n').map(x => {
         const split = x.split('$');
         if (split.length === 2) {
-          return ({ name: split[0], img: split[1] });
+          return ({ name: split[0].trim(), img: split[1].trim() });
         }
-        else return ({ name: x });
+        else return ({ name: x.trim() });
       });
     }
 
