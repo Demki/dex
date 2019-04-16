@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>custom dex</title>
+  <script>
+    function setList(valuesString, listElement) {
+      const list = parseList(valuesString);
+      listElement.innerHTML = "";
+      list.forEach(element => {
+        if (element.img) {
+          listElement.innerHTML += (`<div><input type="checkbox" id="${element.name}"><label for="${element.name}"><img src="${element.img}" alt="${element.name}" /><div>${element.name}</div>
+        </label></div>`);
+        } else {
+          listElement.innerHTML += (`<div><input type="checkbox" id="${element.name}"><label for="${element.name}">${element.name}</label></div>`);
+        }
+      });
+    }
+
+    function parseList(values) {
+      return values.split('\n').map(x => {
+        const split = x.split('$');
+        if (split.length === 2) {
+          return ({ name: split[0], img: split[1] });
+        }
+        else return ({ name: x });
+      });
+    }
+
+    function changeWidth(e) {
+      document.body.style.setProperty("--minBoxWidth", e.target.value+"px");
+    }
+  </script>
+  <style>
+    body {
+      --minBoxWidth: 300px;
+    }
+
+    #content {
+      padding: 10px;
+      border: 1px solid grey;
+      resize: both;
+      overflow: auto;
+    }
+
+    #list {
+      text-align: center;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(var(--minBoxWidth), 1fr));
+      grid-gap: 3px;
+      counter-reset: ucount;
+    }
+
+    #list input {
+      display: none;
+    }
+
+    #list label {
+      display: block;
+      width: 100%;
+      height: 100%;
+      transition: box-shadow .250s ease-in;
+    }
+
+    input:checked~label {
+      counter-increment: ucount;
+      box-shadow: inset 0 0 0 100px red;
+      font-weight: bold;
+    }
+
+    #list>div {
+      cursor: default;
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      -khtml-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      border: 1px solid black;
+    }
+
+    #x::after {
+      content: counter(ucount);
+    }
+  </style>
+</head>
+
+<body>
+  <div id="content">
+    <div id="list">
+    </div>
+    <div id="count">#: <span id="x"></span></div>
+  </div>
+  <div>
+    <div>
+      <textarea id="listData"></textarea>
+      <input type="button" onclick="setList(document.getElementById('listData').value, document.getElementById('list'))"
+        value="Set Checkboxes" />
+    </div>
+    <div>
+      <input type="range" id="width" onchange="changeWidth(event)" step="1" min="100" max="600" defaultValue="300" /> <label for="width">Minimal Width</label>
+    </div>
+  </div>
+</body>
+
+</html>
