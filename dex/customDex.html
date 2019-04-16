@@ -10,12 +10,12 @@
     function setList(valuesString, listElement) {
       const list = parseList(valuesString);
       listElement.innerHTML = "";
-      list.forEach(element => {
+      list.forEach((element,idx) => {
         if (element.img) {
-          listElement.innerHTML += (`<div><input type="checkbox" id="${element.name}"><label for="${element.name}"><img src="${element.img}" alt="${element.name}" /><div>${element.name}</div>
+          listElement.innerHTML += (`<div><input type="checkbox" id="${element.name+idx}"><label for="${element.name+idx}"><img src="${element.img}" alt="${element.name+idx}" /><div>${element.name}</div>
         </label></div>`);
         } else {
-          listElement.innerHTML += (`<div><input type="checkbox" id="${element.name}"><label for="${element.name}">${element.name}</label></div>`);
+          listElement.innerHTML += (`<div><input type="checkbox" id="${element.name+}"><label for="${element.name}">${element.name}</label></div>`);
         }
       });
     }
