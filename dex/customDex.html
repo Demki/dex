@@ -10,28 +10,29 @@
     function setList(valuesString, listElement) {
       const list = parseList(valuesString);
       listElement.innerHTML = "";
-      list.forEach((element,idx) => {
+      list.forEach((element, idx) => {
         if (element.img) {
-          listElement.innerHTML += (`<div><input type="checkbox" id="${element.name+idx}"><label for="${element.name+idx}"><img src="${element.img}" alt="${element.name+idx}" /><div>${element.name}</div>
+          listElement.innerHTML += (`<div><input type="checkbox" id="${element.name + idx}"><label for="${element.name + idx}"><img src="${element.img}" alt="${element.name + idx}" /><div>${element.name}</div>
         </label></div>`);
         } else {
-          listElement.innerHTML += (`<div><input type="checkbox" id="${element.name+idx}"><label for="${element.name+idx}">${element.name}</label></div>`);
+          listElement.innerHTML += (`<div><input type="checkbox" id="${element.name + idx}"><label for="${element.name + idx}">${element.name}</label></div>`);
         }
       });
     }
 
     function parseList(values) {
       return values.split('\n').map(x => {
-        const split = x.split('$');
-        if (split.length === 2) {
-          return ({ name: split[0].trim(), img: split[1].trim() });
+        const imgLinkIdx = x.indexOf("$");
+        if (imgLinkIdx !== -1) {
+          return ({ name: x.substr(0, imgLinkIdx), img: x.substr(imgLinkIdx + 1) });
         }
         else return ({ name: x.trim() });
       });
     }
 
     function changeWidth(e) {
-      document.body.style.setProperty("--minBoxWidth", e.target.value+"px");
+      document.body.style.setProperty("--minBoxWidth", e.target.value + "px");
+      document.querySelectorAll("#widthRange, #widthNumber").forEach(x => x.value = e.target.value);
     }
   </script>
   <style>
@@ -65,7 +66,7 @@
       transition: box-shadow .250s ease-in;
     }
 
-    input:checked~label {
+    #list input:checked~label {
       counter-increment: ucount;
       box-shadow: inset 0 0 0 100px red;
       font-weight: bold;
@@ -84,6 +85,24 @@
     #x::after {
       content: counter(ucount);
     }
+
+    pre {
+      border: 1px solid black;
+      background: grey;
+    }
+
+    #inputs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    #exactMinWidth:checked~#widthRange, #widthNumber {
+      display:none;
+    }
+
+    #exactMinWidth:checked~#widthNumber, #widthRange {
+      display:block;
+    }
   </style>
 </head>
 
@@ -93,14 +112,29 @@
     </div>
     <div id="count">#: <span id="x"></span></div>
   </div>
-  <div>
+  <div id="inputs">
     <div>
       <textarea id="listData"></textarea>
       <input type="button" onclick="setList(document.getElementById('listData').value, document.getElementById('list'))"
-        value="Set Checkboxes" />
+        value="Set List" />
+      <p>Separate items by lines, example</p>
+      <pre>item1
+item2
+item3</pre>
+      <p>For images, use $ to separate name from url to image, example</p>
+      <pre>item1$https://images.pexels.com/photos/414612/pexels-photo-414612.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500
+item2 $ file:///C:/path/to/image.png
+item3 $ file:///D:/path/to/image.jpeg
+$file:///C:/path/to/image.image3.jpeg
+      </pre>
+
     </div>
     <div>
-      <input type="range" id="width" onchange="changeWidth(event)" step="1" min="100" max="600" defaultValue="300" /> <label for="width">Minimal Width</label>
+      <input type="checkbox" id="exactMinWidth" />
+      <label for="exactMinWidth">Exact</label>
+      <input type="range" id="widthRange" onchange="changeWidth(event)" step="1" min="100" max="600" defaultValue="300" />
+      <input type="number" id="widthNumber" onchange="changeWidth(event)" step="1" value="300" />
+      <label for="width">Minimal width for each item</label>
     </div>
   </div>
 </body>
