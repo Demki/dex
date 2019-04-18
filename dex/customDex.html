@@ -30,10 +30,14 @@
       });
     }
 
-    function changeWidth(e) {
-      document.body.style.setProperty("--minBoxWidth", e.target.value + "px");
-      document.querySelectorAll("#widthRange, #widthNumber").forEach(x => x.value = e.target.value);
+    function changeWidth(v) {
+      document.body.style.setProperty("--minBoxWidth", v + "px");
+      document.querySelectorAll("#widthRange, #widthNumber").forEach(x => x.value = v);
     }
+
+    window.addEventListener("load", () => {
+      changeWidth(document.querySelector("#widthNumber").value);
+    })
   </script>
   <style>
     body {
@@ -68,7 +72,7 @@
 
     #list input:checked~label {
       counter-increment: ucount;
-      box-shadow: inset 0 0 0 100px red;
+      box-shadow: inset 0 0 0 var(--minBoxWidth) red;
       font-weight: bold;
     }
 
@@ -143,9 +147,8 @@ $file:///C:/path/to/image.image3.jpeg</pre>
     <div>
       <input type="checkbox" id="exactMinWidth" />
       <label for="exactMinWidth">Exact</label>
-      <input type="range" id="widthRange" onchange="changeWidth(event)" step="1" min="100" max="600"
-        defaultValue="300" />
-      <input type="number" id="widthNumber" onchange="changeWidth(event)" step="1" value="300" />
+      <input type="range" id="widthRange" onchange="changeWidth(event.target.value)" step="1" min="50" max="600" />
+      <input type="number" id="widthNumber" onchange="changeWidth(event.target.value)" step="1" value="300" />
       <label for="width">Minimal width for each item</label>
     </div>
   </div>
