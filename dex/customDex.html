@@ -92,16 +92,26 @@
     }
 
     #inputs {
+      margin-top:5px;
+      border-top: 1px dashed grey;
+      padding-top: 5px;
       display: grid;
       grid-template-columns: 1fr 1fr;
     }
 
-    #exactMinWidth:checked~#widthRange, #widthNumber {
-      display:none;
+    #exactMinWidth:checked~#widthRange,
+    #widthNumber {
+      display: none;
     }
 
-    #exactMinWidth:checked~#widthNumber, #widthRange {
-      display:block;
+    #exactMinWidth:checked~#widthNumber,
+    #widthRange {
+      display: block;
+    }
+
+    #listData {
+      width: 90%;
+      display: block;
     }
   </style>
 </head>
@@ -115,24 +125,26 @@
   <div id="inputs">
     <div>
       <textarea id="listData"></textarea>
+
       <input type="button" onclick="setList(document.getElementById('listData').value, document.getElementById('list'))"
         value="Set List" />
       <p>Separate items by lines, example</p>
       <pre>item1
-item2
-item3</pre>
+          item2
+          item3</pre>
       <p>For images, use $ to separate name from url to image, example</p>
       <pre>item1$https://images.pexels.com/photos/414612/pexels-photo-414612.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500
-item2 $ file:///C:/path/to/image.png
-item3 $ file:///D:/path/to/image.jpeg
-$file:///C:/path/to/image.image3.jpeg
-      </pre>
+            item2 $ file:///C:/path/to/image.png
+            item3 $ file:///D:/path/to/image.jpeg
+            $file:///C:/path/to/image.image3.jpeg
+          </pre>
 
     </div>
     <div>
       <input type="checkbox" id="exactMinWidth" />
       <label for="exactMinWidth">Exact</label>
-      <input type="range" id="widthRange" onchange="changeWidth(event)" step="1" min="100" max="600" defaultValue="300" />
+      <input type="range" id="widthRange" onchange="changeWidth(event)" step="1" min="100" max="600"
+        defaultValue="300" />
       <input type="number" id="widthNumber" onchange="changeWidth(event)" step="1" value="300" />
       <label for="width">Minimal width for each item</label>
     </div>
