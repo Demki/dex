@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>SM64 levels dex</title>
+  <style>
+    #content {
+      padding: 10px;
+      border: 1px solid grey;
+      resize: both;
+      overflow: auto;
+    }
+
+    #list {
+      text-align: center;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      grid-gap: 3px;
+      counter-reset: ucount;
+    }
+
+    #list input {
+      display: none;
+    }
+
+    #list label {
+      padding: 3px;
+      display: block;
+      transition: box-shadow .250s ease-in;
+    }
+
+    input:checked~label {
+      counter-increment: ucount;
+      box-shadow: inset 0 0 0 100px red;
+      font-weight: bold;
+    }
+
+    #list>div {
+      cursor: default;
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      -khtml-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      border: 1px solid black;
+    }
+
+    #x::after {
+      content: counter(ucount);
+    }
+  </style>
+</head>
+
+<body>
+  <div id="content">
+    <div id="list">
+      <div><input type="checkbox" id="Bob-omb Battlefield">
+        <label for="Bob-omb Battlefield">Bob-omb Battlefield</label></div>
+      <div><input type="checkbox" id="Whomp's Fortress">
+        <label for="Whomp's Fortress">Whomp's Fortress</label></div>
+      <div><input type="checkbox" id="Jolly Roger Bay">
+        <label for="Jolly Roger Bay">Jolly Roger Bay</label></div>
+      <div><input type="checkbox" id="Cool, Cool Mountain">
+        <label for="Cool, Cool Mountain">Cool, Cool Mountain</label></div>
+      <div><input type="checkbox" id="Big Boo's Haunt">
+        <label for="Big Boo's Haunt">Big Boo's Haunt</label></div>
+      <div><input type="checkbox" id="Hazy Maze Cave">
+        <label for="Hazy Maze Cave">Hazy Maze Cave</label></div>
+      <div><input type="checkbox" id="Lethal Lava Land">
+        <label for="Lethal Lava Land">Lethal Lava Land</label></div>
+      <div><input type="checkbox" id="Shifting Sand Land">
+        <label for="Shifting Sand Land">Shifting Sand Land</label></div>
+      <div><input type="checkbox" id="Dire, Dire Docks">
+        <label for="Dire, Dire Docks">Dire, Dire Docks</label></div>
+      <div><input type="checkbox" id="Snowman's Land">
+        <label for="Snowman's Land">Snowman's Land</label></div>
+      <div><input type="checkbox" id="Wet-Dry World">
+        <label for="Wet-Dry World">Wet-Dry World</label></div>
+      <div><input type="checkbox" id="Tall, Tall Mountain">
+        <label for="Tall, Tall Mountain">Tall, Tall Mountain</label></div>
+      <div><input type="checkbox" id="Tiny, Huge Island">
+        <label for="Tiny, Huge Island">Tiny, Huge Island</label></div>
+      <div><input type="checkbox" id="Tick Tock Clock">
+        <label for="Tick Tock Clock">Tick Tock Clock</label></div>
+      <div><input type="checkbox" id="Rainbow Ride">
+        <label for="Rainbow Ride">Rainbow Ride</label></div>
+      <div><input type="checkbox" id="Bowser in the Dark World">
+        <label for="Bowser in the Dark World">Bowser in the Dark World</label></div>
+      <div><input type="checkbox" id="Bowser in the Fire Sea">
+        <label for="Bowser in the Fire Sea">Bowser in the Fire Sea</label></div>
+      <div><input type="checkbox" id="Bowser in the Sky">
+        <label for="Bowser in the Sky">Bowser in the Sky</label></div>
+      <div><input type="checkbox" id="Slide">
+        <label for="Slide">Slide</label></div>
+      <div><input type="checkbox" id="Aquarium">
+        <label for="Aquarium">Aquarium</label></div>
+      <div><input type="checkbox" id="Over Rainbow">
+        <label for="Over Rainbow">Over Rainbow</label></div>
+      <div><input type="checkbox" id="Wing cap">
+        <label for="Wing cap">Wing cap</label></div>
+      <div><input type="checkbox" id="Vanish cap">
+        <label for="Vanish cap">Vanish cap</label></div>
+      <div><input type="checkbox" id="Metal cap">
+        <label for="Metal cap">Metal cap</label></div>
+      <div><input type="checkbox" id="Toad 1">
+        <label for="Toad 1">Toad 1</label></div>
+      <div><input type="checkbox" id="Toad 2+3">
+        <label for="Toad 2+3">Toad 2+3</label></div>
+    </div>
+    <div id="count">#: <span id="x"></span></div>
+  </div>
+</body>
+
+</html>
