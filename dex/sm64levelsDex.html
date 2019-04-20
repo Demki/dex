@@ -87,6 +87,8 @@
     }
 
     window.addEventListener("load", () => {
+      document.getElementById("content").addEventListener("contextmenu", (ev) => {ev.preventDefault(); return false;});
+
       for (const child of document.getElementById("list").children) {
         const i = items.push({ el: child, mark: 0 }) - 1;
         child.addEventListener("click", mark(LEFT, i));
