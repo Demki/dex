@@ -10,6 +10,7 @@
     body {
       --color1: red;
       --color2: green;
+      --minItemWidth: 200px;
     }
 
     #content {
@@ -22,7 +23,7 @@
     #list {
       text-align: center;
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(var(--minItemWidth), 1fr));
       grid-gap: 3px;
       counter-reset: picked1 picked2; 
     }
@@ -41,12 +42,12 @@
     }
 
     #list>div.color1 {
-      box-shadow: inset 0 0 0 300px var(--color1);
+      box-shadow: inset 0 0 0 var(--minItemWidth) var(--color1);
       font-weight: bold;
       counter-increment: picked1;
     }
     #list>div.color2 {
-      box-shadow: inset 0 0 0 300px var(--color2);
+      box-shadow: inset 0 0 0 var(--minItemWidth) var(--color2);
       font-weight: bold;
       counter-increment: picked2;
     }
