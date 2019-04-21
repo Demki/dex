@@ -58,19 +58,17 @@
 
   </style>
   <script>
-    const LEFT = 1, RIGHT = 2;
     const items = [];
 
     function mark(d, i) {
       return (ev) => {
         ev.preventDefault();
         const item = items[i];
-        item.mark = item.mark === d ? 0 : d;
-        if (item.mark !== 0) {
-          item.el.className = "color" + item.mark;
-        } else {
-          item.el.className = "";
+        const newMark = item.mark === d ? 0 : d;
+        if(!item.el.classList.replace(`color${item.mark}`, `color${newMark}`)) {
+          item.el.classList.add(`color${newMark}`);
         }
+        item.mark = newMark;
         recount();
         return false;
       }
@@ -91,8 +89,8 @@
 
       for (const child of document.getElementById("list").children) {
         const i = items.push({ el: child, mark: 0 }) - 1;
-        child.addEventListener("click", mark(LEFT, i));
-        child.addEventListener("contextmenu", mark(RIGHT, i));
+        child.addEventListener("click", mark(1, i));
+        child.addEventListener("contextmenu", mark(2, i));
       }
     });
   </script>
