@@ -69,17 +69,24 @@
 
   </style>
   <script>
-    const items = [];
+    class ListItem { 
+      constructor(element) {
+        this.element = element;
+        this.mark = 0;
+      }
 
-    function mark(d, i) {
+      markWith(mark) {
+        if(!this.element.classList.replace(`color${this.mark}`, `color${mark}`)) {
+          this.element.classList.add(`color${mark}`);
+        }
+        this.mark = mark;
+      }
+    }
+
+    function mark(button, item) {
       return (ev) => {
         ev.preventDefault();
-        const item = items[i];
-        const newMark = item.mark === d ? 0 : d;
-        if(!item.el.classList.replace(`color${item.mark}`, `color${newMark}`)) {
-          item.el.classList.add(`color${newMark}`);
-        }
-        item.mark = newMark;
+        item.markWith(item.mark === button ? 0 : button);
         return false;
       }
     }
@@ -88,11 +95,12 @@
       document.getElementById("content").addEventListener("contextmenu", (ev) => {ev.preventDefault(); return false;});
 
       for (const child of document.getElementById("list").children) {
-        const i = items.push({ el: child, mark: 0 }) - 1;
-        child.addEventListener("click", mark(1, i));
-        child.addEventListener("contextmenu", mark(2, i));
+        const item = new ListItem(child);
+        child.addEventListener("click", mark(1, item));
+        child.addEventListener("contextmenu", mark(2, item));
       }
     });
+
   </script>
 </head>
 
