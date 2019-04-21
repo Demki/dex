@@ -72,7 +72,11 @@
     class ListItem { 
       constructor(element) {
         this.element = element;
-        this.mark = 0;
+        this.markWith(0);
+      }
+
+      toggleMark(v) {
+        this.markWith(this.mark === v ? 0 : v);
       }
 
       markWith(mark) {
@@ -86,7 +90,7 @@
     function mark(button, item) {
       return (ev) => {
         ev.preventDefault();
-        item.markWith(item.mark === button ? 0 : button);
+        item.toggleMark(button);
         return false;
       }
     }
