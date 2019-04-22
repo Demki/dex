@@ -48,10 +48,6 @@
       padding-left: 5px;
     }
 
-    .mark--1 {
-      background-color: lightblue;
-    }
-
     .marked {
       background-color: red;
     }
@@ -72,11 +68,8 @@
         return (ev) => {
           console.log(`clicked on ${this.name} x${this.count}`);
           if (this.marked < this.count) {
-            this.marked+=this.count;
-            if(this.marked > 0) ut(this.count);
-          }
-          if (this.marked === 0) {
-            ie.classList.replace('mark--1', 'unmark');
+            this.marked += this.count;
+            if (this.marked > 0) ut(this.count);
           }
           else if (this.marked < this.count) {
             ie.classList.replace('unmark', 'marked');
@@ -94,8 +87,8 @@
           ev.preventDefault();
           console.log(`clicked on ${this.name} x${this.count}`);
           if (this.marked > 0) {
-            this.marked-=this.count;
-            if(this.marked >= 0) ut(-this.count);
+            this.marked -= this.count;
+            if (this.marked >= 0) ut(-this.count);
           }
 
           if (this.marked === 0) {
@@ -202,8 +195,7 @@
           optionalItems.appendChild(itemEl);
         }
         template.content.firstChild.children[0].addEventListener('click', () => {
-          for(const child of items.children) {
-            child.click();
+          for (const child of items.children) {
             child.click();
           }
         });
