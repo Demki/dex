@@ -20,7 +20,7 @@
       return values.split('\n').map(x => {
         const imgLinkIdx = x.indexOf("$");
         if (imgLinkIdx !== -1) {
-          return ({ name: x.substr(0, imgLinkIdx), img: x.substr(imgLinkIdx + 1) });
+          return ({ name: x.substr(0, imgLinkIdx).trim(), img: x.substr(imgLinkIdx + 1).trim() });
         }
         else return ({ name: x.trim() });
       });
