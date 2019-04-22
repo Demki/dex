@@ -11,12 +11,8 @@
       const list = parseList(valuesString);
       listElement.innerHTML = "";
       list.forEach((element, idx) => {
-        if (element.img) {
-          listElement.innerHTML += (`<div><input type="checkbox" id="${element.name + idx}"><label for="${element.name + idx}"><img src="${element.img}" alt="${element.name + idx}" /><div>${element.name}</div>
-        </label></div>`);
-        } else {
-          listElement.innerHTML += (`<div><input type="checkbox" id="${element.name + idx}"><label for="${element.name + idx}">${element.name}</label></div>`);
-        }
+        const img = element.img ? `<img src="${element.img}" alt="${element.name + idx}" />` : ""; 
+        listElement.innerHTML += `<div><input type="checkbox" id="${element.name + idx}"><label for="${element.name + idx}">${img}<div>${element.name}</div></label></div>`
       });
     }
 
