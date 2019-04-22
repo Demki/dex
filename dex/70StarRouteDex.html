@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>70 Star Route dex</title>
+  <style>
+    #content {
+      padding: 10px;
+      border: 1px solid grey;
+      resize: both;
+      overflow: auto;
+    }
+
+    .itemGroup {
+      display: grid;
+      grid-template-columns: 1fr 1fr 4fr 4fr;
+      margin-bottom: 1px;
+      padding-bottom: 1px;
+    }
+
+    .items {
+      display: flex;
+      gap: 4px;
+    }
+
+    .items>div {
+      border: 1px solid black;
+      width: fit-content;
+      padding: 2px;
+      -moz-user-select: none;
+      -webkit-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+
+    .optionalItems {
+      border-left: 1px solid black;
+      padding-left: 5px;
+    }
+
+    .mark--1 {
+      background-color: lightblue;
+    }
+
+    .marked {
+      background-color: red;
+    }
+
+    .completed {
+      background-color: green;
+    }
+  </style>
+  <script>
+    class Item {
+      constructor(name, count) {
+        this.name = name;
+        this.count = count;
+        this.marked = 0;
+      }
+
+      check(ig, ice, ie) {
+        return (ev) => {
+          console.log(`clicked on ${this.name} x${this.count}`);
+          if (this.marked < this.count) this.marked++;
+          if (this.marked === 0) {
+            ie.classList.replace('mark--1', 'unmark');
+          }
+          else if (this.marked < this.count) {
+            ie.classList.replace('unmark', 'marked');
+          }
+          else {
+            ie.classList.replace('unmark', 'completed');
+            ie.classList.replace('marked', 'completed');
+          }
+          ig.updateCount(ice);
+        }
+      }
+
+      uncheck(ig, ice, ie) {
+        return (ev) => {
+          ev.preventDefault();
+          console.log(`clicked on ${this.name} x${this.count}`);
+          if (this.marked >= 0) this.marked--;
+          if (this.marked === 0) {
+            ie.classList.replace('marked', 'unmark');
+            ie.classList.replace('completed', 'unmark');
+          }
+          else if (this.marked < 0) {
+            ie.classList.replace('unmark', 'mark--1');
+          }
+          else {
+            ie.classList.replace('completed', 'marked');
+          }
+          ig.updateCount(ice);
+          return false;
+        }
+      }
+    }
+
+    class ItemGroup {
+      constructor(name, items, optionals) {
+        this.name = name;
+        this.items = items;
+        this.optionals = optionals;
+        this.count = items.reduce((acc, x) => acc + x.count, 0);
+      }
+
+      getMarkedCount() {
+        return this.items.reduce((acc, x) => acc + Math.max(x.marked, 0), 0) + this.optionals.reduce((acc, x) => acc + Math.max(x.marked, 0), 0);
+      }
+
+      updateCount(ice) {
+        ice.innerText = `${this.getMarkedCount()}/${this.count}`;
+      }
+    }
+
+    const data = [
+      new ItemGroup("BOB", [new Item("Box", 1), new Item("Open", 1), new Item("King", 1)], [new Item("Secrets", 1)]),
+      new ItemGroup("WF", [new Item("All", 6)], [new Item("Reds", 1)]),
+      new ItemGroup("JRB", [new Item("Ship", 1), new Item("Box", 1), new Item("Chest", 1), new Item("Open", 1)], [new Item("Eel", 1)]),
+      new ItemGroup("CCM", [new Item("Slide", 1), new Item("Open", 1), new Item("Penguin", 1)], [new Item("Race", 1)]),
+      new ItemGroup("BBH", [new Item("Open or Boo or Eye", 1)], [new Item("The other two", 2)]),
+      new ItemGroup("HMC", [new Item("Open", 5)], []),
+      new ItemGroup("LLL", [new Item("Open", 1), new Item("Bully", 1), new Item("Volcano", 2)], [new Item("Reds", 1)]),
+      new ItemGroup("SSL", [new Item("Open", 1), new Item("Pyramid", 1), new Item("Bird", 1)], [new Item("Secrets", 1), new Item("Eyerock", 1)]),
+      new ItemGroup("DDD", [new Item("Open", 2), new Item("Chests", 1), new Item("Manta", 1)], [new Item("Rings", 1)]),
+      new ItemGroup("SL", [new Item("Open", 2), new Item("Box", 1), new Item("Igloo", 1), new Item("Bully", 1)], []),
+      new ItemGroup("WDW", [new Item("100", 1), new Item("Secrets", 1), new Item("Open", 1), new Item("Box", 2)], [new Item("City", 1)]),
+      new ItemGroup("TTM", [new Item("Open", 4)], [new Item("Monkey", 1)]),
+      new ItemGroup("THI", [new Item("Secrets", 1), new Item("Box", 1)], [new Item("Reds", 1)]),
+      new ItemGroup("TTC", [new Item("Open", 5)], []),
+      new ItemGroup("RR", [new Item("Open", 4)], [new Item("Box", 1)]),
+      new ItemGroup("Toad", [new Item("Bottom", 1), new Item("Top", 2)], []),
+      new ItemGroup("Mips", [new Item("Bottom", 2)], []),
+      new ItemGroup("Slide", [new Item("Box", 1), new Item("Race", 1)], []),
+      new ItemGroup("Aqua", [new Item("Reds", 1)], []),
+      new ItemGroup("Wing", [new Item("Reds", 1)], []),
+      new ItemGroup("Metal", [], [new Item("Reds", 1)]),
+      new ItemGroup("BitDW", [], [new Item("Reds", 1)]),
+      new ItemGroup("Cloud", [], []),
+      new ItemGroup("Vanish", [], []),
+      new ItemGroup("BitFS", [], []),
+      new ItemGroup("BitS", [], []),
+    ];
+
+    function htmlToElement(html) {
+      var template = document.createElement('template');
+      html = html.trim(); // Never return a text node of whitespace as the result
+      template.innerHTML = html;
+      return template.content.firstChild;
+    }
+
+
+    window.addEventListener("load", () => {
+      const listEl = document.getElementById("list");
+      const totalCountEl = document.getElementById("totalText");
+      for (const itemGroup of data) {
+        const template = document.createElement("template");
+        template.innerHTML = `<div class="itemGroup">
+        <div class="title">${itemGroup.name}</div>
+        <div class="itemCount">0/${itemGroup.count}</div>
+        <div class="items mandatory"></div>
+        <div class="items optionalItems"></div>
+        </div>`
+        const itemCountEl = template.content.firstChild.children[1];
+        const items = template.content.firstChild.children[2];
+        const optionalItems = template.content.firstChild.children[3];
+        for (const item of itemGroup.items) {
+          const itemEl = document.createElement('div');
+          itemEl.classList.add('unmark');
+          itemEl.innerText = item.name;
+          itemEl.addEventListener('click', item.check(itemGroup, itemCountEl, itemEl));
+          itemEl.addEventListener('contextmenu', item.uncheck(itemGroup, itemCountEl, itemEl));
+          items.appendChild(itemEl);
+        }
+        for (const item of itemGroup.optionals) {
+          const itemEl = document.createElement('div');
+          itemEl.classList.add('unmark');
+          itemEl.innerText = item.name;
+          itemEl.addEventListener('click', item.check(itemGroup, itemCountEl, itemEl));
+          itemEl.addEventListener('contextmenu', item.uncheck(itemGroup, itemCountEl, itemEl));
+          optionalItems.appendChild(itemEl);
+        }
+        listEl.appendChild(template.content.firstChild);
+      }
+
+    });
+  </script>
+</head>
+
+<body>
+  <div id="content">
+    <div id="list">
+    </div>
+  </div>
+  </div>
+</body>
+
+</html>
