@@ -21,6 +21,13 @@
       padding-bottom: 1px;
     }
 
+    .title {
+      -moz-user-select: none;
+      -webkit-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+
     .items {
       display: flex;
       gap: 4px;
@@ -86,7 +93,7 @@
         return (ev) => {
           ev.preventDefault();
           console.log(`clicked on ${this.name} x${this.count}`);
-          if (this.marked >= 0) {
+          if (this.marked > 0) {
             this.marked-=this.count;
             if(this.marked >= 0) ut(-this.count);
           }
@@ -94,9 +101,6 @@
           if (this.marked === 0) {
             ie.classList.replace('marked', 'unmark');
             ie.classList.replace('completed', 'unmark');
-          }
-          else if (this.marked < 0) {
-            ie.classList.replace('unmark', 'mark--1');
           }
           else {
             ie.classList.replace('completed', 'marked');
@@ -197,6 +201,12 @@
           itemEl.addEventListener('contextmenu', item.uncheck(itemGroup, itemCountEl, itemEl, updateTotal));
           optionalItems.appendChild(itemEl);
         }
+        template.content.firstChild.children[0].addEventListener('click', () => {
+          for(const child of items.children) {
+            child.click();
+            child.click();
+          }
+        });
         listEl.appendChild(template.content.firstChild);
       }
     });
