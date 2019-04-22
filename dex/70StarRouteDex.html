@@ -162,6 +162,7 @@
 
 
     window.addEventListener("load", () => {
+      document.getElementById("content").addEventListener("contextmenu", (ev) => { ev.preventDefault(); return false; });
       const listEl = document.getElementById("list");
       const totalCountEl = document.getElementById("total");
       let total = 0;
