@@ -65,8 +65,8 @@
         return (ev) => {
           console.log(`clicked on ${this.name} x${this.count}`);
           if (this.marked < this.count) {
-            this.marked++;
-            if(this.marked > 0) ut(1);
+            this.marked+=this.count;
+            if(this.marked > 0) ut(this.count);
           }
           if (this.marked === 0) {
             ie.classList.replace('mark--1', 'unmark');
@@ -87,8 +87,8 @@
           ev.preventDefault();
           console.log(`clicked on ${this.name} x${this.count}`);
           if (this.marked >= 0) {
-            this.marked--;
-            if(this.marked >= 0) ut(-1);
+            this.marked-=this.count;
+            if(this.marked >= 0) ut(-this.count);
           }
 
           if (this.marked === 0) {
