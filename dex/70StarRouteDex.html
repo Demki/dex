@@ -183,7 +183,7 @@
         for (const item of itemGroup.items) {
           const itemEl = document.createElement('div');
           itemEl.classList.add('unmark');
-          itemEl.innerText = item.name;
+          itemEl.innerText = item.name + (item.count > 1 ? ` x${item.count}` : '');
           itemEl.addEventListener('click', item.check(itemGroup, itemCountEl, itemEl, updateTotal));
           itemEl.addEventListener('contextmenu', item.uncheck(itemGroup, itemCountEl, itemEl, updateTotal));
           items.appendChild(itemEl);
