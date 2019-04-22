@@ -16,7 +16,7 @@
 
     .itemGroup {
       display: grid;
-      grid-template-columns: 1fr 1fr 4fr 4fr;
+      grid-template-columns: 1fr 1fr 4fr 2fr;
       margin-bottom: 1px;
       padding-bottom: 1px;
     }
@@ -61,10 +61,13 @@
         this.marked = 0;
       }
 
-      check(ig, ice, ie) {
+      check(ig, ice, ie, ut) {
         return (ev) => {
           console.log(`clicked on ${this.name} x${this.count}`);
-          if (this.marked < this.count) this.marked++;
+          if (this.marked < this.count) {
+            this.marked++;
+            if(this.marked > 0) ut(1);
+          }
           if (this.marked === 0) {
             ie.classList.replace('mark--1', 'unmark');
           }
@@ -79,11 +82,15 @@
         }
       }
 
-      uncheck(ig, ice, ie) {
+      uncheck(ig, ice, ie, ut) {
         return (ev) => {
           ev.preventDefault();
           console.log(`clicked on ${this.name} x${this.count}`);
-          if (this.marked >= 0) this.marked--;
+          if (this.marked >= 0) {
+            this.marked--;
+            if(this.marked >= 0) ut(-1);
+          }
+
           if (this.marked === 0) {
             ie.classList.replace('marked', 'unmark');
             ie.classList.replace('completed', 'unmark');
@@ -156,7 +163,12 @@
 
     window.addEventListener("load", () => {
       const listEl = document.getElementById("list");
-      const totalCountEl = document.getElementById("totalText");
+      const totalCountEl = document.getElementById("total");
+      let total = 0;
+      const updateTotal = (x) => {
+        total += x;
+        totalCountEl.innerText = total;
+      }
       for (const itemGroup of data) {
         const template = document.createElement("template");
         template.innerHTML = `<div class="itemGroup">
@@ -172,30 +184,29 @@
           const itemEl = document.createElement('div');
           itemEl.classList.add('unmark');
           itemEl.innerText = item.name;
-          itemEl.addEventListener('click', item.check(itemGroup, itemCountEl, itemEl));
-          itemEl.addEventListener('contextmenu', item.uncheck(itemGroup, itemCountEl, itemEl));
+          itemEl.addEventListener('click', item.check(itemGroup, itemCountEl, itemEl, updateTotal));
+          itemEl.addEventListener('contextmenu', item.uncheck(itemGroup, itemCountEl, itemEl, updateTotal));
           items.appendChild(itemEl);
         }
         for (const item of itemGroup.optionals) {
           const itemEl = document.createElement('div');
           itemEl.classList.add('unmark');
           itemEl.innerText = item.name;
-          itemEl.addEventListener('click', item.check(itemGroup, itemCountEl, itemEl));
-          itemEl.addEventListener('contextmenu', item.uncheck(itemGroup, itemCountEl, itemEl));
+          itemEl.addEventListener('click', item.check(itemGroup, itemCountEl, itemEl, updateTotal));
+          itemEl.addEventListener('contextmenu', item.uncheck(itemGroup, itemCountEl, itemEl, updateTotal));
           optionalItems.appendChild(itemEl);
         }
         listEl.appendChild(template.content.firstChild);
       }
-
     });
   </script>
 </head>
 
 <body>
+  <div id="total">0</div>
   <div id="content">
     <div id="list">
     </div>
-  </div>
   </div>
 </body>
 
