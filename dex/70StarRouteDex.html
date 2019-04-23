@@ -71,7 +71,7 @@
             this.marked += this.count;
             if (this.marked > 0) ut(this.count);
           }
-          else if (this.marked < this.count) {
+          if (this.marked < this.count) {
             ie.classList.replace('unmark', 'marked');
           }
           else {
