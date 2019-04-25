@@ -85,21 +85,15 @@
       }
     }
 
-    function mark(button, item) {
-      return (ev) => {
-        ev.preventDefault();
-        item.toggleMark(button);
-        return false;
-      }
-    }
-
     window.addEventListener("load", () => {
-      document.getElementById("content").addEventListener("contextmenu", (ev) => { ev.preventDefault(); return false; });
+      document.getElementById("content").addEventListener("contextmenu", (ev) => { ev.preventDefault(); }, false);
 
       for (const child of document.getElementById("list").children) {
         const item = new ListItem(child);
-        child.addEventListener("click", mark(1, item));
-        child.addEventListener("contextmenu", mark(2, item));
+        child.addEventListener("click", (ev) => item.toggleMark(1));
+        child.addEventListener("auxclick", (ev) => {
+          if(ev.button === 2) item.toggleMark(2);
+        });
       }
     });
 
