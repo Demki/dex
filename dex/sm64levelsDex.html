@@ -67,21 +67,15 @@
     }
   </style>
   <script>
-    class ListItem {
-      constructor(element) {
-        this.element = element;
-        this.markWith(0);
-      }
-
-      toggleMark(v) {
-        this.markWith(this.mark === v ? 0 : v);
-      }
-
-      markWith(mark) {
-        if (!this.element.classList.replace(`color${this.mark}`, `color${mark}`)) {
-          this.element.classList.add(`color${mark}`);
+    function mark(v) {
+      return (ev) => {
+        const target = ev.target;
+        const mark = target.dataset.mark;
+        const newMark = target.dataset.mark === v ? '0' : v;
+        if (!target.classList.replace(`color${mark}`, `color${newMark}`)) {
+          target.classList.add(`color${newMark}`);
         }
-        this.mark = mark;
+        target.dataset.mark = newMark;
       }
     }
 
@@ -89,14 +83,14 @@
       document.getElementById("content").addEventListener("contextmenu", (ev) => { ev.preventDefault(); }, false);
 
       for (const child of document.getElementById("list").children) {
-        const item = new ListItem(child);
-        child.addEventListener("click", (ev) => item.toggleMark(1));
+        child.classList.add("color0");
+        child.dataset.mark = 'none';
+        child.addEventListener("click", mark('1'));
         child.addEventListener("auxclick", (ev) => {
-          if(ev.button === 2) item.toggleMark(2);
+          if (ev.button === 2) mark('2')(ev);
         });
       }
     });
-
   </script>
 </head>
 
