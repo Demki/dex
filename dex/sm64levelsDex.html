@@ -84,7 +84,7 @@
 
       for (const child of document.getElementById("list").children) {
         child.classList.add("color0");
-        child.dataset.mark = 'none';
+        child.dataset.mark = '0';
         child.addEventListener("click", mark('1'));
         child.addEventListener("auxclick", (ev) => {
           if (ev.button === 2) mark('2')(ev);
