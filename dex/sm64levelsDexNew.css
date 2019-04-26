@@ -1,69 +1,69 @@
 
-    body {
-      --color1: red;
-      --color2: green;
-      --minItemWidth: 200px;
-    }
+body {
+  --color1: red;
+  --color2: green;
+  --minItemWidth: 200px;
+}
 
-    #content {
-      position: relative;
-      padding: 10px;
-      border: 1px solid grey;
-      resize: both;
-      overflow: auto;
-      counter-reset: picked1 picked2;
-    }
+#content {
+  position: relative;
+  padding: 10px;
+  border: 1px solid grey;
+  resize: both;
+  overflow: auto;
+  counter-reset: picked1 picked2;
+}
 
-    .path {
-      border: 2px dashed grey;
-      margin-bottom: 2px;
-      padding: 3px;
-    }
+.path {
+  border: 2px dashed grey;
+  margin-bottom: 2px;
+  padding: 3px;
+}
 
 
-    #list, .path {
-      text-align: center;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(var(--minItemWidth), 1fr));
-      grid-gap: 3px;
-    }
+#list, .path {
+  text-align: center;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(var(--minItemWidth), 1fr));
+  grid-gap: 3px;
+}
 
-    #list>*, .path>* {
-      padding: 3px;
-      display: block;
-      transition: box-shadow .250s ease-in;
-      cursor: default;
-      -moz-user-select: none;
-      -webkit-user-select: none;
-      -ms-user-select: none;
-      user-select: none;
-      border: 1px solid black;
-    }
+#list>*, .path>* {
+  padding: 3px;
+  display: block;
+  transition: box-shadow .250s ease-in;
+  cursor: default;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  border: 1px solid black;
+}
 
-    .color1 {
-      box-shadow: inset 0 0 0 var(--minItemWidth) var(--color1);
-      font-weight: bold;
-      counter-increment: picked1;
-    }
+.color1 {
+  box-shadow: inset 0 0 0 var(--minItemWidth) var(--color1);
+  font-weight: bold;
+  counter-increment: picked1;
+}
 
-    .color2 {
-      box-shadow: inset 0 0 0 var(--minItemWidth) var(--color2);
-      font-weight: bold;
-      counter-increment: picked2;
-    }
+.color2 {
+  box-shadow: inset 0 0 0 var(--minItemWidth) var(--color2);
+  font-weight: bold;
+  counter-increment: picked2;
+}
 
-    #count1 {
-      color: var(--color1);
-    }
+#count1 {
+  color: var(--color1);
+}
 
-    #count2 {
-      color: var(--color2);
-    }
+#count2 {
+  color: var(--color2);
+}
 
-    #x1::after {
-      content: counter(picked1);
-    }
+#x1::after {
+  content: counter(picked1);
+}
 
-    #x2::after {
-      content: counter(picked2);
-    }
+#x2::after {
+  content: counter(picked2);
+}
