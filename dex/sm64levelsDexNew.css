@@ -20,15 +20,20 @@ body {
   padding: 3px;
 }
 
+#others {
+  border-top: 2px solid grey;
+  margin-top: 2px;
+  padding: 3px;
+}
 
-#list, .path {
+#list, .path, #others {
   text-align: center;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(var(--minItemWidth), 1fr));
   grid-gap: 3px;
 }
 
-#list>*, .path>* {
+#list>*, .path>*, #others>* {
   padding: 3px;
   display: block;
   transition: box-shadow .250s ease-in;

@@ -76,7 +76,37 @@ function mouseup(ev) {
 
       if (startInd !== -1) {
         if (endInd !== -1) {
+          if (prev.parentElement === ev.target.parentElement) {
 
+          } else {
+            const currentStartPath = prev.parentElement;
+            currentStartPath.dataset.looping = "no";
+            const endPath = ev.target.parentElement;
+            endPath.dataset.looping = "no";
+            let newPath = document.createElement("div");
+            newPath.classList.add("path");
+            newPath.dataset.looping = "no";
+            newPath.append(...Array.from(currentStartPath.children).slice(startInd + 1));
+            if (newPath.children.length <= 1) {
+              Array.from(newPath.children).forEach((x) => x.dataset.pathInd = -1);
+
+              document.getElementById("list").append(...newPath.children);
+              newPath.remove();
+              newPath = null;
+            } else {
+              Array.from(newPath.children).forEach((x, i) => x.dataset.pathInd = i);
+            }
+            if (newPath) document.getElementById("content").insertBefore(newPath, currentStartPath);
+
+            currentStartPath.append(...Array.from(endPath.children).slice(endInd));
+            Array.from(currentStartPath.children).forEach((x, i) => x.dataset.pathInd = i);
+            if (endPath.children.length <= 1) {
+              Array.from(endPath.children).forEach((x) => x.dataset.pathInd = -1);
+
+              document.getElementById("list").append(...endPath.children);
+              endPath.remove();
+            }
+          }
         } else {
           const currentStartPath = prev.parentElement;
           currentStartPath.dataset.looping = "no";
@@ -105,6 +135,7 @@ function mouseup(ev) {
 
         } else if (endInd !== -1) {
           const endPath = ev.target.parentElement;
+          endPath.dataset.looping = "no";
           let newPath = document.createElement("div");
           newPath.classList.add("path");
           newPath.dataset.looping = "no";
@@ -149,6 +180,13 @@ window.addEventListener("load", () => {
   });
 
   for (const child of document.getElementById("list").children) {
+    child.classList.add("item");
+    child.classList.add("color0");
+    child.dataset.mark = '0';
+    child.dataset.pathInd = '-1';
+  }
+
+  for (const child of document.getElementById("others").children) {
     child.classList.add("item");
     child.classList.add("color0");
     child.dataset.mark = '0';
