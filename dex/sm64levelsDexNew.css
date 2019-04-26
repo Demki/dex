@@ -15,7 +15,7 @@ body {
 }
 
 .path {
-  border: 2px dashed grey;
+  border-bottom: 2px solid Black;
   margin-bottom: 2px;
   padding: 3px;
 }
