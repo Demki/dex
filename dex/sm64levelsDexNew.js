@@ -42,7 +42,8 @@ function removeLine() {
 function mousedown(ev) {
   if (ev.target.classList.contains("item")) {
     prev = ev.target;
-    if (ev.button === 0 && ev.shiftKey) {
+    console.log(ev);
+    if ((ev.button === 0 && ev.shiftKey) || (ev.button === 1)) {
       state = 'connecting';
       createLine(ev);
     }
@@ -58,7 +59,7 @@ function mousemove(ev) {
 function mouseup(ev) {
   if (state === 'connecting') {
     removeLine();
-    if (!ev.shiftKey) state = 'none';
+    if (ev.button !== 1 && !ev.shiftKey) state = 'none';
   }
   if (ev.target.classList.contains("item")) {
     if (state !== 'connecting' && ev.target === prev) {
