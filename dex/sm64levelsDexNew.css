@@ -17,13 +17,13 @@ body {
 .path {
   border-bottom: 2px solid Black;
   margin-bottom: 2px;
-  padding: 3px;
+  padding: 3px 0px;
 }
 
 #others {
-  border-top: 2px solid grey;
+  border-top: 2px solid rgb(80,80,80);
   margin-top: 2px;
-  padding: 3px;
+  padding: 3px 0px;
 }
 
 #list, .path, #others {
