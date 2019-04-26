@@ -17,23 +17,27 @@ body {
 .path {
   border-bottom: 2px solid Black;
   margin-bottom: 2px;
-  padding: 3px 0px;
 }
 
 #others {
   border-top: 2px solid rgb(80,80,80);
   margin-top: 2px;
-  padding: 3px 0px;
 }
 
 #list, .path, #others {
   text-align: center;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(var(--minItemWidth), 1fr));
-  grid-gap: 3px;
+  grid-gap: 2px;
+  padding: 3px 0px;
 }
 
-#list>*, .path>*, #others>* {
+.item:hover {
+  border: 2px solid blue;
+  margin: 0;
+}
+
+.item {
   padding: 3px;
   display: block;
   transition: box-shadow .250s ease-in;
@@ -43,6 +47,8 @@ body {
   -ms-user-select: none;
   user-select: none;
   border: 1px solid black;
+  margin: 1px;
+  box-sizing: border-box;
 }
 
 .color1 {
