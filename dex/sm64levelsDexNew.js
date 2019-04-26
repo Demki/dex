@@ -42,7 +42,6 @@ function removeLine() {
 function mousedown(ev) {
   if (ev.target.classList.contains("item")) {
     prev = ev.target;
-    console.log(ev);
     if ((ev.button === 0 && ev.shiftKey) || (ev.button === 1)) {
       state = 'connecting';
       createLine(ev);
@@ -103,7 +102,7 @@ function mouseup(ev) {
 
         // } 
         if (endInd !== -1) {
-          
+
         } else {
           const currentStartPath = prev.parentElement;
           currentStartPath.dataset.looping = "no";
@@ -112,17 +111,16 @@ function mouseup(ev) {
             newPath.classList.add("path");
             newPath.dataset.looping = "no";
             newPath.append(...Array.from(currentStartPath.children).slice(startInd + 1));
-            if (newPath.children.length === 1) {
-              const child = newPath.children[0];
-              child.dataset.pathInd = -1;
-              document.getElementById("list").append(newPath.children[0]);
+            if (newPath.children.length <= 1) {
+              Array.from(newPath.children).forEach((x) => x.dataset.pathInd = -1);
+
+              document.getElementById("list").append(...newPath.children);
               newPath.remove();
               newPath = null;
-            }
-            else {
+            } else {
               Array.from(newPath.children).forEach((x, i) => x.dataset.pathInd = i);
             }
-            if(newPath) document.getElementById("content").insertBefore(newPath, currentStartPath);
+            if (newPath) document.getElementById("content").insertBefore(newPath, currentStartPath);
           }
           currentStartPath.append(ev.target);
           ev.target.dataset.pathInd = currentStartPath.children.length - 1;
@@ -132,7 +130,24 @@ function mouseup(ev) {
         if (ev.target === prev) {
 
         } else if (endInd !== -1) {
+          const endPath = ev.target.parentElement;
+          let newPath = document.createElement("div");
+          newPath.classList.add("path");
+          newPath.dataset.looping = "no";
+          newPath.append(...Array.from(endPath.children).slice(0, endInd));
+          endPath.insertBefore(prev, ev.target);
+          Array.from(endPath.children).forEach((x, i) => x.dataset.pathInd = i);
 
+          if (newPath.children.length <= 1) {
+            Array.from(newPath.children).forEach((x) => x.dataset.pathInd = -1);
+
+            document.getElementById("list").append(...newPath.children);
+            newPath.remove();
+            newPath = null;
+          } else {
+            Array.from(newPath.children).forEach((x, i) => x.dataset.pathInd = i);
+          }
+          if (newPath) document.getElementById("content").insertBefore(newPath, endPath);
         } else {
           const listEl = prev.parentElement;
           const newPath = document.createElement("div");
