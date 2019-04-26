@@ -42,7 +42,7 @@ function removeLine() {
 function mousedown(ev) {
   if (ev.target.classList.contains("item")) {
     prev = ev.target;
-    if ((ev.button === 0 && ev.shiftKey) || (ev.button === 1)) {
+    if (((ev.button === 0 && ev.shiftKey) || (ev.button === 1)) && !ev.target.classList.contains('nocon')) {
       state = 'connecting';
       createLine(ev);
     }
@@ -56,17 +56,19 @@ function mousemove(ev) {
 }
 
 function mouseup(ev) {
-  if (state === 'connecting') {
+  let prevState = state;
+  state = 'none';
+  if (prevState === 'connecting') {
     removeLine();
-    if (ev.button !== 1 && !ev.shiftKey) state = 'none';
+    if (ev.button !== 1 && !ev.shiftKey) prevState = 'none';
+    if (ev.target.classList.contains('nocon')) prevState = 'none';
   }
   if (ev.target.classList.contains("item")) {
-    if (state !== 'connecting' && ev.target === prev) {
+    if (prevState !== 'connecting' && ev.target === prev) {
       if (ev.button === 0) mark('1')(ev);
       if (ev.button === 2) mark('2')(ev);
     }
-    else if (state === 'connecting') {
-      state = 'none';
+    else if (prevState === 'connecting') {
 
       //...put the elements in a corresponding path
       const startInd = Number.parseInt(prev.dataset.pathInd);
