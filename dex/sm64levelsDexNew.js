@@ -75,34 +75,6 @@ function mouseup(ev) {
       const endInd = Number.parseInt(ev.target.dataset.pathInd);
 
       if (startInd !== -1) {
-        // if (ev.target === prev) {
-        //   // unmark current path as looping if it is and fix it, move element to a new path, mark that path as looping
-        //   const currentStartPath = prev.parentElement;
-        //   const newPath = document.createElement("div");
-        //   newPath.classList.add("path");
-        //   if (currentStartPath.dataset.looping === "looping") {
-        //     for (let i = currentStartPath.children.length - 1; i > startInd; --i) {
-        //       currentStartPath.insertBefore(currentStartPath.children[i], currentStartPath.children[0]);
-        //     }
-        //     newPath.dataset.looping = "looping";
-        //     newPath.append(prev);
-        //     document.getElementById("content").insertBefore(currentStartPath, newPath);
-        //     currentStartPath.dataset.looping = "no";
-        //   } else {
-        //     newPath.dataset.looping = "no";
-        //     newPath.append(Array.from(currentStartPath.children).slice(startInd+1));
-        //     document.getElementById("content").insertBefore(currentStartPath, newPath);
-        //     const otherNewPath = document.createElement("div");
-        //     otherNewPath.dataset.looping = "looping";
-        //     otherNewPath.classList.add("path");
-        //     otherNewPath.append(prev);
-        //     prev.pathInd = 0;
-        //     document.getElementById("content").insertBefore(currentStartPath, otherNewPath);
-        //     currentStartPath.dataset.looping = "no";
-        //     fixIndices(currentStartPath);
-        //   }
-
-        // } 
         if (endInd !== -1) {
 
         } else {
