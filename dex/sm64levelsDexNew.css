@@ -12,6 +12,9 @@ body {
   resize: both;
   overflow: auto;
   counter-reset: picked1 picked2;
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 3px;
 }
 
 .path {
@@ -24,7 +27,15 @@ body {
   margin-top: 2px;
 }
 
-#list, .path, #others {
+#main {
+  border-right: 2px solid green;
+}
+
+#copy {
+  border-left: 2px solid green;
+}
+
+#list, .path, #others, #copy {
   text-align: center;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(var(--minItemWidth), 1fr));

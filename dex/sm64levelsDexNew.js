@@ -1,12 +1,19 @@
 function mark(v) {
   return (ev) => {
-    const target = ev.target;
-    const mark = target.dataset.mark;
-    const newMark = target.dataset.mark === v ? '0' : v;
-    if (!target.classList.replace(`color${mark}`, `color${newMark}`)) {
-      target.classList.add(`color${newMark}`);
+    m(ev.target);
+    if ('for' in ev.target.dataset) {
+      m(document.getElementById(ev.target.dataset.for));
+    } else if ('copy' in ev.target.dataset) {
+      m(document.getElementById(ev.target.dataset.copy));
     }
-    target.dataset.mark = newMark;
+    function m(target) {
+      const mark = target.dataset.mark;
+      const newMark = target.dataset.mark === v ? '0' : v;
+      if (!target.classList.replace(`color${mark}`, `color${newMark}`)) {
+        target.classList.add(`color${newMark}`);
+      }
+      target.dataset.mark = newMark;
+    }
   }
 }
 
@@ -41,7 +48,7 @@ function removeLine() {
 
 function mousedown(ev) {
   if (ev.target.classList.contains("item")) {
-    prev = ev.target;
+    prev = 'for' in ev.target.dataset ? document.getElementById(ev.target.dataset.for) : ev.target;
     if (((ev.button === 0 && ev.shiftKey) || (ev.button === 1)) && !ev.target.classList.contains('nocon')) {
       state = 'connecting';
       createLine(ev);
@@ -58,13 +65,14 @@ function mousemove(ev) {
 function mouseup(ev) {
   let prevState = state;
   state = 'none';
+  const target = 'for' in ev.target.dataset ? document.getElementById(ev.target.dataset.for) : ev.target;
   if (prevState === 'connecting') {
     removeLine();
     if (ev.button !== 1 && !ev.shiftKey) prevState = 'none';
-    if (ev.target.classList.contains('nocon')) prevState = 'none';
+    if (target.classList.contains('nocon')) prevState = 'none';
   }
-  if (ev.target.classList.contains("item")) {
-    if (prevState !== 'connecting' && ev.target === prev) {
+  if (target.classList.contains("item")) {
+    if (prevState !== 'connecting' && target === prev) {
       if (ev.button === 0) mark('1')(ev);
       if (ev.button === 2) mark('2')(ev);
     }
@@ -72,16 +80,16 @@ function mouseup(ev) {
 
       //...put the elements in a corresponding path
       const startInd = Number.parseInt(prev.dataset.pathInd);
-      const endInd = Number.parseInt(ev.target.dataset.pathInd);
+      const endInd = Number.parseInt(target.dataset.pathInd);
 
       if (startInd !== -1) {
         if (endInd !== -1) {
-          if (prev.parentElement === ev.target.parentElement) {
+          if (prev.parentElement === target.parentElement) {
 
           } else {
             const currentStartPath = prev.parentElement;
             currentStartPath.dataset.looping = "no";
-            const endPath = ev.target.parentElement;
+            const endPath = target.parentElement;
             endPath.dataset.looping = "no";
             let newPath = document.createElement("div");
             newPath.classList.add("path");
@@ -124,23 +132,23 @@ function mouseup(ev) {
             } else {
               Array.from(newPath.children).forEach((x, i) => x.dataset.pathInd = i);
             }
-            if (newPath) document.getElementById("content").insertBefore(newPath, currentStartPath);
+            if (newPath) currentStartPath.parentElement.insertBefore(newPath, currentStartPath);
           }
-          currentStartPath.append(ev.target);
-          ev.target.dataset.pathInd = currentStartPath.children.length - 1;
+          currentStartPath.append(target);
+          target.dataset.pathInd = currentStartPath.children.length - 1;
         }
       }
       else {
-        if (ev.target === prev) {
+        if (target === prev) {
 
         } else if (endInd !== -1) {
-          const endPath = ev.target.parentElement;
+          const endPath = target.parentElement;
           endPath.dataset.looping = "no";
           let newPath = document.createElement("div");
           newPath.classList.add("path");
           newPath.dataset.looping = "no";
           newPath.append(...Array.from(endPath.children).slice(0, endInd));
-          endPath.insertBefore(prev, ev.target);
+          endPath.insertBefore(prev, target);
           Array.from(endPath.children).forEach((x, i) => x.dataset.pathInd = i);
 
           if (newPath.children.length <= 1) {
@@ -152,15 +160,15 @@ function mouseup(ev) {
           } else {
             Array.from(newPath.children).forEach((x, i) => x.dataset.pathInd = i);
           }
-          if (newPath) document.getElementById("content").insertBefore(newPath, endPath);
+          if (newPath) endPath.parentElement.insertBefore(newPath, endPath);
         } else {
           const listEl = prev.parentElement;
           const newPath = document.createElement("div");
           newPath.classList.add("path");
           newPath.dataset.looping = "no";
-          newPath.append(prev, ev.target);
+          newPath.append(prev, target);
           Array.from(newPath.children).forEach((x, i) => x.dataset.pathInd = i);
-          document.getElementById("content").insertBefore(newPath, listEl);
+          listEl.parentElement.insertBefore(newPath, listEl);
         }
       }
     }
@@ -179,17 +187,34 @@ window.addEventListener("load", () => {
     }
   });
 
+  const copyEl = document.getElementById("copy");
+  let i = 0;
   for (const child of document.getElementById("list").children) {
     child.classList.add("item");
     child.classList.add("color0");
+    const copy = child.cloneNode(true);
+    child.id = child.innerText + i;
+    copy.id = child.id + 'copy';
+    i++;
     child.dataset.mark = '0';
     child.dataset.pathInd = '-1';
+    copy.dataset.for = child.id;
+    child.dataset.copy = copy.id;
+    copyEl.append(copy);
   }
 
   for (const child of document.getElementById("others").children) {
+    child.classList.add("nocon");
     child.classList.add("item");
     child.classList.add("color0");
+    const copy = child.cloneNode(true);
+    child.id = child.innerText + i;
+    copy.id = child.id + 'copy';
+    i++;
     child.dataset.mark = '0';
     child.dataset.pathInd = '-1';
+    copy.dataset.for = child.id;
+    child.dataset.copy = copy.id;
+    copyEl.append(copy);
   }
 });
