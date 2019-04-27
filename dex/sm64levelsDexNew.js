@@ -1,3 +1,5 @@
+// this whole thing is an ugly hack and needs to be refactored some day
+
 function mark(v) {
   return (ev) => {
     m(ev.target);
@@ -28,7 +30,7 @@ function createLine(ev) {
 
   dragLine.startX = startX;
   dragLine.startY = startY;
-  gEl.innerHTML = `<path/>`
+  gEl.innerHTML = `<path/>`;
   dragLine.element = gEl.children[0];
   updateLine(ev);
 }
