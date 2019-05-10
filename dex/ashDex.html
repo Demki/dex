@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Ash dex</title>
+  <style>
+    #content {
+      width: 230px;
+      height: 230px;
+      padding: 10px;
+      border: 1px solid grey;
+      resize: both;
+      overflow: auto;
+    }
+
+    #list {
+      text-align: center;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
+      grid-gap: 3px;
+      counter-reset: ucount;
+    }
+
+    #list input {
+      display: none;
+    }
+
+    #list label {
+      display: block;
+      transition: box-shadow .250s ease-in;
+    }
+
+    input:checked~label {
+      counter-increment: ucount;
+      box-shadow: inset 0 0 0 100px red;
+      font-weight: bold;
+    }
+
+    #list>div {
+      cursor: default;
+      -moz-user-select: none;
+      -webkit-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      border: 1px solid black;
+      display: grid;
+      grid-template-rows: 1fr auto;
+    }
+
+    #list label img {
+      width: 24px;
+      height: 24px;
+      margin-top: 2px;
+    }
+
+    #count {
+      margin-top: 1px;
+    }
+
+    #x::after {
+      content: counter(ucount);
+    }
+  </style>
+</head>
+
+<body>
+  <div id="content">
+    <div id="list">
+      <div><input type="checkbox" id="Blue_Flute"><label for="Blue_Flute">
+          <img src="ashes/Blue_Flute.png" alt="Blue_Flute" />
+          <div>Blue Flute</div>
+        </label></div>
+      <div><input type="checkbox" id="Red_Flute"><label for="Red_Flute">
+          <img src="ashes/Red_Flute.png" alt="Red_Flute" />
+          <div>Red Flute</div>
+        </label></div>
+      <div><input type="checkbox" id="Yellow_Flute"><label for="Yellow_Flute">
+          <img src="ashes/Yellow_Flute.png" alt="Yellow_Flute" />
+          <div>Yellow Flute</div>
+        </label></div>
+      <div><input type="checkbox" id="Black_Flute"><label for="Black_Flute">
+          <img src="ashes/Black_Flute.png" alt="Black_Flute" />
+          <div>Black Flute</div>
+        </label></div>
+      <div><input type="checkbox" id="White_Flute"><label for="White_Flute">
+          <img src="ashes/White_Flute.png" alt="White_Flute" />
+          <div>White Flute</div>
+        </label></div>
+      <div><input type="checkbox" id="PrettyChair"><label for="PrettyChair">
+          <img src="ashes/PrettyChair.png" alt="PrettyChair" />
+          <div>Pretty Chair</div>
+        </label></div>
+        <div><input type="checkbox" id="PrettyDesk"><label for="PrettyDesk">
+          <img src="ashes/PrettyDesk.png" alt="PrettyDesk" />
+          <div>Pretty Desk</div>
+        </label></div>
+    </div>
+    <div id="count">#: <span id="x"></span></div>
+  </div>
+
+</body>
+
+</html>
