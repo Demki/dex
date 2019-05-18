@@ -89,3 +89,7 @@ body {
 #x2::after {
   content: counter(picked2);
 }
+
+div[data-looping^="yes"]::after {
+  content: "↩";
+}

@@ -87,12 +87,13 @@ function mouseup(ev) {
       if (startInd !== -1) {
         if (endInd !== -1) {
           if (prev.parentElement === target.parentElement) {
-
+            if(prev.nextElementSibling === null && target.previousElementSibling === null) {
+              prev.parentElement.dataset.looping = "yes";
+            }
           } else {
             const currentStartPath = prev.parentElement;
             currentStartPath.dataset.looping = "no";
-            const endPath = target.parentElement;
-            endPath.dataset.looping = "no";
+            
             let newPath = document.createElement("div");
             newPath.classList.add("path");
             newPath.dataset.looping = "no";
@@ -108,6 +109,8 @@ function mouseup(ev) {
             }
             if (newPath) document.getElementById("content").insertBefore(newPath, currentStartPath);
 
+            const endPath = target.parentElement;
+            endPath.dataset.looping = "no";
             currentStartPath.append(...Array.from(endPath.children).slice(endInd));
             Array.from(currentStartPath.children).forEach((x, i) => x.dataset.pathInd = i);
             if (endPath.children.length <= 1) {
@@ -195,8 +198,8 @@ window.addEventListener("load", () => {
     child.classList.add("item");
     child.classList.add("color0");
     const copy = child.cloneNode(true);
-    child.id = child.innerText + i;
-    copy.id = child.id + 'copy';
+    child.id = "item" + i;
+    copy.id = child.id + "-copy";
     i++;
     child.dataset.mark = '0';
     child.dataset.pathInd = '-1';
@@ -210,8 +213,8 @@ window.addEventListener("load", () => {
     child.classList.add("item");
     child.classList.add("color0");
     const copy = child.cloneNode(true);
-    child.id = child.innerText + i;
-    copy.id = child.id + 'copy';
+    child.id = "item" + i;
+    copy.id = child.id + "-copy";
     i++;
     child.dataset.mark = '0';
     child.dataset.pathInd = '-1';
