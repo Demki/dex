@@ -19,6 +19,7 @@ function mark(v) {
   }
 }
 
+let dWindow = null;
 let state = 'none';
 let prev = null;
 let dragLine = {};
@@ -81,7 +82,7 @@ function mouseup(ev) {
       document.getElementById("main").insertBefore(newPath, prev.parentElement);
       newPath.append(prev);
       prev.dataset.pathInd = 0;
-      
+
     }
     else if (prevState !== 'connecting' && target === prev) {
       if (ev.button === 0) mark('1')(ev);
@@ -187,6 +188,29 @@ function mouseup(ev) {
       }
     }
   }
+  updateWindow();
+}
+
+function updateWindow() {
+  if (dWindow && !dWindow.closed) {
+    dWindow.document.body.innerHTML = "<div style='overflow-wrap: break-word'>" +
+     Array.from(document.getElementById("main").children).filter(x => x.classList.contains("path")).map((p) => {
+      let result = Array.from(p.children).map(c => c.dataset.short).join("<wbr>→<wbr>");
+      if (p.dataset.looping === "yes") result += "↩";
+      return result;
+    }).join(" | ")
+    + "</div>";
+  }
+}
+
+function openWindow() {
+  if (!dWindow || dWindow.closed) {
+    dWindow = window.open("", "display window", "width=300,height=300");
+  }
+  else {
+    dWindow.focus();
+  }
+  updateWindow();
 }
 
 window.addEventListener("load", () => {
@@ -231,4 +255,5 @@ window.addEventListener("load", () => {
     child.dataset.copy = copy.id;
     copyEl.append(copy);
   }
+  document.getElementById("displayBtn").addEventListener("click", openWindow);
 });
