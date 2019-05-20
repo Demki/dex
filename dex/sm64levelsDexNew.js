@@ -195,7 +195,7 @@ function updateWindow() {
   if (dWindow && !dWindow.closed) {
     dWindow.document.body.innerHTML = "<div style='overflow-wrap: break-word'>" +
      Array.from(document.getElementById("main").children).filter(x => x.classList.contains("path")).map((p) => {
-      let result = Array.from(p.children).map(c => c.dataset.short).join("<wbr>→<wbr>");
+      let result = Array.from(p.children).map(c => c.dataset.short + (c.dataset.mark === '1' ? '*' : c.dataset.mark === '2' ? '(*)' : '')).join("<wbr>→<wbr>");
       if (p.dataset.looping === "yes") result += "↩";
       return result;
     }).join(" | ")
