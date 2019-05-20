@@ -74,7 +74,16 @@ function mouseup(ev) {
     if (target.classList.contains('nocon')) prevState = 'none';
   }
   if (target.classList.contains("item")) {
-    if (prevState !== 'connecting' && target === prev) {
+    if (ev.ctrlKey && target === prev && prev.dataset.pathInd === '-1' && !target.classList.contains('nocon')) {
+      let newPath = document.createElement("div");
+      newPath.classList.add("path");
+      newPath.dataset.looping = "yes";
+      document.getElementById("main").insertBefore(newPath, prev.parentElement);
+      newPath.append(prev);
+      prev.dataset.pathInd = 0;
+      
+    }
+    else if (prevState !== 'connecting' && target === prev) {
       if (ev.button === 0) mark('1')(ev);
       if (ev.button === 2) mark('2')(ev);
     }
@@ -87,13 +96,13 @@ function mouseup(ev) {
       if (startInd !== -1) {
         if (endInd !== -1) {
           if (prev.parentElement === target.parentElement) {
-            if(prev.nextElementSibling === null && target.previousElementSibling === null) {
+            if (prev.nextElementSibling === null && target.previousElementSibling === null) {
               prev.parentElement.dataset.looping = "yes";
             }
           } else {
             const currentStartPath = prev.parentElement;
             currentStartPath.dataset.looping = "no";
-            
+
             let newPath = document.createElement("div");
             newPath.classList.add("path");
             newPath.dataset.looping = "no";
@@ -107,7 +116,7 @@ function mouseup(ev) {
             } else {
               Array.from(newPath.children).forEach((x, i) => x.dataset.pathInd = i);
             }
-            if (newPath) document.getElementById("content").insertBefore(newPath, currentStartPath);
+            if (newPath) document.getElementById("main").insertBefore(newPath, currentStartPath);
 
             const endPath = target.parentElement;
             endPath.dataset.looping = "no";
