@@ -13,7 +13,7 @@ body {
   overflow: auto;
   counter-reset: picked1 picked2;
   display:grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   grid-gap: 3px;
 }
 
@@ -27,15 +27,8 @@ body {
   margin-top: 2px;
 }
 
-#main {
-  border-right: 2px solid green;
-}
 
-#copy {
-  border-left: 2px solid green;
-}
-
-#list, .path, #others, #copy {
+#list, .path, #others {
   text-align: center;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(var(--minItemWidth), 1fr));

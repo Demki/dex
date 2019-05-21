@@ -3,11 +3,7 @@
 function mark(v) {
   return (ev) => {
     m(ev.target);
-    if ('for' in ev.target.dataset) {
-      m(document.getElementById(ev.target.dataset.for));
-    } else if ('copy' in ev.target.dataset) {
-      m(document.getElementById(ev.target.dataset.copy));
-    }
+    
     function m(target) {
       const mark = target.dataset.mark;
       const newMark = target.dataset.mark === v ? '0' : v;
@@ -51,7 +47,7 @@ function removeLine() {
 
 function mousedown(ev) {
   if (ev.target.classList.contains("item")) {
-    prev = 'for' in ev.target.dataset ? document.getElementById(ev.target.dataset.for) : ev.target;
+    prev = ev.target;
     if (((ev.button === 0 && ev.shiftKey) || (ev.button === 1)) && !ev.target.classList.contains('nocon')) {
       state = 'connecting';
       createLine(ev);
@@ -68,7 +64,7 @@ function mousemove(ev) {
 function mouseup(ev) {
   let prevState = state;
   state = 'none';
-  const target = 'for' in ev.target.dataset ? document.getElementById(ev.target.dataset.for) : ev.target;
+  const target = ev.target;
   if (prevState === 'connecting') {
     removeLine();
     if (ev.button !== 1 && !ev.shiftKey) prevState = 'none';
@@ -225,35 +221,24 @@ window.addEventListener("load", () => {
     }
   });
 
-  const copyEl = document.getElementById("copy");
   let i = 0;
   for (const child of document.getElementById("list").children) {
     child.classList.add("item");
     child.classList.add("color0");
-    const copy = child.cloneNode(true);
     child.id = "item" + i;
-    copy.id = child.id + "-copy";
     i++;
     child.dataset.mark = '0';
     child.dataset.pathInd = '-1';
-    copy.dataset.for = child.id;
-    child.dataset.copy = copy.id;
-    copyEl.append(copy);
   }
 
   for (const child of document.getElementById("others").children) {
     child.classList.add("nocon");
     child.classList.add("item");
     child.classList.add("color0");
-    const copy = child.cloneNode(true);
     child.id = "item" + i;
-    copy.id = child.id + "-copy";
     i++;
     child.dataset.mark = '0';
     child.dataset.pathInd = '-1';
-    copy.dataset.for = child.id;
-    child.dataset.copy = copy.id;
-    copyEl.append(copy);
   }
   document.getElementById("displayBtn").addEventListener("click", openWindow);
 });
