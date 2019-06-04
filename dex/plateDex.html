@@ -7,7 +7,7 @@
   <style>
     #content {
       width: 360px;
-      height: 210px;
+      height: 250px;
       padding: 10px;
       border: 1px solid grey;
       resize: both;
@@ -48,8 +48,11 @@
       grid-template-rows: 1fr auto;
     }
 
-    #x::after {
+    #x {
       font-size: 3em;
+    }
+
+    #x::after {
       content: counter(ucount);
     }
   </style>
