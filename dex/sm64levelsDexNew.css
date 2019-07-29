@@ -1,24 +1,24 @@
 body {
-  --background: white;
-  --foreground: black;
-  --midColor: grey;
-  --hoverColor: blue;
-  --buttonBGColor: #e1e1e1;
-  --arrowStartColor: rgb(131, 131, 4);
-  --color1: red;
-  --color2: green;
+  --background: hsl(0, 0%, 100%);
+  --foreground: hsl(0, 0%, 0%);
+  --midColor: hsl(0, 0%, 50%);
+  --hoverColor: hsl(240, 100%, 25%);
+  --buttonBGColor: hsl(0, 0%, 88%);
+  --arrowStartColor: hsl(60, 100%, 26%);
+  --color1: hsl(0, 100%, 50%);
+  --color2: hsl(120, 100%, 25%);
   --minItemWidth: 200px;
 }
 
 body.nightMode {
-  --background: #18161f;
-  --foreground: #bab6c2;
-  --midColor: rgb(83, 82, 82);
-  --hoverColor: rgb(51, 51, 155);
-  --buttonBGColor: #363636;
-  --arrowStartColor: yellow;
-  --color1: rgb(219, 27, 27);
-  --color2: rgb(30, 126, 30);
+  --background: hsl(260, 9%, 10%);
+  --foreground: hsl(260, 4%, 74%);
+  --midColor: hsl(260, 4%, 30%);
+  --hoverColor: hsl(240, 50%, 50%);
+  --buttonBGColor: hsl(260, 9%, 15%);
+  --arrowStartColor: hsl(60, 100%, 50%);
+  --color1: hsl(0, 78%, 48%);
+  --color2: hsl(120, 78%, 31%);
 }
 
 body {
