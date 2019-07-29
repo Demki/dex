@@ -19,6 +19,7 @@ let dWindow = null;
 let state = 'none';
 let prev = null;
 let dragLine = {};
+let nightMode = false;
 
 function createLine(ev) {
   const startX = ev.layerX - ev.offsetX + ev.target.offsetWidth / 2;
@@ -241,4 +242,20 @@ window.addEventListener("load", () => {
     child.dataset.pathInd = '-1';
   }
   document.getElementById("displayBtn").addEventListener("click", openWindow);
+  nightMode = localStorage.getItem("nightMode") === "true";
+  if(nightMode) document.body.classList.add("nightMode");
+  document.getElementById("nightBtn").addEventListener("click", toggleNightMode);
 });
+
+function toggleNightMode() {
+  if(nightMode) {
+    nightMode = false;
+    localStorage.setItem("nightMode", nightMode);
+    document.body.classList.remove("nightMode");
+  }
+  else {
+    nightMode = true;
+    localStorage.setItem("nightMode", nightMode);
+    document.body.classList.add("nightMode");
+  }
+}
