@@ -112,11 +112,11 @@ body {
 }
 
 #count1 {
-  color: var(--color1);
+  color: var(--color1BG);
 }
 
 #count2 {
-  color: var(--color2);
+  color: var(--color2BG);
 }
 
 #x1::after {
