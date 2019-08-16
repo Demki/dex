@@ -22,7 +22,7 @@
       counter-reset: ucount;
     }
 
-    #list input {
+    #list input[type=checkbox] {
       display: none;
     }
 
@@ -56,6 +56,43 @@
       content: counter(ucount);
     }
   </style>
+  <script src="prng.js"></script>
+  <script>
+    let rand = null;
+    let orig = null;
+    function randomize(list) {
+      const arr = Array.from(orig);
+      if (rand) {
+        shuffle(rand, arr);
+      }
+      arr.forEach(x => list.removeChild(x));
+      arr.forEach(x => list.appendChild(x));
+    }
+
+    window.addEventListener("load", () => {
+      const seedText = document.getElementById("seedText");
+      const list = document.getElementById("list");
+      orig = Array.from(list.children);
+      document.getElementById("genSeedButton").addEventListener("click", () => {
+        const seed = generateId(10);
+        const seedF = xmur3(seed);
+        rand = sfc32(seedF(), seedF(), seedF(), seedF());
+        seedText.value = seed;
+        randomize(list);
+      });
+      document.getElementById("setSeedButton").addEventListener("click", () => {
+        const seed = seedText.value;
+        if (seed) {
+          const seedF = xmur3(seed);
+          rand = sfc32(seedF(), seedF(), seedF(), seedF());
+        }
+        else {
+          rand = null;
+        }
+        randomize(list);
+      });
+    });
+  </script>
 </head>
 
 <body>
@@ -121,7 +158,11 @@
     </div>
     <div id="count">#: <span id="x"></span></div>
   </div>
-
+  <div>
+    Seed: <input type="text" id="seedText" />
+    <input type="button" id="genSeedButton" value="Random Seed" />
+    <input type="button" id="setSeedButton" value="Set seed" />
+  </div>
 </body>
 
 </html>
