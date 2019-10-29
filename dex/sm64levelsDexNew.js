@@ -3,7 +3,6 @@
 function mark(v) {
   return (ev) => {
     m(ev.target);
-    
     function m(target) {
       const mark = target.dataset.mark;
       const newMark = target.dataset.mark === v ? '0' : v;
@@ -20,23 +19,24 @@ let state = 'none';
 let prev = null;
 let dragLine = {};
 let nightMode = false;
+let shortMode = false;
 
-function createLine(ev) {
-  const startX = ev.layerX - ev.offsetX + ev.target.offsetWidth / 2;
-  const startY = ev.layerY - ev.offsetY + ev.target.offsetHeight / 2;
+function createLine({layerX, layerY, offsetX, offsetY, target: {offsetWidth, offsetHeight}}) {
+  const startX = layerX - offsetX + offsetWidth / 2;
+  const startY = layerY - offsetY + offsetHeight / 2;
   const gEl = document.getElementById('connectingLine');
 
   dragLine.startX = startX;
   dragLine.startY = startY;
   gEl.innerHTML = `<path/>`;
   dragLine.element = gEl.children[0];
-  updateLine(ev);
+  updateLine(layerX, layerY);
 }
 
-function updateLine(ev) {
+function updateLine(x,y) {
   if (dragLine.element) {
-    dragLine.endX = ev.layerX;
-    dragLine.endY = ev.layerY;
+    dragLine.endX = x;
+    dragLine.endY = y;
     dragLine.element.setAttribute('d', `M${dragLine.startX},${dragLine.startY} L${dragLine.endX},${dragLine.endY}`);
   }
 }
@@ -58,7 +58,7 @@ function mousedown(ev) {
 
 function mousemove(ev) {
   if (state === 'connecting') {
-    updateLine(ev);
+    updateLine(ev.layerX, ev.layerY);
   }
 }
 
@@ -241,10 +241,17 @@ window.addEventListener("load", () => {
     child.dataset.mark = '0';
     child.dataset.pathInd = '-1';
   }
-  document.getElementById("displayBtn").addEventListener("click", openWindow);
+  const displayBtn = document.getElementById("displayBtn");  
+  if(displayBtn) displayBtn.addEventListener("click", openWindow);
+  const nightBtn = document.getElementById("nightBtn");
+  if(nightBtn) nightBtn.addEventListener("click", toggleNightMode);
+  const shortBtn = document.getElementById("shortBtn");
+  if(shortBtn) shortBtn.addEventListener("click", toggleShort);
+
   nightMode = localStorage.getItem("nightMode") === "true";
+  shortMode = localStorage.getItem("shortMode") === "true";
   if(nightMode) document.body.classList.add("nightMode");
-  document.getElementById("nightBtn").addEventListener("click", toggleNightMode);
+  setShort(shortMode);
 });
 
 function toggleNightMode() {
@@ -258,4 +265,35 @@ function toggleNightMode() {
     localStorage.setItem("nightMode", nightMode);
     document.body.classList.add("nightMode");
   }
+}
+
+function setShort(sm) {
+  
+  for (const child of [...document.getElementById("main").children].filter(x => !x.id.startsWith("count")).flatMap(x => [...x.children])) {
+    if(!("long" in child.dataset)) {
+      child.dataset.long = child.innerText;
+    }
+    if(!("short" in child.dataset)) {
+      child.dataset.short = child.innerText;
+    }
+    if(sm) {
+      child.innerText = child.dataset.short;
+      document.body.style.setProperty("--minItemWidth", "100px");
+    } else {
+      child.innerText = child.dataset.long;
+      document.body.style.setProperty("--minItemWidth", "200px");
+    }  
+  }
+}
+
+function toggleShort() {
+  if(shortMode) {
+    shortMode = false;
+    localStorage.setItem("shortMode", shortMode);
+  }
+  else {
+    shortMode = true;
+    localStorage.setItem("shortMode", shortMode);
+  }
+  setShort(shortMode);
 }
