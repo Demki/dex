@@ -62,6 +62,78 @@ function mousemove(ev) {
   }
 }
 
+function isPath(p) {
+  return p.classList.contains("path");
+}
+
+function createPath(startPath, ...ls) {
+  const newPath = document.createElement("div");
+  newPath.classList.add("path");
+  newPath.dataset.looping = "no";
+  newPath.append(...ls);
+  addPath(newPath, startPath);
+  return newPath;
+}
+
+function addPath(newPath, startPath) {
+  const main = document.getElementById("main");
+  const before = startPath ? startPath : document.getElementById("list");
+  main.insertBefore(newPath, before);
+}
+
+function dumpToList(...ls) {
+  document.getElementById("list").append(...ls);
+}
+
+function connect(target) {
+
+  let prevPath = prev.parentElement;
+  const targetPath = target.parentElement;
+
+  if(prevPath === targetPath && isPath(prevPath)
+    && prev.nextElementSibling === null && target.previousElementSibling === null)
+  {
+    prevPath.dataset.looping = "yes";
+    return;
+  }
+
+  if(!isPath(prevPath)) {
+    prevPath = createPath(null, prev);
+  }
+
+  prevPath.dataset.looping = "no";
+
+  if(prev.nextElementSibling !== null) {
+    const afterPrev = [...dropUntilExc(x => x === prev, prevPath.children)];
+    if(afterPrev.length > 1) {
+      createPath(prevPath, ...afterPrev);
+    }
+    else {
+      dumpToList(...afterPrev);
+    }
+  }
+
+  if(!isPath(targetPath)) {
+    prevPath.append(target);
+    return;
+  }
+
+  targetPath.dataset.looping = "no";
+
+  if(target.previousElementSibling !== null) {
+    const beforeTarget = [...takeUntilExc(x => x === target, targetPath.children)];
+    if(beforeTarget.length <= 1) {
+      dumpToList(...beforeTarget);
+    }
+  }
+
+  prevPath.append(...dropUntilInc(x => x === target, targetPath.children));
+  if(prevPath.length === 0) prevPath.remove();
+  else {
+    addPath(prevPath, null);
+  }
+}
+
 function mouseup(ev) {
   let prevState = state;
   state = 'none';
@@ -72,117 +144,19 @@ function mouseup(ev) {
     if (target.classList.contains('nocon')) prevState = 'none';
   }
   if (target.classList.contains("item")) {
-    if (ev.ctrlKey && target === prev && prev.dataset.pathInd === '-1' && !target.classList.contains('nocon')) {
+    if (ev.ctrlKey && target === prev && !isPath(target.parentElement) && !target.classList.contains('nocon')) {
       let newPath = document.createElement("div");
       newPath.classList.add("path");
       newPath.dataset.looping = "yes";
       document.getElementById("main").insertBefore(newPath, prev.parentElement);
       newPath.append(prev);
-      prev.dataset.pathInd = 0;
-
     }
     else if (prevState !== 'connecting' && target === prev) {
       if (ev.button === 0) mark('1')(ev);
       if (ev.button === 2) mark('2')(ev);
     }
     else if (prevState === 'connecting') {
-
-      //...put the elements in a corresponding path
-      const startInd = Number.parseInt(prev.dataset.pathInd);
-      const endInd = Number.parseInt(target.dataset.pathInd);
-
-      if (startInd !== -1) {
-        if (endInd !== -1) {
-          if (prev.parentElement === target.parentElement) {
-            if (prev.nextElementSibling === null && target.previousElementSibling === null) {
-              prev.parentElement.dataset.looping = "yes";
-            }
-          } else {
-            const currentStartPath = prev.parentElement;
-            currentStartPath.dataset.looping = "no";
-
-            let newPath = document.createElement("div");
-            newPath.classList.add("path");
-            newPath.dataset.looping = "no";
-            newPath.append(...Array.from(currentStartPath.children).slice(startInd + 1));
-            if (newPath.children.length <= 1) {
-              Array.from(newPath.children).forEach((x) => x.dataset.pathInd = -1);
-
-              document.getElementById("list").append(...newPath.children);
-              newPath.remove();
-              newPath = null;
-            } else {
-              Array.from(newPath.children).forEach((x, i) => x.dataset.pathInd = i);
-            }
-            if (newPath) document.getElementById("main").insertBefore(newPath, currentStartPath);
-
-            const endPath = target.parentElement;
-            endPath.dataset.looping = "no";
-            currentStartPath.append(...Array.from(endPath.children).slice(endInd));
-            Array.from(currentStartPath.children).forEach((x, i) => x.dataset.pathInd = i);
-            if (endPath.children.length <= 1) {
-              Array.from(endPath.children).forEach((x) => x.dataset.pathInd = -1);
-
-              document.getElementById("list").append(...endPath.children);
-              endPath.remove();
-            }
-          }
-        } else {
-          const currentStartPath = prev.parentElement;
-          currentStartPath.dataset.looping = "no";
-          if (currentStartPath.children.length > startInd + 1) {
-            let newPath = document.createElement("div");
-            newPath.classList.add("path");
-            newPath.dataset.looping = "no";
-            newPath.append(...Array.from(currentStartPath.children).slice(startInd + 1));
-            if (newPath.children.length <= 1) {
-              Array.from(newPath.children).forEach((x) => x.dataset.pathInd = -1);
-
-              document.getElementById("list").append(...newPath.children);
-              newPath.remove();
-              newPath = null;
-            } else {
-              Array.from(newPath.children).forEach((x, i) => x.dataset.pathInd = i);
-            }
-            if (newPath) currentStartPath.parentElement.insertBefore(newPath, currentStartPath);
-          }
-          currentStartPath.append(target);
-          target.dataset.pathInd = currentStartPath.children.length - 1;
-        }
-      }
-      else {
-        if (target === prev) {
-
-        } else if (endInd !== -1) {
-          const endPath = target.parentElement;
-          endPath.dataset.looping = "no";
-          let newPath = document.createElement("div");
-          newPath.classList.add("path");
-          newPath.dataset.looping = "no";
-          newPath.append(...Array.from(endPath.children).slice(0, endInd));
-          endPath.insertBefore(prev, target);
-          Array.from(endPath.children).forEach((x, i) => x.dataset.pathInd = i);
-
-          if (newPath.children.length <= 1) {
-            Array.from(newPath.children).forEach((x) => x.dataset.pathInd = -1);
-
-            document.getElementById("list").append(...newPath.children);
-            newPath.remove();
-            newPath = null;
-          } else {
-            Array.from(newPath.children).forEach((x, i) => x.dataset.pathInd = i);
-          }
-          if (newPath) endPath.parentElement.insertBefore(newPath, endPath);
-        } else {
-          const listEl = prev.parentElement;
-          const newPath = document.createElement("div");
-          newPath.classList.add("path");
-          newPath.dataset.looping = "no";
-          newPath.append(prev, target);
-          Array.from(newPath.children).forEach((x, i) => x.dataset.pathInd = i);
-          listEl.parentElement.insertBefore(newPath, listEl);
-        }
-      }
+      connect(target);
     }
   }
   updateWindow();
@@ -229,7 +203,6 @@ window.addEventListener("load", () => {
     child.id = "item" + i;
     i++;
     child.dataset.mark = '0';
-    child.dataset.pathInd = '-1';
   }
 
   for (const child of document.getElementById("others").children) {
@@ -239,7 +212,6 @@ window.addEventListener("load", () => {
     child.id = "item" + i;
     i++;
     child.dataset.mark = '0';
-    child.dataset.pathInd = '-1';
   }
   const displayBtn = document.getElementById("displayBtn");  
   if(displayBtn) displayBtn.addEventListener("click", openWindow);
