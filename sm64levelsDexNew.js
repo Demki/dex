@@ -49,7 +49,7 @@ function removeLine() {
 function mousedown(ev) {
   if (ev.target.classList.contains("item")) {
     prev = ev.target;
-    if (((ev.button === 0 && ev.shiftKey) || (ev.button === 1)) && !ev.target.classList.contains('nocon')) {
+    if (((ev.button === 1 && ev.shiftKey) || (ev.button === 0)) && !ev.target.classList.contains('nocon')) {
       state = 'connecting';
       createLine(ev);
     }
@@ -140,7 +140,7 @@ function mouseup(ev) {
   const target = ev.target;
   if (prevState === 'connecting') {
     removeLine();
-    if (ev.button !== 1 && !ev.shiftKey) prevState = 'none';
+    if (ev.button !== 0 && !ev.shiftKey) prevState = 'none';
     if (target.classList.contains('nocon')) prevState = 'none';
   }
   if (target.classList.contains("item")) {
@@ -152,10 +152,10 @@ function mouseup(ev) {
       newPath.append(prev);
     }
     else if (prevState !== 'connecting' && target === prev) {
-      if (ev.button === 0) mark('1')(ev);
-      if (ev.button === 2) mark('2')(ev);
+      if (ev.button === 2) mark('1')(ev);
+      if (ev.button === 1) mark('2')(ev);
     }
-    else if (prevState === 'connecting') {
+    else if (prevState === 'connecting' && target !== prev) {
       connect(target);
     }
   }
