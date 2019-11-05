@@ -1,5 +1,13 @@
 // this whole thing is an ugly hack and needs to be refactored some day
 
+const LEFT_MOUSE_BUTTON   = 0;
+const MIDDLE_MOUSE_BUTTON = 1;
+const RIGHT_MOUSE_BUTTON  = 2;
+
+const CONNECT_BUTTON = LEFT_MOUSE_BUTTON;
+const MARK_1_BUTTON  = RIGHT_MOUSE_BUTTON;
+const MARK_2_BUTTON  = MIDDLE_MOUSE_BUTTON;
+
 function mark(v) {
   return (ev) => {
     m(ev.target);
@@ -49,7 +57,7 @@ function removeLine() {
 function mousedown(ev) {
   if (ev.target.classList.contains("item")) {
     prev = ev.target;
-    if (((ev.button === 1 && ev.shiftKey) || (ev.button === 0)) && !ev.target.classList.contains('nocon')) {
+    if ((ev.shiftKey || (ev.button === CONNECT_BUTTON)) && !ev.target.classList.contains('nocon')) {
       state = 'connecting';
       createLine(ev);
     }
@@ -60,6 +68,34 @@ function mousemove(ev) {
   if (state === 'connecting') {
     updateLine(ev.layerX, ev.layerY);
   }
+}
+
+function mouseup(ev) {
+  let prevState = state;
+  state = 'none';
+  const target = ev.target;
+  if (prevState === 'connecting') {
+    removeLine();
+    if (ev.button !== CONNECT_BUTTON && !ev.shiftKey) prevState = 'none';
+    if (target.classList.contains('nocon')) prevState = 'none';
+  }
+  if (target.classList.contains("item")) {
+    if (ev.ctrlKey && target === prev && !isPath(target.parentElement) && !target.classList.contains('nocon')) {
+      let newPath = document.createElement("div");
+      newPath.classList.add("path");
+      newPath.dataset.looping = "yes";
+      document.getElementById("main").insertBefore(newPath, prev.parentElement);
+      newPath.append(prev);
+    }
+    else if (prevState !== 'connecting' && target === prev) {
+      if (ev.button === MARK_1_BUTTON) mark('1')(ev);
+      if (ev.button === MARK_2_BUTTON) mark('2')(ev);
+    }
+    else if (prevState === 'connecting' && target !== prev) {
+      connect(target);
+    }
+  }
+  updateWindow();
 }
 
 function isPath(p) {
@@ -90,10 +126,12 @@ function connect(target) {
   let prevPath = prev.parentElement;
   const targetPath = target.parentElement;
 
-  if(prevPath === targetPath && isPath(prevPath)
-    && prev.nextElementSibling === null && target.previousElementSibling === null)
+  if(prevPath === targetPath && isPath(prevPath))
   {
-    prevPath.dataset.looping = "yes";
+    if(prev.nextElementSibling === null && target.previousElementSibling === null) 
+    {
+      prevPath.dataset.looping = "yes";
+    }
     return;
   }
 
@@ -132,34 +170,6 @@ function connect(target) {
   else {
     addPath(prevPath, null);
   }
-}
-
-function mouseup(ev) {
-  let prevState = state;
-  state = 'none';
-  const target = ev.target;
-  if (prevState === 'connecting') {
-    removeLine();
-    if (ev.button !== 0 && !ev.shiftKey) prevState = 'none';
-    if (target.classList.contains('nocon')) prevState = 'none';
-  }
-  if (target.classList.contains("item")) {
-    if (ev.ctrlKey && target === prev && !isPath(target.parentElement) && !target.classList.contains('nocon')) {
-      let newPath = document.createElement("div");
-      newPath.classList.add("path");
-      newPath.dataset.looping = "yes";
-      document.getElementById("main").insertBefore(newPath, prev.parentElement);
-      newPath.append(prev);
-    }
-    else if (prevState !== 'connecting' && target === prev) {
-      if (ev.button === 2) mark('1')(ev);
-      if (ev.button === 1) mark('2')(ev);
-    }
-    else if (prevState === 'connecting' && target !== prev) {
-      connect(target);
-    }
-  }
-  updateWindow();
 }
 
 function updateWindow() {
