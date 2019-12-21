@@ -166,8 +166,11 @@ function connect(target) {
   }
 
   prevPath.append(...dropUntilInc(x => x === target, targetPath.children));
-  if(prevPath.length === 0) prevPath.remove();
-  else {
+
+  if(targetPath.length === 0) targetPath.remove();
+  if(prevPath.length === 0) {
+    prevPath.remove();
+  } else {
     addPath(prevPath, null);
   }
 }
