@@ -6,8 +6,8 @@
   <title>Ash dex</title>
   <style>
     #content {
-      width: 230px;
-      height: 230px;
+      width: 280px;
+      height: 170px;
       padding: 10px;
       border: 1px solid grey;
       resize: both;
@@ -17,7 +17,7 @@
     #list {
       text-align: center;
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
       grid-gap: 3px;
       counter-reset: ucount;
     }
@@ -52,6 +52,12 @@
       width: 24px;
       height: 24px;
       margin-top: 2px;
+    }
+
+    #list label div {
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
     }
 
     #count {
