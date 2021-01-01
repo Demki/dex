@@ -62,6 +62,12 @@ body {
   margin-bottom: 2px;
 }
 
+.dpath {
+  padding-bottom: 1px;
+  border-bottom: 1px dotted var(--foreground);
+  margin-bottom: 1px;
+}
+
 #others {
   border-top: 2px solid var(--midColor);
   margin-top: 2px;

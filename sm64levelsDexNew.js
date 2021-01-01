@@ -204,12 +204,17 @@ function connect(target) {
 
 function updateWindow() {
   if (dWindow && !dWindow.closed) {
+    if(nightMode) {
+      dWindow.document.body.classList.add("nightMode");
+    } else {
+      dWindow.document.body.classList.remove("nightMode");
+    }
     dWindow.document.body.innerHTML = "<div style='overflow-wrap: break-word'>" +
       Array.from(document.getElementById("main").children).filter(x => x.classList.contains("path")).map((p) => {
         let result = Array.from(p.children).map(c => c.dataset.short + (c.dataset.mark === '1' ? '*' : c.dataset.mark === '2' ? '(*)' : '')).join("<wbr>→<wbr>");
         if (p.dataset.looping === "yes") result += "↩";
-        return result;
-      }).join(" | ")
+        return `<div class="dpath">${result}</div>`
+      }).join(" ")
       + "</div>";
   }
 }
@@ -217,6 +222,17 @@ function updateWindow() {
 function openWindow() {
   if (!dWindow || dWindow.closed) {
     dWindow = window.open("", "display window", "width=300,height=300");
+    dWindow.document.open();
+    dWindow.document.write(`<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>SM64 level dex</title>
+    <link rel="stylesheet" href="sm64levelsDexNew.css" />
+  </head>
+  <body>
+  </body>
+</html>`);
+    dWindow.document.close();
   }
   else {
     dWindow.focus();
@@ -271,6 +287,7 @@ function toggleNightMode() {
     localStorage.setItem("nightMode", nightMode);
     document.body.classList.add("nightMode");
   }
+  updateWindow();
 }
 
 function setShort(sm) {
