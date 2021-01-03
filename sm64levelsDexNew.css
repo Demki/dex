@@ -68,6 +68,19 @@ body {
   margin-bottom: 1px;
 }
 
+.hidden{
+  display: none;
+}
+
+#display {
+  height: 300px;
+  width: 200px;
+  resize: both;
+  overflow: auto;
+  padding: 10px;
+  border: 1px solid var(--midColor);
+}
+
 #others {
   border-top: 2px solid var(--midColor);
   margin-top: 2px;
