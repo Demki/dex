@@ -213,7 +213,9 @@ function updateWindow() {
 }
 
 function toggleDisplay() {
-  document.getElementById("display").classList.toggle("hidden")
+  const clist = document.getElementById("display").classList;
+  clist.toggle("hidden");
+  localStorage.setItem("displayVisible", !clist.contains("hidden"));
 }
 
 window.addEventListener("load", () => {
@@ -250,6 +252,40 @@ window.addEventListener("load", () => {
   shortMode = localStorage.getItem("shortMode") === "true";
   if (nightMode) document.body.classList.add("nightMode");
   setShort(shortMode);
+
+  if(JSON.parse(localStorage.getItem("displayVisible"))) toggleDisplay();
+
+  const displayDiv = document.getElementById("display");
+  const contentDiv = document.getElementById("content");
+
+  const displaySizeObserver = new MutationObserver(() => 
+  {
+    localStorage.setItem("displayWidth", displayDiv.style.width);
+    localStorage.setItem("displayHeight", displayDiv.style.height);
+  });
+
+  const contentSizeObserver = new MutationObserver(() => 
+  {
+    localStorage.setItem("contentWidth", contentDiv.style.width);
+    localStorage.setItem("contentHeight", contentDiv.style.height);
+  });
+
+  displaySizeObserver.observe(displayDiv, {attributes: true, attributeFilter: ["style"]});
+
+  contentSizeObserver.observe(contentDiv, {attributes: true, attributeFilter: ["style"]});
+
+  if(localStorage.getItem("displayWidth") && localStorage.getItem("displayHeight"))
+  {
+    displayDiv.style.setProperty("width", localStorage.getItem("displayWidth"));
+    displayDiv.style.setProperty("height", localStorage.getItem("displayHeight"));
+  }
+  
+  if(localStorage.getItem("contentWidth") && localStorage.getItem("contentHeight"))
+  {
+    contentDiv.style.setProperty("width", localStorage.getItem("contentWidth"));
+    contentDiv.style.setProperty("height", localStorage.getItem("contentHeight"));
+  }
+
 });
 
 function toggleNightMode() {
