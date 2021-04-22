@@ -69,7 +69,11 @@ body {
 }
 
 .hidden{
-  display: none;
+  display: none !important;
+}
+
+#toggles {
+  margin-top: 2px;
 }
 
 #display {

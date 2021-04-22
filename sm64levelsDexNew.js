@@ -27,6 +27,9 @@ let prev = null;
 let dragLine = {};
 let nightMode = false;
 let shortMode = false;
+let hiddenBitS = false;
+let hiddenOthers = false;
+let shownTips = false;
 
 function createLine({ layerX, layerY, offsetX, offsetY, target: { offsetWidth, offsetHeight } }) {
   const startX = layerX - offsetX + offsetWidth / 2;
@@ -247,11 +250,23 @@ window.addEventListener("load", () => {
   if (nightBtn) nightBtn.addEventListener("click", toggleNightMode);
   const shortBtn = document.getElementById("shortBtn");
   if (shortBtn) shortBtn.addEventListener("click", toggleShort);
+  const toggleOthersBtn = document.getElementById("toggleOthersBtn");
+  if (toggleOthersBtn) toggleOthersBtn.addEventListener("click", toggleOthers);
+  const toggleBitSBtn = document.getElementById("toggleBitSBtn");
+  if (toggleBitSBtn) toggleBitSBtn.addEventListener("click", toggleBitS);
+  const toggleTipsBtn = document.getElementById("toggleTipsBtn");
+  if (toggleTipsBtn) toggleTipsBtn.addEventListener("click", toggleTips);
 
   nightMode = localStorage.getItem("nightMode") === "true";
   shortMode = localStorage.getItem("shortMode") === "true";
+  hiddenBitS = localStorage.getItem("hiddenBitS") === "true";
+  hiddenOthers = localStorage.getItem("hiddenOthers") === "true";
+  shownTips = localStorage.getItem("shownTips") === "true";
   if (nightMode) document.body.classList.add("nightMode");
   setShort(shortMode);
+  setHiddenBitS(hiddenBitS);
+  setHiddenOthers(hiddenOthers);
+  setShownTips(shownTips);
 
   if(JSON.parse(localStorage.getItem("displayVisible"))) toggleDisplay();
 
@@ -331,4 +346,82 @@ function toggleShort() {
     localStorage.setItem("shortMode", shortMode);
   }
   setShort(shortMode);
+}
+
+function setHiddenBitS(hBS) {
+  const bitS = document.querySelector("div[data-short=BitS]");
+  if(hBS)
+  {
+    bitS.classList.add("hidden");
+    document.getElementById("toggleBitSBtn").value = "show BitS";
+  }
+  else
+  {
+    bitS.classList.remove("hidden");
+    document.getElementById("toggleBitSBtn").value = "hide BitS";
+  }
+}
+
+function setHiddenOthers(hOthers) {
+  const others = document.getElementById("others");
+  if(hOthers)
+  {
+    others.classList.add("hidden");
+    document.getElementById("toggleOthersBtn").value = "show Toads and Mips";
+  }
+  else
+  {
+    others.classList.remove("hidden");
+    document.getElementById("toggleOthersBtn").value = "hide Toads and Mips";
+  }
+}
+
+function toggleBitS() {
+  if (hiddenBitS) {
+    hiddenBitS = false;
+    localStorage.setItem("hiddenBitS", hiddenBitS);
+  }
+  else {
+    hiddenBitS = true;
+    localStorage.setItem("hiddenBitS", hiddenBitS);
+  }
+  setHiddenBitS(hiddenBitS);
+}
+
+function toggleOthers() {
+  if (hiddenOthers) {
+    hiddenOthers = false;
+    localStorage.setItem("hiddenOthers", hiddenOthers);
+  }
+  else {
+    hiddenOthers = true;
+    localStorage.setItem("hiddenOthers", hiddenOthers);
+  }
+  setHiddenOthers(hiddenOthers);
+}
+
+function setShownTips(sTips) {
+  const tips = document.getElementById("tooltips");
+  if(!sTips)
+  {
+    tips.classList.add("hidden");
+    document.getElementById("toggleTipsBtn").value = "show controls";
+  }
+  else
+  {
+    tips.classList.remove("hidden");
+    document.getElementById("toggleTipsBtn").value = "hide controls";
+  }
+}
+
+function toggleTips() {
+  if (shownTips) {
+    shownTips = false;
+    localStorage.setItem("shownTips", shownTips);
+  }
+  else {
+    shownTips = true;
+    localStorage.setItem("shownTips", shownTips);
+  }
+  setShownTips(shownTips);
 }

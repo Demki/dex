@@ -66,6 +66,19 @@
   <input id="displayBtn" type="button" value="show/hide display"/>
   <input id="nightBtn" type="button" value="toggle night mode"/>
   <input id="shortBtn" type="button" value="toggle short names"/>
+  <input id="toggleTipsBtn" type="button" value="show coontrols"/>
+  <div id="toggles">
+    <input id="toggleOthersBtn" type="button" value="hide Toads and Mips"/>
+    <input id="toggleBitSBtn" type="button" value="hide BitS"/>
+  </div>
+  <div id="tooltips" class="hidden">
+    <ul>
+      <li>Left Mouse Button hold & drag to connect stages.</li>
+      <li>Middle Mouse Button to mark/unmark a stage green, Right Mouse Button to mark/unmark a stage red</li>
+      <li>Ctrl + Middle Mouse Button to disconnect a path, this will disconnect the stage connected to the one clicked, for example if you have BOB→WF→JRB→BBH→HMC→LLL and you hold Ctrl and click with the middle mouse button on JRB you'll get two paths: BBH→HMC→LLL and BOB→WF→JRB</li>
+      <li>Ctrl + Left clicking a stage that is not in a path will put it in its own path, looping back to itself.</li>
+    </ul>
+  </div>
 </body>
 
 </html>
