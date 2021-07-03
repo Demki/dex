@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Plate dex</title>
+  <style>
+    #content {
+      width: 360px;
+      height: 250px;
+      padding: 10px;
+      font-size: 0.8em;
+      border: 1px solid grey;
+      resize: both;
+      overflow: auto;
+    }
+
+    #list {
+      text-align: center;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      grid-gap: 3px;
+      counter-reset: ucount;
+    }
+
+    #list input[type=checkbox] {
+      display: none;
+    }
+
+    #list label {
+      display: block;
+      transition: box-shadow .250s ease-in;
+    }
+
+    input:checked~label {
+      counter-increment: ucount;
+      box-shadow: inset 0 0 0 100px red;
+      font-weight: bold;
+    }
+
+    #list>div {
+      cursor: default;
+      -moz-user-select: none;
+      -webkit-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      border: 1px solid black;
+      display: grid;
+      grid-template-rows: 1fr auto;
+    }
+
+    #count {
+      font-size: 3em;
+    }
+
+    #x::after {
+      content: counter(ucount);
+    }
+  </style>
+  <script src="base64js.min.js"></script>
+  <script src="prng.js"></script>
+  <script>
+    let rand = null;
+    let orig = null;
+    function randomize(list) {
+      const arr = Array.from(orig);
+      if (rand) {
+        shuffle(rand, arr);
+      }
+      arr.forEach(x => list.removeChild(x));
+      arr.forEach(x => list.appendChild(x));
+    }
+
+    window.addEventListener("load", () => {
+      const seedText = document.getElementById("seedText");
+      const list = document.getElementById("list");
+      orig = Array.from(list.children);
+      document.getElementById("genSeedButton").addEventListener("click", () => {
+        const seed = generateId(10);
+        const seedF = xmur3(seed);
+        rand = sfc32(seedF(), seedF(), seedF(), seedF());
+        seedText.value = seed;
+        randomize(list);
+      });
+      document.getElementById("setSeedButton").addEventListener("click", () => {
+        const seed = seedText.value;
+        if (seed) {
+          const seedF = xmur3(seed);
+          rand = sfc32(seedF(), seedF(), seedF(), seedF());
+        }
+        else {
+          rand = null;
+        }
+        randomize(list);
+      });
+    });
+  </script>
+</head>
+
+<body>
+  <div id="content">
+    <div id="list">
+        <div><input type="checkbox" id="POUND"/><label for="POUND"><div>POUND</div></label></div>
+        <div><input type="checkbox" id="KARATE CHOP"/><label for="KARATE CHOP"><div>KARATE CHOP</div></label></div>
+        <div><input type="checkbox" id="DOUBLESLAP"/><label for="DOUBLESLAP"><div>DOUBLESLAP</div></label></div>
+        <div><input type="checkbox" id="COMET PUNCH"/><label for="COMET PUNCH"><div>COMET PUNCH</div></label></div>
+        <div><input type="checkbox" id="MEGA PUNCH"/><label for="MEGA PUNCH"><div>MEGA PUNCH</div></label></div>
+        <div><input type="checkbox" id="PAY DAY"/><label for="PAY DAY"><div>PAY DAY</div></label></div>
+        <div><input type="checkbox" id="FIRE PUNCH"/><label for="FIRE PUNCH"><div>FIRE PUNCH</div></label></div>
+        <div><input type="checkbox" id="ICE PUNCH"/><label for="ICE PUNCH"><div>ICE PUNCH</div></label></div>
+        <div><input type="checkbox" id="THUNDERPUNCH"/><label for="THUNDERPUNCH"><div>THUNDERPUNCH</div></label></div>
+        <div><input type="checkbox" id="SCRATCH"/><label for="SCRATCH"><div>SCRATCH</div></label></div>
+        <div><input type="checkbox" id="VICEGRIP"/><label for="VICEGRIP"><div>VICEGRIP</div></label></div>
+        <div><input type="checkbox" id="GUILLOTINE"/><label for="GUILLOTINE"><div>GUILLOTINE</div></label></div>
+        <div><input type="checkbox" id="RAZOR WIND"/><label for="RAZOR WIND"><div>RAZOR WIND</div></label></div>
+        <div><input type="checkbox" id="SWORDS DANCE"/><label for="SWORDS DANCE"><div>SWORDS DANCE</div></label></div>
+        <div><input type="checkbox" id="CUT"/><label for="CUT"><div>CUT</div></label></div>
+        <div><input type="checkbox" id="GUST"/><label for="GUST"><div>GUST</div></label></div>
+        <div><input type="checkbox" id="WING ATTACK"/><label for="WING ATTACK"><div>WING ATTACK</div></label></div>
+        <div><input type="checkbox" id="WHIRLWIND"/><label for="WHIRLWIND"><div>WHIRLWIND</div></label></div>
+        <div><input type="checkbox" id="FLY"/><label for="FLY"><div>FLY</div></label></div>
+        <div><input type="checkbox" id="BIND"/><label for="BIND"><div>BIND</div></label></div>
+        <div><input type="checkbox" id="SLAM"/><label for="SLAM"><div>SLAM</div></label></div>
+        <div><input type="checkbox" id="VINE WHIP"/><label for="VINE WHIP"><div>VINE WHIP</div></label></div>
+        <div><input type="checkbox" id="STOMP"/><label for="STOMP"><div>STOMP</div></label></div>
+        <div><input type="checkbox" id="DOUBLE KICK"/><label for="DOUBLE KICK"><div>DOUBLE KICK</div></label></div>
+        <div><input type="checkbox" id="MEGA KICK"/><label for="MEGA KICK"><div>MEGA KICK</div></label></div>
+        <div><input type="checkbox" id="JUMP KICK"/><label for="JUMP KICK"><div>JUMP KICK</div></label></div>
+        <div><input type="checkbox" id="ROLLING KICK"/><label for="ROLLING KICK"><div>ROLLING KICK</div></label></div>
+        <div><input type="checkbox" id="SAND-ATTACK"/><label for="SAND-ATTACK"><div>SAND-ATTACK</div></label></div>
+        <div><input type="checkbox" id="HEADBUTT"/><label for="HEADBUTT"><div>HEADBUTT</div></label></div>
+        <div><input type="checkbox" id="HORN ATTACK"/><label for="HORN ATTACK"><div>HORN ATTACK</div></label></div>
+        <div><input type="checkbox" id="FURY ATTACK"/><label for="FURY ATTACK"><div>FURY ATTACK</div></label></div>
+        <div><input type="checkbox" id="HORN DRILL"/><label for="HORN DRILL"><div>HORN DRILL</div></label></div>
+        <div><input type="checkbox" id="TACKLE"/><label for="TACKLE"><div>TACKLE</div></label></div>
+        <div><input type="checkbox" id="BODY SLAM"/><label for="BODY SLAM"><div>BODY SLAM</div></label></div>
+        <div><input type="checkbox" id="WRAP"/><label for="WRAP"><div>WRAP</div></label></div>
+        <div><input type="checkbox" id="TAKE DOWN"/><label for="TAKE DOWN"><div>TAKE DOWN</div></label></div>
+        <div><input type="checkbox" id="THRASH"/><label for="THRASH"><div>THRASH</div></label></div>
+        <div><input type="checkbox" id="DOUBLE-EDGE"/><label for="DOUBLE-EDGE"><div>DOUBLE-EDGE</div></label></div>
+        <div><input type="checkbox" id="TAIL WHIP"/><label for="TAIL WHIP"><div>TAIL WHIP</div></label></div>
+        <div><input type="checkbox" id="POISON STING"/><label for="POISON STING"><div>POISON STING</div></label></div>
+        <div><input type="checkbox" id="TWINEEDLE"/><label for="TWINEEDLE"><div>TWINEEDLE</div></label></div>
+        <div><input type="checkbox" id="PIN MISSILE"/><label for="PIN MISSILE"><div>PIN MISSILE</div></label></div>
+        <div><input type="checkbox" id="LEER"/><label for="LEER"><div>LEER</div></label></div>
+        <div><input type="checkbox" id="BITE"/><label for="BITE"><div>BITE</div></label></div>
+        <div><input type="checkbox" id="GROWL"/><label for="GROWL"><div>GROWL</div></label></div>
+        <div><input type="checkbox" id="ROAR"/><label for="ROAR"><div>ROAR</div></label></div>
+        <div><input type="checkbox" id="SING"/><label for="SING"><div>SING</div></label></div>
+        <div><input type="checkbox" id="SUPERSONIC"/><label for="SUPERSONIC"><div>SUPERSONIC</div></label></div>
+        <div><input type="checkbox" id="SONICBOOM"/><label for="SONICBOOM"><div>SONICBOOM</div></label></div>
+        <div><input type="checkbox" id="DISABLE"/><label for="DISABLE"><div>DISABLE</div></label></div>
+        <div><input type="checkbox" id="ACID"/><label for="ACID"><div>ACID</div></label></div>
+        <div><input type="checkbox" id="EMBER"/><label for="EMBER"><div>EMBER</div></label></div>
+        <div><input type="checkbox" id="FLAMETHROWER"/><label for="FLAMETHROWER"><div>FLAMETHROWER</div></label></div>
+        <div><input type="checkbox" id="MIST"/><label for="MIST"><div>MIST</div></label></div>
+        <div><input type="checkbox" id="WATER GUN"/><label for="WATER GUN"><div>WATER GUN</div></label></div>
+        <div><input type="checkbox" id="HYDRO PUMP"/><label for="HYDRO PUMP"><div>HYDRO PUMP</div></label></div>
+        <div><input type="checkbox" id="SURF"/><label for="SURF"><div>SURF</div></label></div>
+        <div><input type="checkbox" id="ICE BEAM"/><label for="ICE BEAM"><div>ICE BEAM</div></label></div>
+        <div><input type="checkbox" id="BLIZZARD"/><label for="BLIZZARD"><div>BLIZZARD</div></label></div>
+        <div><input type="checkbox" id="PSYBEAM"/><label for="PSYBEAM"><div>PSYBEAM</div></label></div>
+        <div><input type="checkbox" id="BUBBLEBEAM"/><label for="BUBBLEBEAM"><div>BUBBLEBEAM</div></label></div>
+        <div><input type="checkbox" id="AURORA BEAM"/><label for="AURORA BEAM"><div>AURORA BEAM</div></label></div>
+        <div><input type="checkbox" id="HYPER BEAM"/><label for="HYPER BEAM"><div>HYPER BEAM</div></label></div>
+        <div><input type="checkbox" id="PECK"/><label for="PECK"><div>PECK</div></label></div>
+        <div><input type="checkbox" id="DRILL PECK"/><label for="DRILL PECK"><div>DRILL PECK</div></label></div>
+        <div><input type="checkbox" id="SUBMISSION"/><label for="SUBMISSION"><div>SUBMISSION</div></label></div>
+        <div><input type="checkbox" id="LOW KICK"/><label for="LOW KICK"><div>LOW KICK</div></label></div>
+        <div><input type="checkbox" id="COUNTER"/><label for="COUNTER"><div>COUNTER</div></label></div>
+        <div><input type="checkbox" id="SEISMIC TOSS"/><label for="SEISMIC TOSS"><div>SEISMIC TOSS</div></label></div>
+        <div><input type="checkbox" id="STRENGTH"/><label for="STRENGTH"><div>STRENGTH</div></label></div>
+        <div><input type="checkbox" id="ABSORB"/><label for="ABSORB"><div>ABSORB</div></label></div>
+        <div><input type="checkbox" id="MEGA DRAIN"/><label for="MEGA DRAIN"><div>MEGA DRAIN</div></label></div>
+        <div><input type="checkbox" id="LEECH SEED"/><label for="LEECH SEED"><div>LEECH SEED</div></label></div>
+        <div><input type="checkbox" id="GROWTH"/><label for="GROWTH"><div>GROWTH</div></label></div>
+        <div><input type="checkbox" id="RAZOR LEAF"/><label for="RAZOR LEAF"><div>RAZOR LEAF</div></label></div>
+        <div><input type="checkbox" id="SOLARBEAM"/><label for="SOLARBEAM"><div>SOLARBEAM</div></label></div>
+        <div><input type="checkbox" id="POISONPOWDER"/><label for="POISONPOWDER"><div>POISONPOWDER</div></label></div>
+        <div><input type="checkbox" id="STUN SPORE"/><label for="STUN SPORE"><div>STUN SPORE</div></label></div>
+        <div><input type="checkbox" id="SLEEP POWDER"/><label for="SLEEP POWDER"><div>SLEEP POWDER</div></label></div>
+        <div><input type="checkbox" id="PETAL DANCE"/><label for="PETAL DANCE"><div>PETAL DANCE</div></label></div>
+        <div><input type="checkbox" id="STRING SHOT"/><label for="STRING SHOT"><div>STRING SHOT</div></label></div>
+        <div><input type="checkbox" id="DRAGON RAGE"/><label for="DRAGON RAGE"><div>DRAGON RAGE</div></label></div>
+        <div><input type="checkbox" id="FIRE SPIN"/><label for="FIRE SPIN"><div>FIRE SPIN</div></label></div>
+        <div><input type="checkbox" id="THUNDERSHOCK"/><label for="THUNDERSHOCK"><div>THUNDERSHOCK</div></label></div>
+        <div><input type="checkbox" id="THUNDERBOLT"/><label for="THUNDERBOLT"><div>THUNDERBOLT</div></label></div>
+        <div><input type="checkbox" id="THUNDER WAVE"/><label for="THUNDER WAVE"><div>THUNDER WAVE</div></label></div>
+        <div><input type="checkbox" id="THUNDER"/><label for="THUNDER"><div>THUNDER</div></label></div>
+        <div><input type="checkbox" id="ROCK THROW"/><label for="ROCK THROW"><div>ROCK THROW</div></label></div>
+        <div><input type="checkbox" id="EARTHQUAKE"/><label for="EARTHQUAKE"><div>EARTHQUAKE</div></label></div>
+        <div><input type="checkbox" id="FISSURE"/><label for="FISSURE"><div>FISSURE</div></label></div>
+        <div><input type="checkbox" id="DIG"/><label for="DIG"><div>DIG</div></label></div>
+        <div><input type="checkbox" id="TOXIC"/><label for="TOXIC"><div>TOXIC</div></label></div>
+        <div><input type="checkbox" id="CONFUSION"/><label for="CONFUSION"><div>CONFUSION</div></label></div>
+        <div><input type="checkbox" id="PSYCHIC"/><label for="PSYCHIC"><div>PSYCHIC</div></label></div>
+        <div><input type="checkbox" id="HYPNOSIS"/><label for="HYPNOSIS"><div>HYPNOSIS</div></label></div>
+        <div><input type="checkbox" id="MEDITATE"/><label for="MEDITATE"><div>MEDITATE</div></label></div>
+        <div><input type="checkbox" id="AGILITY"/><label for="AGILITY"><div>AGILITY</div></label></div>
+        <div><input type="checkbox" id="QUICK ATTACK"/><label for="QUICK ATTACK"><div>QUICK ATTACK</div></label></div>
+        <div><input type="checkbox" id="RAGE"/><label for="RAGE"><div>RAGE</div></label></div>
+        <div><input type="checkbox" id="TELEPORT"/><label for="TELEPORT"><div>TELEPORT</div></label></div>
+        <div><input type="checkbox" id="NIGHT SHADE"/><label for="NIGHT SHADE"><div>NIGHT SHADE</div></label></div>
+        <div><input type="checkbox" id="MIMIC"/><label for="MIMIC"><div>MIMIC</div></label></div>
+        <div><input type="checkbox" id="SCREECH"/><label for="SCREECH"><div>SCREECH</div></label></div>
+        <div><input type="checkbox" id="DOUBLE TEAM"/><label for="DOUBLE TEAM"><div>DOUBLE TEAM</div></label></div>
+        <div><input type="checkbox" id="RECOVER"/><label for="RECOVER"><div>RECOVER</div></label></div>
+        <div><input type="checkbox" id="HARDEN"/><label for="HARDEN"><div>HARDEN</div></label></div>
+        <div><input type="checkbox" id="MINIMIZE"/><label for="MINIMIZE"><div>MINIMIZE</div></label></div>
+        <div><input type="checkbox" id="SMOKESCREEN"/><label for="SMOKESCREEN"><div>SMOKESCREEN</div></label></div>
+        <div><input type="checkbox" id="CONFUSE RAY"/><label for="CONFUSE RAY"><div>CONFUSE RAY</div></label></div>
+        <div><input type="checkbox" id="WITHDRAW"/><label for="WITHDRAW"><div>WITHDRAW</div></label></div>
+        <div><input type="checkbox" id="DEFENSE CURL"/><label for="DEFENSE CURL"><div>DEFENSE CURL</div></label></div>
+        <div><input type="checkbox" id="BARRIER"/><label for="BARRIER"><div>BARRIER</div></label></div>
+        <div><input type="checkbox" id="LIGHT SCREEN"/><label for="LIGHT SCREEN"><div>LIGHT SCREEN</div></label></div>
+        <div><input type="checkbox" id="HAZE"/><label for="HAZE"><div>HAZE</div></label></div>
+        <div><input type="checkbox" id="REFLECT"/><label for="REFLECT"><div>REFLECT</div></label></div>
+        <div><input type="checkbox" id="FOCUS ENERGY"/><label for="FOCUS ENERGY"><div>FOCUS ENERGY</div></label></div>
+        <div><input type="checkbox" id="BIDE"/><label for="BIDE"><div>BIDE</div></label></div>
+        <div><input type="checkbox" id="METRONOME"/><label for="METRONOME"><div>METRONOME</div></label></div>
+        <div><input type="checkbox" id="MIRROR MOVE"/><label for="MIRROR MOVE"><div>MIRROR MOVE</div></label></div>
+        <div><input type="checkbox" id="SELFDESTRUCT"/><label for="SELFDESTRUCT"><div>SELFDESTRUCT</div></label></div>
+        <div><input type="checkbox" id="EGG BOMB"/><label for="EGG BOMB"><div>EGG BOMB</div></label></div>
+        <div><input type="checkbox" id="LICK"/><label for="LICK"><div>LICK</div></label></div>
+        <div><input type="checkbox" id="SMOG"/><label for="SMOG"><div>SMOG</div></label></div>
+        <div><input type="checkbox" id="SLUDGE"/><label for="SLUDGE"><div>SLUDGE</div></label></div>
+        <div><input type="checkbox" id="BONE CLUB"/><label for="BONE CLUB"><div>BONE CLUB</div></label></div>
+        <div><input type="checkbox" id="FIRE BLAST"/><label for="FIRE BLAST"><div>FIRE BLAST</div></label></div>
+        <div><input type="checkbox" id="WATERFALL"/><label for="WATERFALL"><div>WATERFALL</div></label></div>
+        <div><input type="checkbox" id="CLAMP"/><label for="CLAMP"><div>CLAMP</div></label></div>
+        <div><input type="checkbox" id="SWIFT"/><label for="SWIFT"><div>SWIFT</div></label></div>
+        <div><input type="checkbox" id="SKULL BASH"/><label for="SKULL BASH"><div>SKULL BASH</div></label></div>
+        <div><input type="checkbox" id="SPIKE CANNON"/><label for="SPIKE CANNON"><div>SPIKE CANNON</div></label></div>
+        <div><input type="checkbox" id="CONSTRICT"/><label for="CONSTRICT"><div>CONSTRICT</div></label></div>
+        <div><input type="checkbox" id="AMNESIA"/><label for="AMNESIA"><div>AMNESIA</div></label></div>
+        <div><input type="checkbox" id="KINESIS"/><label for="KINESIS"><div>KINESIS</div></label></div>
+        <div><input type="checkbox" id="SOFTBOILED"/><label for="SOFTBOILED"><div>SOFTBOILED</div></label></div>
+        <div><input type="checkbox" id="HI JUMP KICK"/><label for="HI JUMP KICK"><div>HI JUMP KICK</div></label></div>
+        <div><input type="checkbox" id="GLARE"/><label for="GLARE"><div>GLARE</div></label></div>
+        <div><input type="checkbox" id="DREAM EATER"/><label for="DREAM EATER"><div>DREAM EATER</div></label></div>
+        <div><input type="checkbox" id="POISON GAS"/><label for="POISON GAS"><div>POISON GAS</div></label></div>
+        <div><input type="checkbox" id="BARRAGE"/><label for="BARRAGE"><div>BARRAGE</div></label></div>
+        <div><input type="checkbox" id="LEECH LIFE"/><label for="LEECH LIFE"><div>LEECH LIFE</div></label></div>
+        <div><input type="checkbox" id="LOVELY KISS"/><label for="LOVELY KISS"><div>LOVELY KISS</div></label></div>
+        <div><input type="checkbox" id="SKY ATTACK"/><label for="SKY ATTACK"><div>SKY ATTACK</div></label></div>
+        <div><input type="checkbox" id="TRANSFORM"/><label for="TRANSFORM"><div>TRANSFORM</div></label></div>
+        <div><input type="checkbox" id="BUBBLE"/><label for="BUBBLE"><div>BUBBLE</div></label></div>
+        <div><input type="checkbox" id="DIZZY PUNCH"/><label for="DIZZY PUNCH"><div>DIZZY PUNCH</div></label></div>
+        <div><input type="checkbox" id="SPORE"/><label for="SPORE"><div>SPORE</div></label></div>
+        <div><input type="checkbox" id="FLASH"/><label for="FLASH"><div>FLASH</div></label></div>
+        <div><input type="checkbox" id="PSYWAVE"/><label for="PSYWAVE"><div>PSYWAVE</div></label></div>
+        <div><input type="checkbox" id="SPLASH"/><label for="SPLASH"><div>SPLASH</div></label></div>
+        <div><input type="checkbox" id="ACID ARMOR"/><label for="ACID ARMOR"><div>ACID ARMOR</div></label></div>
+        <div><input type="checkbox" id="CRABHAMMER"/><label for="CRABHAMMER"><div>CRABHAMMER</div></label></div>
+        <div><input type="checkbox" id="EXPLOSION"/><label for="EXPLOSION"><div>EXPLOSION</div></label></div>
+        <div><input type="checkbox" id="FURY SWIPES"/><label for="FURY SWIPES"><div>FURY SWIPES</div></label></div>
+        <div><input type="checkbox" id="BONEMERANG"/><label for="BONEMERANG"><div>BONEMERANG</div></label></div>
+        <div><input type="checkbox" id="REST"/><label for="REST"><div>REST</div></label></div>
+        <div><input type="checkbox" id="ROCK SLIDE"/><label for="ROCK SLIDE"><div>ROCK SLIDE</div></label></div>
+        <div><input type="checkbox" id="HYPER FANG"/><label for="HYPER FANG"><div>HYPER FANG</div></label></div>
+        <div><input type="checkbox" id="SHARPEN"/><label for="SHARPEN"><div>SHARPEN</div></label></div>
+        <div><input type="checkbox" id="CONVERSION"/><label for="CONVERSION"><div>CONVERSION</div></label></div>
+        <div><input type="checkbox" id="TRI ATTACK"/><label for="TRI ATTACK"><div>TRI ATTACK</div></label></div>
+        <div><input type="checkbox" id="SUPER FANG"/><label for="SUPER FANG"><div>SUPER FANG</div></label></div>
+        <div><input type="checkbox" id="SLASH"/><label for="SLASH"><div>SLASH</div></label></div>
+        <div><input type="checkbox" id="SUBSTITUTE"/><label for="SUBSTITUTE"><div>SUBSTITUTE</div></label></div>
+        <div><input type="checkbox" id="STRUGGLE"/><label for="STRUGGLE"><div>STRUGGLE</div></label></div>
+        <div><input type="checkbox" id="SKETCH"/><label for="SKETCH"><div>SKETCH</div></label></div>
+        <div><input type="checkbox" id="TRIPLE KICK"/><label for="TRIPLE KICK"><div>TRIPLE KICK</div></label></div>
+        <div><input type="checkbox" id="THIEF"/><label for="THIEF"><div>THIEF</div></label></div>
+        <div><input type="checkbox" id="SPIDER WEB"/><label for="SPIDER WEB"><div>SPIDER WEB</div></label></div>
+        <div><input type="checkbox" id="MIND READER"/><label for="MIND READER"><div>MIND READER</div></label></div>
+        <div><input type="checkbox" id="NIGHTMARE"/><label for="NIGHTMARE"><div>NIGHTMARE</div></label></div>
+        <div><input type="checkbox" id="FLAME WHEEL"/><label for="FLAME WHEEL"><div>FLAME WHEEL</div></label></div>
+        <div><input type="checkbox" id="SNORE"/><label for="SNORE"><div>SNORE</div></label></div>
+        <div><input type="checkbox" id="CURSE"/><label for="CURSE"><div>CURSE</div></label></div>
+        <div><input type="checkbox" id="FLAIL"/><label for="FLAIL"><div>FLAIL</div></label></div>
+        <div><input type="checkbox" id="CONVERSION2"/><label for="CONVERSION2"><div>CONVERSION2</div></label></div>
+        <div><input type="checkbox" id="AEROBLAST"/><label for="AEROBLAST"><div>AEROBLAST</div></label></div>
+        <div><input type="checkbox" id="COTTON SPORE"/><label for="COTTON SPORE"><div>COTTON SPORE</div></label></div>
+        <div><input type="checkbox" id="REVERSAL"/><label for="REVERSAL"><div>REVERSAL</div></label></div>
+        <div><input type="checkbox" id="SPITE"/><label for="SPITE"><div>SPITE</div></label></div>
+        <div><input type="checkbox" id="POWDER SNOW"/><label for="POWDER SNOW"><div>POWDER SNOW</div></label></div>
+        <div><input type="checkbox" id="PROTECT"/><label for="PROTECT"><div>PROTECT</div></label></div>
+        <div><input type="checkbox" id="MACH PUNCH"/><label for="MACH PUNCH"><div>MACH PUNCH</div></label></div>
+        <div><input type="checkbox" id="SCARY FACE"/><label for="SCARY FACE"><div>SCARY FACE</div></label></div>
+        <div><input type="checkbox" id="FAINT ATTACK"/><label for="FAINT ATTACK"><div>FAINT ATTACK</div></label></div>
+        <div><input type="checkbox" id="SWEET KISS"/><label for="SWEET KISS"><div>SWEET KISS</div></label></div>
+        <div><input type="checkbox" id="BELLY DRUM"/><label for="BELLY DRUM"><div>BELLY DRUM</div></label></div>
+        <div><input type="checkbox" id="SLUDGE BOMB"/><label for="SLUDGE BOMB"><div>SLUDGE BOMB</div></label></div>
+        <div><input type="checkbox" id="MUD-SLAP"/><label for="MUD-SLAP"><div>MUD-SLAP</div></label></div>
+        <div><input type="checkbox" id="OCTAZOOKA"/><label for="OCTAZOOKA"><div>OCTAZOOKA</div></label></div>
+        <div><input type="checkbox" id="SPIKES"/><label for="SPIKES"><div>SPIKES</div></label></div>
+        <div><input type="checkbox" id="ZAP CANNON"/><label for="ZAP CANNON"><div>ZAP CANNON</div></label></div>
+        <div><input type="checkbox" id="FORESIGHT"/><label for="FORESIGHT"><div>FORESIGHT</div></label></div>
+        <div><input type="checkbox" id="DESTINY BOND"/><label for="DESTINY BOND"><div>DESTINY BOND</div></label></div>
+        <div><input type="checkbox" id="PERISH SONG"/><label for="PERISH SONG"><div>PERISH SONG</div></label></div>
+        <div><input type="checkbox" id="ICY WIND"/><label for="ICY WIND"><div>ICY WIND</div></label></div>
+        <div><input type="checkbox" id="DETECT"/><label for="DETECT"><div>DETECT</div></label></div>
+        <div><input type="checkbox" id="BONE RUSH"/><label for="BONE RUSH"><div>BONE RUSH</div></label></div>
+        <div><input type="checkbox" id="LOCK-ON"/><label for="LOCK-ON"><div>LOCK-ON</div></label></div>
+        <div><input type="checkbox" id="OUTRAGE"/><label for="OUTRAGE"><div>OUTRAGE</div></label></div>
+        <div><input type="checkbox" id="SANDSTORM"/><label for="SANDSTORM"><div>SANDSTORM</div></label></div>
+        <div><input type="checkbox" id="GIGA DRAIN"/><label for="GIGA DRAIN"><div>GIGA DRAIN</div></label></div>
+        <div><input type="checkbox" id="ENDURE"/><label for="ENDURE"><div>ENDURE</div></label></div>
+        <div><input type="checkbox" id="CHARM"/><label for="CHARM"><div>CHARM</div></label></div>
+        <div><input type="checkbox" id="ROLLOUT"/><label for="ROLLOUT"><div>ROLLOUT</div></label></div>
+        <div><input type="checkbox" id="FALSE SWIPE"/><label for="FALSE SWIPE"><div>FALSE SWIPE</div></label></div>
+        <div><input type="checkbox" id="SWAGGER"/><label for="SWAGGER"><div>SWAGGER</div></label></div>
+        <div><input type="checkbox" id="MILK DRINK"/><label for="MILK DRINK"><div>MILK DRINK</div></label></div>
+        <div><input type="checkbox" id="SPARK"/><label for="SPARK"><div>SPARK</div></label></div>
+        <div><input type="checkbox" id="FURY CUTTER"/><label for="FURY CUTTER"><div>FURY CUTTER</div></label></div>
+        <div><input type="checkbox" id="STEEL WING"/><label for="STEEL WING"><div>STEEL WING</div></label></div>
+        <div><input type="checkbox" id="MEAN LOOK"/><label for="MEAN LOOK"><div>MEAN LOOK</div></label></div>
+        <div><input type="checkbox" id="ATTRACT"/><label for="ATTRACT"><div>ATTRACT</div></label></div>
+        <div><input type="checkbox" id="SLEEP TALK"/><label for="SLEEP TALK"><div>SLEEP TALK</div></label></div>
+        <div><input type="checkbox" id="HEAL BELL"/><label for="HEAL BELL"><div>HEAL BELL</div></label></div>
+        <div><input type="checkbox" id="RETURN"/><label for="RETURN"><div>RETURN</div></label></div>
+        <div><input type="checkbox" id="PRESENT"/><label for="PRESENT"><div>PRESENT</div></label></div>
+        <div><input type="checkbox" id="FRUSTRATION"/><label for="FRUSTRATION"><div>FRUSTRATION</div></label></div>
+        <div><input type="checkbox" id="SAFEGUARD"/><label for="SAFEGUARD"><div>SAFEGUARD</div></label></div>
+        <div><input type="checkbox" id="PAIN SPLIT"/><label for="PAIN SPLIT"><div>PAIN SPLIT</div></label></div>
+        <div><input type="checkbox" id="SACRED FIRE"/><label for="SACRED FIRE"><div>SACRED FIRE</div></label></div>
+        <div><input type="checkbox" id="MAGNITUDE"/><label for="MAGNITUDE"><div>MAGNITUDE</div></label></div>
+        <div><input type="checkbox" id="DYNAMICPUNCH"/><label for="DYNAMICPUNCH"><div>DYNAMICPUNCH</div></label></div>
+        <div><input type="checkbox" id="MEGAHORN"/><label for="MEGAHORN"><div>MEGAHORN</div></label></div>
+        <div><input type="checkbox" id="DRAGONBREATH"/><label for="DRAGONBREATH"><div>DRAGONBREATH</div></label></div>
+        <div><input type="checkbox" id="BATON PASS"/><label for="BATON PASS"><div>BATON PASS</div></label></div>
+        <div><input type="checkbox" id="ENCORE"/><label for="ENCORE"><div>ENCORE</div></label></div>
+        <div><input type="checkbox" id="PURSUIT"/><label for="PURSUIT"><div>PURSUIT</div></label></div>
+        <div><input type="checkbox" id="RAPID SPIN"/><label for="RAPID SPIN"><div>RAPID SPIN</div></label></div>
+        <div><input type="checkbox" id="SWEET SCENT"/><label for="SWEET SCENT"><div>SWEET SCENT</div></label></div>
+        <div><input type="checkbox" id="IRON TAIL"/><label for="IRON TAIL"><div>IRON TAIL</div></label></div>
+        <div><input type="checkbox" id="METAL CLAW"/><label for="METAL CLAW"><div>METAL CLAW</div></label></div>
+        <div><input type="checkbox" id="VITAL THROW"/><label for="VITAL THROW"><div>VITAL THROW</div></label></div>
+        <div><input type="checkbox" id="MORNING SUN"/><label for="MORNING SUN"><div>MORNING SUN</div></label></div>
+        <div><input type="checkbox" id="SYNTHESIS"/><label for="SYNTHESIS"><div>SYNTHESIS</div></label></div>
+        <div><input type="checkbox" id="MOONLIGHT"/><label for="MOONLIGHT"><div>MOONLIGHT</div></label></div>
+        <div><input type="checkbox" id="HIDDEN POWER"/><label for="HIDDEN POWER"><div>HIDDEN POWER</div></label></div>
+        <div><input type="checkbox" id="CROSS CHOP"/><label for="CROSS CHOP"><div>CROSS CHOP</div></label></div>
+        <div><input type="checkbox" id="TWISTER"/><label for="TWISTER"><div>TWISTER</div></label></div>
+        <div><input type="checkbox" id="RAIN DANCE"/><label for="RAIN DANCE"><div>RAIN DANCE</div></label></div>
+        <div><input type="checkbox" id="SUNNY DAY"/><label for="SUNNY DAY"><div>SUNNY DAY</div></label></div>
+        <div><input type="checkbox" id="CRUNCH"/><label for="CRUNCH"><div>CRUNCH</div></label></div>
+        <div><input type="checkbox" id="MIRROR COAT"/><label for="MIRROR COAT"><div>MIRROR COAT</div></label></div>
+        <div><input type="checkbox" id="PSYCH UP"/><label for="PSYCH UP"><div>PSYCH UP</div></label></div>
+        <div><input type="checkbox" id="EXTREMESPEED"/><label for="EXTREMESPEED"><div>EXTREMESPEED</div></label></div>
+        <div><input type="checkbox" id="ANCIENTPOWER"/><label for="ANCIENTPOWER"><div>ANCIENTPOWER</div></label></div>
+        <div><input type="checkbox" id="SHADOW BALL"/><label for="SHADOW BALL"><div>SHADOW BALL</div></label></div>
+        <div><input type="checkbox" id="FUTURE SIGHT"/><label for="FUTURE SIGHT"><div>FUTURE SIGHT</div></label></div>
+        <div><input type="checkbox" id="ROCK SMASH"/><label for="ROCK SMASH"><div>ROCK SMASH</div></label></div>
+        <div><input type="checkbox" id="WHIRLPOOL"/><label for="WHIRLPOOL"><div>WHIRLPOOL</div></label></div>
+        <div><input type="checkbox" id="BEAT UP"/><label for="BEAT UP"><div>BEAT UP</div></label></div>
+    </div>
+    <div id="count">#: <span id="x"></span></div>
+  </div>
+  <div>
+    Seed: <input type="text" id="seedText" />
+    <input type="button" id="genSeedButton" value="Random Seed" />
+    <input type="button" id="setSeedButton" value="Set seed" />
+  </div>
+</body>
+
+</html>
