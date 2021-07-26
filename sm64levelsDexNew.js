@@ -57,7 +57,7 @@ function removeLine() {
 }
 
 function mousedown(ev) {
-  ev.preventDefault();
+  if(ev.button === MIDDLE_MOUSE_BUTTON) ev.preventDefault(); // prevent scroll toggle with middle mouse button
   if (ev.target.classList.contains("item")) {
     prev = ev.target;
     if (!ev.target.classList.contains('nocon')) {
