@@ -57,6 +57,7 @@ function removeLine() {
 }
 
 function mousedown(ev) {
+  ev.preventDefault();
   if (ev.target.classList.contains("item")) {
     prev = ev.target;
     if (!ev.target.classList.contains('nocon')) {
