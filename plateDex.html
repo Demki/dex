@@ -40,7 +40,7 @@
 
     #content {
       width: 360px;
-      height: 250px;
+      height: 260px;
       padding: 10px;
       border: 1px solid var(--midColor);
       resize: both;
@@ -50,12 +50,12 @@
       grid-gap: 3px;
       overflow: auto;
       margin-bottom:5px;
+      counter-reset: ucount;
     }
 
     #list {
       text-align: center;
       display: contents;
-      counter-reset: ucount;
     }
 
     #list input[type=checkbox] {
@@ -84,6 +84,13 @@
       grid-template-rows: 1fr auto;
     }
 
+    #list>.grid-separator {
+      height: 1px;
+      background-color: var(--foreground);
+      grid-column: 1/-1;
+      align-self: center;
+    }
+
     #count {
       font-size: 2em;
       grid-column: -2;
@@ -107,14 +114,19 @@
       if (rand) {
         shuffle(rand, arr);
       }
+
       arr.forEach(x => list.removeChild(x));
-      arr.forEach(x => list.appendChild(x));
+      const sep = list.getElementsByClassName("grid-separator")[0];
+      arr.forEach((x,i) => {
+        if(i < arr.length-1) list.insertBefore(x, sep);
+        else list.appendChild(x);
+      });
     }
 
     window.addEventListener("load", () => {
       const seedText = document.getElementById("seedText");
       const list = document.getElementById("list");
-      orig = Array.from(list.children);
+      orig = Array.from(list.children).filter(x => !x.classList.contains("grid-separator"));
       document.getElementById("genSeedButton").addEventListener("click", () => {
         const seed = generateId(10);
         const seedF = xmur3(seed);
@@ -168,6 +180,25 @@
         }
         else {
           pixieDiv.classList.remove("removed");
+        }
+      });
+      
+      let sepLine = localStorage.getItem("sepLine") == JSON.stringify(true);
+      const sepLineDiv = document.getElementById("sepLine");
+      if(sepLine) {
+        sepLineDiv.classList.add("removed");
+      }
+      else {
+        sepLineDiv.classList.remove("removed");
+      }
+      document.getElementById("sepLineButton").addEventListener("click", () => {
+        sepLine = !sepLine;
+        localStorage.setItem("sepLine", JSON.stringify(sepLine));
+        if(sepLine) {
+          sepLineDiv.classList.add("removed");
+        }
+        else {
+          sepLineDiv.classList.remove("removed");
         }
       });
     });
@@ -234,6 +265,7 @@
       <div><input type="checkbox" id="Toxic"><label for="Toxic"><img src="plates/Toxic.png" alt="Toxic" />
           <div>Toxic</div>
         </label></div>
+      <div class="grid-separator" id="sepLine"></div>
       <div><input type="checkbox" id="Zap"><label for="Zap"><img src="plates/Zap.png" alt="Zap" />
           <div>Zap</div>
         </label></div>
@@ -248,6 +280,7 @@
   <div>
     <input type="button" id="darkModeButton" value="Toggle Dark Mode" />
     <input type="button" id="pixiePlateButton" value="Toggle Pixie Plate" />
+    <input type="button" id="sepLineButton" value="Toggle Separator Line" />
   </div>
 </body>
 
