@@ -5,20 +5,56 @@
   <meta charset="UTF-8">
   <title>Plate dex</title>
   <style>
+    body {
+      --background: hsl(0, 0%, 100%);
+      --backgroundLowOp: hsla(0, 0%, 100%, 0.733);
+      --foreground: hsl(0, 0%, 0%);
+
+      --midColor: hsl(0, 0%, 50%);
+      --hoverColor: hsl(240, 100%, 25%);
+
+      --color-1: blue;
+      --color1: black;
+      --color2: red;
+      --color3: green;
+    }
+
+    body.darkMode {
+      --background: hsl(260, 9%, 10%);
+      --backgroundLowOp: hsla(260, 9%, 10%, 0.9);
+      --foreground: hsl(260, 4%, 74%);
+
+      --midColor: hsl(260, 4%, 30%);
+      --hoverColor: hsl(240, 50%, 50%);
+
+      --inputBGColor: hsl(260, 9%, 15%);
+
+      --color1: hsl(0, 0%, 69%);
+      --color3: hsl(300, 70%, 50%);
+    }
+
+    body {
+      background-color: var(--background);
+      color: var(--foreground);
+    }
+
     #content {
       width: 360px;
       height: 250px;
       padding: 10px;
-      border: 1px solid grey;
+      border: 1px solid var(--midColor);
       resize: both;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
+      grid-auto-rows: 1fr;
+      grid-gap: 3px;
       overflow: auto;
+      margin-bottom:5px;
     }
 
     #list {
       text-align: center;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
-      grid-gap: 3px;
+      display: contents;
       counter-reset: ucount;
     }
 
@@ -43,17 +79,22 @@
       -webkit-user-select: none;
       -ms-user-select: none;
       user-select: none;
-      border: 1px solid black;
+      border: 1px solid var(--foreground);
       display: grid;
       grid-template-rows: 1fr auto;
     }
 
     #count {
-      font-size: 3em;
+      font-size: 2em;
+      grid-column: -2;
     }
 
     #x::after {
       content: counter(ucount);
+    }
+
+    #list>.removed {
+      display: none;
     }
   </style>
   <script src="base64js.min.js"></script>
@@ -91,6 +132,43 @@
           rand = null;
         }
         randomize(list);
+      });
+
+      let darkMode = localStorage.getItem("darkMode") == JSON.stringify(true);
+      if(darkMode) {
+        document.body.classList.add("darkMode");
+      }
+      else {
+        document.body.classList.remove("darkMode");
+      }
+      document.getElementById("darkModeButton").addEventListener("click", () => {
+        darkMode = !darkMode;
+        localStorage.setItem("darkMode", JSON.stringify(darkMode));
+        if(darkMode) {
+          document.body.classList.add("darkMode");
+        }
+        else {
+          document.body.classList.remove("darkMode");
+        }
+      });
+
+      let pixiePlate = localStorage.getItem("pixiePlate") == JSON.stringify(true);
+      const pixieDiv = document.getElementById("Pixie").parentElement;
+      if(pixiePlate) {
+        pixieDiv.classList.add("removed");
+      }
+      else {
+        pixieDiv.classList.remove("removed");
+      }
+      document.getElementById("pixiePlateButton").addEventListener("click", () => {
+        pixiePlate = !pixiePlate;
+        localStorage.setItem("pixiePlate", JSON.stringify(pixiePlate));
+        if(pixiePlate) {
+          pixieDiv.classList.add("removed");
+        }
+        else {
+          pixieDiv.classList.remove("removed");
+        }
       });
     });
   </script>
@@ -138,6 +216,9 @@
       <div><input type="checkbox" id="Mind"><label for="Mind"><img src="plates/Mind.png" alt="Mind" />
           <div>Mind</div>
         </label></div>
+      <div><input type="checkbox" id="Pixie"><label for="Pixie"><img src="plates/Pixie.png" alt="Pixie" />
+          <div>Pixie</div>
+        </label></div>
       <div><input type="checkbox" id="Sky"><label for="Sky"><img src="plates/Sky.png" alt="Sky" />
           <div>Sky</div>
         </label></div>
@@ -163,6 +244,10 @@
     Seed: <input type="text" id="seedText" />
     <input type="button" id="genSeedButton" value="Random Seed" />
     <input type="button" id="setSeedButton" value="Set seed" />
+  </div>
+  <div>
+    <input type="button" id="darkModeButton" value="Toggle Dark Mode" />
+    <input type="button" id="pixiePlateButton" value="Toggle Pixie Plate" />
   </div>
 </body>
 
