@@ -15,21 +15,22 @@
 
       --color-1: blue;
       --color1: black;
-      --color2: red;
+      --color2: rgb(255, 51, 51);
       --color3: green;
     }
 
     body.darkMode {
       --background: hsl(260, 9%, 10%);
       --backgroundLowOp: hsla(260, 9%, 10%, 0.9);
-      --foreground: hsl(260, 4%, 74%);
-
+      --foreground: hsl(260, 4%, 90%);
+      
       --midColor: hsl(260, 4%, 30%);
       --hoverColor: hsl(240, 50%, 50%);
 
       --inputBGColor: hsl(260, 9%, 15%);
 
       --color1: hsl(0, 0%, 69%);
+      --color2: hsl(0, 100%, 43%);
       --color3: hsl(300, 70%, 50%);
     }
 
@@ -69,7 +70,7 @@
 
     input:checked~label {
       counter-increment: ucount;
-      box-shadow: inset 0 0 0 100px red;
+      box-shadow: inset 0 0 0 100px var(--color2);
       font-weight: bold;
     }
 
