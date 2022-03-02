@@ -165,7 +165,7 @@ div[data-looping^="yes"]::after {
   stroke: var(--foreground);
 }
 
-input[type=button] {
+input {
   color: var(--foreground);
   background-color: var(--buttonBGColor);
 }
