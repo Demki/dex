@@ -31,6 +31,12 @@ let hiddenBitS = false;
 let hiddenOthers = false;
 let shownTips = false;
 
+const MARK_1_DEFAULT = "#da1b1b"
+const MARK_2_DEFAULT = "#118d11"
+
+let mark1Color = MARK_1_DEFAULT;
+let mark2Color = MARK_2_DEFAULT;
+
 function createLine({ layerX, layerY, offsetX, offsetY, target: { offsetWidth, offsetHeight } }) {
   const startX = layerX - offsetX + offsetWidth / 2;
   const startY = layerY - offsetY + offsetHeight / 2;
@@ -301,8 +307,50 @@ window.addEventListener("load", () => {
     contentDiv.style.setProperty("width", localStorage.getItem("contentWidth"));
     contentDiv.style.setProperty("height", localStorage.getItem("contentHeight"));
   }
+  
+  if(localStorage.getItem("mark1Color"))
+  {
+    mark1Color = localStorage.getItem("mark1Color");
+  }
 
+  if(localStorage.getItem("mark2Color"))
+  {
+    mark2Color = localStorage.getItem("mark2Color");
+  }
+
+  const mark1ColorPicker = document.getElementById("mark1ColorPicker");
+  const mark2ColorPicker = document.getElementById("mark2ColorPicker");
+  const resetColorsBtn   = document.getElementById("resetColorsBtn");
+
+  mark1ColorPicker.jscolor.fromString(mark1Color);
+  document.body.style.setProperty("--color1BG", mark1Color);
+
+  mark2ColorPicker.jscolor.fromString(mark2Color);
+  document.body.style.setProperty("--color2BG", mark2Color);
+
+  mark1ColorPicker.addEventListener("input", setMark1Color);
+  mark2ColorPicker.addEventListener("input", setMark2Color);
+  resetColorsBtn.addEventListener("click", resetColors);
 });
+
+function setMark1Color() {
+  mark1Color = document.getElementById("mark1ColorPicker").jscolor.toHEXString();
+  localStorage.setItem("mark1Color", mark1Color);
+  document.body.style.setProperty("--color1BG", mark1Color);
+}
+
+function setMark2Color() {
+  mark2Color = document.getElementById("mark2ColorPicker").jscolor.toHEXString();
+  localStorage.setItem("mark2Color", mark2Color);
+  document.body.style.setProperty("--color2BG", mark2Color);
+}
+
+function resetColors(mark1ColorPicker, mark2ColorPicker) { 
+  document.getElementById("mark1ColorPicker").jscolor.fromString(MARK_1_DEFAULT);
+  document.getElementById("mark2ColorPicker").jscolor.fromString(MARK_2_DEFAULT);
+  setMark1Color();
+  setMark2Color();
+}
 
 function toggleNightMode() {
   if (nightMode) {

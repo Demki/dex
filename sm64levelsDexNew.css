@@ -9,11 +9,11 @@ body {
 
   --arrowStartColor: hsl(60, 100%, 26%);
 
-  --color1BG: hsl(0, 100%, 50%);
+  --color1BG: #da1b1b;
   --color1FG: white;
   --color1Shadow: black;
 
-  --color2BG: hsl(120, 100%, 25%);
+  --color2BG: #118d11;
   --color2FG: white;
   --color2Shadow: black;
 
@@ -31,11 +31,9 @@ body.nightMode {
 
   --arrowStartColor: hsl(60, 100%, 50%);
 
-  --color1BG: hsl(0, 78%, 48%);
   --color1FG: white;
   --color1Shadow: black;
 
-  --color2BG: hsl(120, 78%, 31%);
   --color2FG: white;
   --color2Shadow: black;
 }
@@ -170,4 +168,11 @@ div[data-looping^="yes"]::after {
 input[type=button] {
   color: var(--foreground);
   background-color: var(--buttonBGColor);
+}
+
+#colors {
+  margin-top: 5px;
+}
+#colors input[data-jscolor] {
+  width: 60px;
 }

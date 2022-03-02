@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <title>SM64 level dex</title>
   <link rel="stylesheet" href="sm64levelsDexNew.css" />
+  <script src="jscolor.min.js"></script>
   <script src="generatorHelpers.js"></script>
   <script src="sm64levelsDexNew.js"></script>
 </head>
@@ -70,6 +71,11 @@
   <div id="toggles">
     <input id="toggleOthersBtn" type="button" value="hide Toads and Mips"/>
     <input id="toggleBitSBtn" type="button" value="hide BitS"/>
+  </div>
+  <div id="colors">
+    <label for="mark1ColorPicker">Color 1:</label> <input data-jscolor="{preset:'dark'}" id="mark1ColorPicker" />
+    <label for="mark2ColorPicker">Color 2:</label> <input data-jscolor="{preset:'dark'}" id="mark2ColorPicker" />
+    <input type="button" value="reset colors" id="resetColorsBtn" />
   </div>
   <div id="tooltips" class="hidden">
     <ul>
