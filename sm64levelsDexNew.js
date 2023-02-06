@@ -115,6 +115,7 @@ function mouseup(ev) {
     }
   }
   updateWindow();
+  prev = null;
 }
 
 function isPath(p) {

@@ -4,110 +4,81 @@
 <head>
   <meta charset="UTF-8">
   <title>Type dex</title>
-  <style>
-    #content {
-      padding: 10px;
-      border: 1px solid grey;
-      resize: both;
-      overflow: auto;
-    }
-
-    #list {
-      text-align: center;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
-      grid-gap: 3px;
-      counter-reset: ucount;
-    }
-
-    #list input {
-      display: none;
-    }
-
-    #list label {
-      padding: 3px;
-      display: block;
-      transition: box-shadow .250s ease-in;
-    }
-
-    input:checked~label {
-      counter-increment: ucount;
-      box-shadow: inset 0 0 0 100px red;
-      font-weight: bold;
-    }
-
-    #list>div {
-      cursor: default;
-      -moz-user-select: none;
-      -webkit-user-select: none;
-      -ms-user-select: none;
-      user-select: none;
-      border: 1px solid black;
-    }
-
-    #x::after {
-      content: counter(ucount);
-    }
-  </style>
+  <link rel="stylesheet" href="typedex.css" />
+  <script src="jscolor.min.js"></script>
+  <script src="typedex.js"></script>
 </head>
 
 <body>
   <div id="content">
     <div id="list">
-      <div><input type="checkbox" id="Dragon"><label for="Dragon">
+      <div class="item">
           <img src="types/Dragon.png" alt="Dragon" />
-        </label></div>
-      <div><input type="checkbox" id="Dark"><label for="Dark">
+      </div>
+      <div class="item">
           <img src="types/Dark.png" alt="Dark" />
-        </label></div>
-      <div><input type="checkbox" id="Ground"><label for="Ground">
+      </div>
+      <div class="item">
           <img src="types/Ground.png" alt="Ground" />
-        </label></div>
-      <div><input type="checkbox" id="Fighting"><label for="Fighting">
+      </div>
+      <div id="Fairy" class="item">
+        <img src="types/Fairy.png" alt="Fairy" />
+      </div>
+      <div class="item">
           <img src="types/Fighting.png" alt="Fighting" />
-        </label></div>
-      <div><input type="checkbox" id="Fire"><label for="Fire">
+      </div>
+      <div class="item">
           <img src="types/Fire.png" alt="Fire" />
-        </label></div>
-      <div><input type="checkbox" id="Ice"><label for="Ice">
+      </div>
+      <div class="item">
           <img src="types/Ice.png" alt="Ice" />
-        </label></div>
-      <div><input type="checkbox" id="Bug"><label for="Bug">
+      </div>
+      <div class="item">
           <img src="types/Bug.png" alt="Bug" />
-        </label></div>
-      <div><input type="checkbox" id="Steel"><label for="Steel">
+      </div>
+      <div id="Steel" class="item">
           <img src="types/Steel.png" alt="Steel" />
-        </label></div>
-      <div><input type="checkbox" id="Grass"><label for="Grass">
+      </div>
+      <div class="item">
           <img src="types/Grass.png" alt="Grass" />
-        </label></div>
-      <div><input type="checkbox" id="Psychic"><label for="Psychic">
+      </div>
+      <div class="item">
           <img src="types/Psychic.png" alt="Psychic" />
-        </label></div>
-      <div><input type="checkbox" id="Flying"><label for="Flying">
+      </div>
+      <div class="item">
           <img src="types/Flying.png" alt="Flying" />
-        </label></div>
-      <div><input type="checkbox" id="Water"><label for="Water">
+      </div>
+      <div class="item">
           <img src="types/Water.png" alt="Water" />
-        </label></div>
-      <div><input type="checkbox" id="Ghost"><label for="Ghost">
+      </div>
+      <div class="item">
           <img src="types/Ghost.png" alt="Ghost" />
-        </label></div>
-      <div><input type="checkbox" id="Rock"><label for="Rock">
+      </div>
+      <div class="item">
           <img src="types/Rock.png" alt="Rock" />
-        </label></div>
-      <div><input type="checkbox" id="Poison"><label for="Poison">
+      </div>
+      <div class="item">
           <img src="types/Poison.png" alt="Poison" />
-        </label></div>
-      <div><input type="checkbox" id="Electric"><label for="Electric">
+      </div>
+      <div class="item">
           <img src="types/Electric.png" alt="Electric" />
-        </label></div>
-      <div><input type="checkbox" id="Normal"><label for="Normal">
+      </div>
+      <div class="item">
           <img src="types/Normal.png" alt="Normal" />
-        </label></div>
+      </div>
     </div>
-    <div id="count">#: <span id="x"></span></div>
   </div>
+  <input id="nightBtn" type="button" value="toggle night mode"/>
+  <div id="toggles">
+    <input id="toggleFairyBtn" type="button" value="hide Fairy"/>
+    <input id="toggleSteelBtn" type="button" value="hide Steel"/>
+  </div>
+  <div id="colors">
+    <label for="mark1ColorPicker">Color 1 (left click):</label> <input data-jscolor="{preset:'dark'}" id="mark1ColorPicker" />
+    <label for="mark2ColorPicker">Color 2 (right click):</label> <input data-jscolor="{preset:'dark'}" id="mark2ColorPicker" />
+    <input type="button" value="reset colors" id="resetColorsBtn" />
+  </div>
+
 
 </body>
 
