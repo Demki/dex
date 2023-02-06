@@ -58,9 +58,9 @@ window.addEventListener("load", () => {
   const toggleSteelBtn = document.getElementById("toggleSteelBtn");
   if (toggleSteelBtn) toggleSteelBtn.addEventListener("click", toggleSteel);
 
-  nightMode = localStorage.getItem("nightMode") === "true";
-  hiddenFairy = localStorage.getItem("hiddenFairy") === "true";
-  hiddenSteel = localStorage.getItem("hiddenSteel") === "true";
+  nightMode = localStorage.getItem("typedex-nightMode") === "true";
+  hiddenFairy = localStorage.getItem("typedex-hiddenFairy") === "true";
+  hiddenSteel = localStorage.getItem("typedex-hiddenSteel") === "true";
 
   if (nightMode) document.body.classList.add("nightMode");
   setHiddenFairy(hiddenFairy);
@@ -70,26 +70,26 @@ window.addEventListener("load", () => {
 
   const contentSizeObserver = new MutationObserver(() => 
   {
-    localStorage.setItem("contentWidth", contentDiv.style.width);
-    localStorage.setItem("contentHeight", contentDiv.style.height);
+    localStorage.setItem("typedex-contentWidth", contentDiv.style.width);
+    localStorage.setItem("typedex-contentHeight", contentDiv.style.height);
   });
 
   contentSizeObserver.observe(contentDiv, {attributes: true, attributeFilter: ["style"]});
 
-  if(localStorage.getItem("contentWidth") && localStorage.getItem("contentHeight"))
+  if(localStorage.getItem("typedex-contentWidth") && localStorage.getItem("typedex-contentHeight"))
   {
-    contentDiv.style.setProperty("width", localStorage.getItem("contentWidth"));
-    contentDiv.style.setProperty("height", localStorage.getItem("contentHeight"));
+    contentDiv.style.setProperty("width", localStorage.getItem("typedex-contentWidth"));
+    contentDiv.style.setProperty("height", localStorage.getItem("typedex-contentHeight"));
   }
   
-  if(localStorage.getItem("mark1Color"))
+  if(localStorage.getItem("typedex-mark1Color"))
   {
-    mark1Color = localStorage.getItem("mark1Color");
+    mark1Color = localStorage.getItem("typedex-mark1Color");
   }
 
-  if(localStorage.getItem("mark2Color"))
+  if(localStorage.getItem("typedex-mark2Color"))
   {
-    mark2Color = localStorage.getItem("mark2Color");
+    mark2Color = localStorage.getItem("typedex-mark2Color");
   }
 
   const mark1ColorPicker = document.getElementById("mark1ColorPicker");
@@ -109,13 +109,13 @@ window.addEventListener("load", () => {
 
 function setMark1Color() {
   mark1Color = document.getElementById("mark1ColorPicker").jscolor.toHEXString();
-  localStorage.setItem("mark1Color", mark1Color);
+  localStorage.setItem("typedex-mark1Color", mark1Color);
   document.body.style.setProperty("--color1BG", mark1Color);
 }
 
 function setMark2Color() {
   mark2Color = document.getElementById("mark2ColorPicker").jscolor.toHEXString();
-  localStorage.setItem("mark2Color", mark2Color);
+  localStorage.setItem("typedex-mark2Color", mark2Color);
   document.body.style.setProperty("--color2BG", mark2Color);
 }
 
@@ -129,12 +129,12 @@ function resetColors(mark1ColorPicker, mark2ColorPicker) {
 function toggleNightMode() {
   if (nightMode) {
     nightMode = false;
-    localStorage.setItem("nightMode", nightMode);
+    localStorage.setItem("typedex-nightMode", nightMode);
     document.body.classList.remove("nightMode");
   }
   else {
     nightMode = true;
-    localStorage.setItem("nightMode", nightMode);
+    localStorage.setItem("typedex-nightMode", nightMode);
     document.body.classList.add("nightMode");
   }
 }
@@ -156,11 +156,11 @@ function setHiddenFairy(hFairy) {
 function toggleFairy() {
   if (hiddenFairy) {
     hiddenFairy = false;
-    localStorage.setItem("hiddenFairy", hiddenFairy);
+    localStorage.setItem("typedex-hiddenFairy", hiddenFairy);
   }
   else {
     hiddenFairy = true;
-    localStorage.setItem("hiddenFairy", hiddenFairy);
+    localStorage.setItem("typedex-hiddenFairy", hiddenFairy);
   }
   setHiddenFairy(hiddenFairy);
 }
@@ -182,11 +182,11 @@ function setHiddenSteel(hSteel) {
 function toggleSteel() {
   if (hiddenSteel) {
     hiddenSteel = false;
-    localStorage.setItem("hiddenSteel", hiddenSteel);
+    localStorage.setItem("typedex-hiddenSteel", hiddenSteel);
   }
   else {
     hiddenSteel = true;
-    localStorage.setItem("hiddenSteel", hiddenSteel);
+    localStorage.setItem("typedex-hiddenSteel", hiddenSteel);
   }
   setHiddenSteel(hiddenSteel);
 }
