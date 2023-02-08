@@ -1,0 +1,129 @@
+body {
+  --background: hsl(0, 0%, 100%);
+  --foreground: hsl(0, 0%, 0%);
+
+  --midColor: hsl(0, 0%, 50%);
+  --hoverColor: hsl(240, 100%, 25%);
+
+  --buttonBGColor: hsl(0, 0%, 88%);
+
+  --arrowStartColor: hsl(60, 100%, 26%);
+
+  --color1BG: #da1b1b;
+  --color1FG: white;
+  --color1Shadow: black;
+
+  --color2BG: #118d11;
+  --color2FG: white;
+  --color2Shadow: black;
+
+  --minItemWidth: 200px;
+}
+
+body.nightMode {
+  --background: hsl(260, 9%, 10%);
+  --foreground: hsl(260, 4%, 74%);
+
+  --midColor: hsl(260, 4%, 30%);
+  --hoverColor: hsl(240, 50%, 50%);
+
+  --buttonBGColor: hsl(260, 9%, 15%);
+
+  --arrowStartColor: hsl(60, 100%, 50%);
+
+  --color1FG: white;
+  --color1Shadow: black;
+
+  --color2FG: white;
+  --color2Shadow: black;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+}
+
+#content {
+  position: relative;
+  padding: 10px;
+  border: 1px solid var(--midColor);
+  resize: both;
+  overflow: auto;
+}
+
+
+#list {
+  text-align: center;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
+  grid-gap: 3px;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.color1 {
+  background-color: var(--color1BG);
+  color: var(--color1FG);
+  text-shadow: 0 0 3px var(--color1Shadow);
+  font-weight: bold;
+  counter-increment: picked1;
+}
+
+.color2 {
+  background-color: var(--color2BG);
+  color: var(--color2FG);
+  text-shadow: 0 0 3px var(--color2Shadow);
+  font-weight: bold;
+  counter-increment: picked2;
+}
+
+.item:hover {
+  border: 2px solid var(--hoverColor);
+  margin: 0;
+}
+
+.item {
+  padding: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color .250s ease-in, color .250s ease-in;
+  cursor: default;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  border: 1px solid var(--foreground);
+  margin: 1px;
+  box-sizing: border-box;
+}
+
+.item * {
+  pointer-events: none;
+}
+
+input {
+  color: var(--foreground);
+  background-color: var(--buttonBGColor);
+}
+
+#colors {
+  margin-top: 5px;
+}
+#colors input[data-jscolor] {
+  width: 60px;
+}
+
+#toggles {
+  margin-top: 2px;
+}
+
+.hidden{
+  display: none !important;
+}
+
+#size {
+  margin-top: 5px;
+}
