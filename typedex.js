@@ -100,10 +100,14 @@ window.addEventListener("load", () => {
 
 
   widthInput.addEventListener("change", (ev) => {
-    setSize(widthInput.value + "px", heightInput.value + "px", contentDiv);
+    const width = !widthInput.value ? "" : widthInput.value + "px";
+    const height = !heightInput.value ? "" : heightInput.value + "px";
+    setSize(width, height, contentDiv);  
   })
   heightInput.addEventListener("change", (ev) => {
-    setSize(widthInput.value + "px", heightInput.value + "px", contentDiv);
+    const width = !widthInput.value ? "" : widthInput.value + "px";
+    const height = !heightInput.value ? "" : heightInput.value + "px";
+    setSize(width, height, contentDiv);  
   })
 
   mark1ColorPicker.jscolor.fromString(mark1Color);
@@ -209,6 +213,14 @@ function setStoredSize(width, height) {
 function setSize(width, height, div) {
   div.style.setProperty("width", width);
   div.style.setProperty("height", height);
+  if(!width)
+  {
+    div.style.removeProperty("width");
+  }
+  if(!height)
+  {
+    div.style.removeProperty("height");
+  }
 }
 
 function setInputSize(width, height, widthInput, heightInput) {
