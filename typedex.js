@@ -68,18 +68,20 @@ window.addEventListener("load", () => {
 
   const contentDiv = document.getElementById("content");
 
+  const widthInput = document.getElementById("widthInput");
+  const heightInput = document.getElementById("heightInput");
+
   const contentSizeObserver = new MutationObserver(() => 
   {
-    localStorage.setItem("typedex-contentWidth", contentDiv.style.width);
-    localStorage.setItem("typedex-contentHeight", contentDiv.style.height);
+    setStoredSize(contentDiv.style.width, contentDiv.style.height);
+    setInputSize(contentDiv.style.width, contentDiv.style.height, widthInput, heightInput);
   });
 
   contentSizeObserver.observe(contentDiv, {attributes: true, attributeFilter: ["style"]});
 
   if(localStorage.getItem("typedex-contentWidth") && localStorage.getItem("typedex-contentHeight"))
   {
-    contentDiv.style.setProperty("width", localStorage.getItem("typedex-contentWidth"));
-    contentDiv.style.setProperty("height", localStorage.getItem("typedex-contentHeight"));
+    setSize(localStorage.getItem("typedex-contentWidth"), localStorage.getItem("typedex-contentHeight"), contentDiv);
   }
   
   if(localStorage.getItem("typedex-mark1Color"))
@@ -95,6 +97,14 @@ window.addEventListener("load", () => {
   const mark1ColorPicker = document.getElementById("mark1ColorPicker");
   const mark2ColorPicker = document.getElementById("mark2ColorPicker");
   const resetColorsBtn   = document.getElementById("resetColorsBtn");
+
+
+  widthInput.addEventListener("change", (ev) => {
+    setSize(widthInput.value + "px", heightInput.value + "px", contentDiv);
+  })
+  heightInput.addEventListener("change", (ev) => {
+    setSize(widthInput.value + "px", heightInput.value + "px", contentDiv);
+  })
 
   mark1ColorPicker.jscolor.fromString(mark1Color);
   document.body.style.setProperty("--color1BG", mark1Color);
@@ -119,7 +129,7 @@ function setMark2Color() {
   document.body.style.setProperty("--color2BG", mark2Color);
 }
 
-function resetColors(mark1ColorPicker, mark2ColorPicker) { 
+function resetColors() { 
   document.getElementById("mark1ColorPicker").jscolor.fromString(MARK_1_DEFAULT);
   document.getElementById("mark2ColorPicker").jscolor.fromString(MARK_2_DEFAULT);
   setMark1Color();
@@ -189,4 +199,19 @@ function toggleSteel() {
     localStorage.setItem("typedex-hiddenSteel", hiddenSteel);
   }
   setHiddenSteel(hiddenSteel);
+}
+
+function setStoredSize(width, height) {
+  localStorage.setItem("typedex-contentWidth", width);
+  localStorage.setItem("typedex-contentHeight", height);
+}
+
+function setSize(width, height, div) {
+  div.style.setProperty("width", width);
+  div.style.setProperty("height", height);
+}
+
+function setInputSize(width, height, widthInput, heightInput) {
+  widthInput.value = Number.parseFloat(width);
+  heightInput.value = Number.parseFloat(height);
 }

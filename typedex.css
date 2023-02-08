@@ -123,3 +123,7 @@ input {
 .hidden{
   display: none !important;
 }
+
+#size {
+  margin-top: 5px;
+}
