@@ -23,9 +23,12 @@ function mark(v) {
 
 let prev = null;
 let nightMode = false;
-let hiddenFairy = false;
-let hiddenSteel = false;
-let hiddenNormal = false;
+let hiddenX = {
+  "Fairy": false,
+  "Steel": false,
+  "Normal": false,
+  "Dark": false,
+}
 
 const MARK_1_DEFAULT = "#da1b1b"
 const MARK_2_DEFAULT = "#118d11"
@@ -55,21 +58,25 @@ window.addEventListener("load", () => {
   const nightBtn = document.getElementById("nightBtn");
   if (nightBtn) nightBtn.addEventListener("click", toggleNightMode);
   const toggleFairyBtn = document.getElementById("toggleFairyBtn");
-  if (toggleFairyBtn) toggleFairyBtn.addEventListener("click", toggleFairy);
-  const toggleNormalBtn = document.getElementById("toggleNormalBtn");
-  if (toggleNormalBtn) toggleNormalBtn.addEventListener("click", toggleNormal);
+  if (toggleFairyBtn) toggleFairyBtn.addEventListener("click", toggleX("Fairy"));
   const toggleSteelBtn = document.getElementById("toggleSteelBtn");
-  if (toggleSteelBtn) toggleSteelBtn.addEventListener("click", toggleSteel);
+  if (toggleSteelBtn) toggleSteelBtn.addEventListener("click", toggleX("Steel"));
+  const toggleNormalBtn = document.getElementById("toggleNormalBtn");
+  if (toggleNormalBtn) toggleNormalBtn.addEventListener("click", toggleX("Normal"));
+  const toggleDarkBtn = document.getElementById("toggleDarkBtn");
+  if (toggleDarkBtn) toggleDarkBtn.addEventListener("click", toggleX("Dark"));
 
   nightMode = localStorage.getItem("typedex-nightMode") === "true";
-  hiddenFairy = localStorage.getItem("typedex-hiddenFairy") === "true";
-  hiddenSteel = localStorage.getItem("typedex-hiddenSteel") === "true";
-  hiddenNormal = localStorage.getItem("typedex-hiddenNormal") === "true";
+  hiddenX["Fairy"] = localStorage.getItem("typedex-hiddenFairy") === "true";
+  hiddenX["Steel"] = localStorage.getItem("typedex-hiddenSteel") === "true";
+  hiddenX["Normal"] = localStorage.getItem("typedex-hiddenNormal") === "true";
+  hiddenX["Dark"] = localStorage.getItem("typedex-hiddenDark") === "true";
 
   if (nightMode) document.body.classList.add("nightMode");
-  setHiddenFairy(hiddenFairy);
-  setHiddenSteel(hiddenSteel);
-  setHiddenNormal(hiddenNormal);
+  setHiddenX(hiddenX["Fairy"],"Fairy");
+  setHiddenX(hiddenX["Steel"],"Steel");
+  setHiddenX(hiddenX["Normal"],"Normal");
+  setHiddenX(hiddenX["Dark"],"Dark");
 
   const contentDiv = document.getElementById("content");
 
@@ -158,82 +165,32 @@ function toggleNightMode() {
   }
 }
 
-function setHiddenFairy(hFairy) {
-  const fairy = document.getElementById("Fairy");
-  if(hFairy)
+function setHiddenX(hVal, x) {
+  const el = document.getElementById(x);
+  if(hVal)
   {
-    fairy.classList.add("hidden");
-    document.getElementById("toggleFairyBtn").value = "show Fairy";
+    el.classList.add("hidden");
+    document.getElementById(`toggle${x}Btn`).value = `show ${x}`;
   }
   else
   {
-    fairy.classList.remove("hidden");
-    document.getElementById("toggleFairyBtn").value = "hide Fairy";
+    el.classList.remove("hidden");
+    document.getElementById(`toggle${x}Btn`).value = `hide ${x}`;
   }
 }
 
-function toggleFairy() {
-  if (hiddenFairy) {
-    hiddenFairy = false;
-    localStorage.setItem("typedex-hiddenFairy", hiddenFairy);
+function toggleX(x) {
+  return () => {
+    if (hiddenX[x]) {
+      hiddenX[x] = false;
+      localStorage.setItem(`typedex-hidden${x}`, hiddenX[x]);
+    }
+    else {
+      hiddenX[x] = true;
+      localStorage.setItem(`typedex-hidden${x}`, hiddenX[x]);
+    }
+    setHiddenX(hiddenX[x], x);
   }
-  else {
-    hiddenFairy = true;
-    localStorage.setItem("typedex-hiddenFairy", hiddenFairy);
-  }
-  setHiddenFairy(hiddenFairy);
-}
-
-function setHiddenNormal(hNormal) {
-  const normal = document.getElementById("Normal");
-  if(hNormal)
-  {
-    normal.classList.add("hidden");
-    document.getElementById("toggleNormalBtn").value = "show Normal";
-  }
-  else
-  {
-    normal.classList.remove("hidden");
-    document.getElementById("toggleNormalBtn").value = "hide Normal";
-  }
-}
-
-function toggleNormal() {
-  if (hiddenNormal) {
-    hiddenNormal = false;
-    localStorage.setItem("typedex-hiddenNormal", hiddenNormal);
-  }
-  else {
-    hiddenNormal = true;
-    localStorage.setItem("typedex-hiddenNormal", hiddenNormal);
-  }
-  setHiddenNormal(hiddenNormal);
-}
-
-function setHiddenSteel(hSteel) {
-  const steel = document.getElementById("Steel");
-  if(hSteel)
-  {
-    steel.classList.add("hidden");
-    document.getElementById("toggleSteelBtn").value = "show Steel";
-  }
-  else
-  {
-    steel.classList.remove("hidden");
-    document.getElementById("toggleSteelBtn").value = "hide Steel";
-  }
-}
-
-function toggleSteel() {
-  if (hiddenSteel) {
-    hiddenSteel = false;
-    localStorage.setItem("typedex-hiddenSteel", hiddenSteel);
-  }
-  else {
-    hiddenSteel = true;
-    localStorage.setItem("typedex-hiddenSteel", hiddenSteel);
-  }
-  setHiddenSteel(hiddenSteel);
 }
 
 function setStoredSize(width, height) {
