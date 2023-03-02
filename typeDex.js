@@ -25,6 +25,7 @@ let prev = null;
 let nightMode = false;
 let hiddenFairy = false;
 let hiddenSteel = false;
+let hiddenNormal = false;
 
 const MARK_1_DEFAULT = "#da1b1b"
 const MARK_2_DEFAULT = "#118d11"
@@ -55,16 +56,20 @@ window.addEventListener("load", () => {
   if (nightBtn) nightBtn.addEventListener("click", toggleNightMode);
   const toggleFairyBtn = document.getElementById("toggleFairyBtn");
   if (toggleFairyBtn) toggleFairyBtn.addEventListener("click", toggleFairy);
+  const toggleNormalBtn = document.getElementById("toggleNormalBtn");
+  if (toggleNormalBtn) toggleNormalBtn.addEventListener("click", toggleNormal);
   const toggleSteelBtn = document.getElementById("toggleSteelBtn");
   if (toggleSteelBtn) toggleSteelBtn.addEventListener("click", toggleSteel);
 
   nightMode = localStorage.getItem("typedex-nightMode") === "true";
   hiddenFairy = localStorage.getItem("typedex-hiddenFairy") === "true";
   hiddenSteel = localStorage.getItem("typedex-hiddenSteel") === "true";
+  hiddenNormal = localStorage.getItem("typedex-hiddenNormal") === "true";
 
   if (nightMode) document.body.classList.add("nightMode");
   setHiddenFairy(hiddenFairy);
   setHiddenSteel(hiddenSteel);
+  setHiddenNormal(hiddenNormal);
 
   const contentDiv = document.getElementById("content");
 
@@ -177,6 +182,32 @@ function toggleFairy() {
     localStorage.setItem("typedex-hiddenFairy", hiddenFairy);
   }
   setHiddenFairy(hiddenFairy);
+}
+
+function setHiddenNormal(hNormal) {
+  const normal = document.getElementById("Normal");
+  if(hNormal)
+  {
+    normal.classList.add("hidden");
+    document.getElementById("toggleNormalBtn").value = "show Normal";
+  }
+  else
+  {
+    normal.classList.remove("hidden");
+    document.getElementById("toggleNormalBtn").value = "hide Normal";
+  }
+}
+
+function toggleNormal() {
+  if (hiddenNormal) {
+    hiddenNormal = false;
+    localStorage.setItem("typedex-hiddenNormal", hiddenNormal);
+  }
+  else {
+    hiddenNormal = true;
+    localStorage.setItem("typedex-hiddenNormal", hiddenNormal);
+  }
+  setHiddenNormal(hiddenNormal);
 }
 
 function setHiddenSteel(hSteel) {
