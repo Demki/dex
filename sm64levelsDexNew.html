@@ -3,88 +3,13 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>SM64 level dex</title>
-  <link rel="stylesheet" href="sm64levelsDexNew.css" />
-  <script src="jscolor.min.js"></script>
-  <script src="generatorHelpers.js"></script>
-  <script src="sm64levelsDexNew.js"></script>
+  <title>SM64 level tracker</title>
+  <meta http-equiv="refresh" content="0; URL=https://demki.github.io/sm64leveltracker/">
+  <link rel="canonical" href="https://demki.github.io/sm64leveltracker/">
 </head>
 
 <body>
-  <div id="display" class="hidden"></div>
-  <div id="content">
-    <svg id="SVG" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"
-      style="position:absolute; z-index:9; left:0; top:0; pointer-events: none">
-      <defs>
-        <marker id="arrowhead" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-          <path d="M 0 0 L 10 5 L 0 10 z" />
-        </marker>
-        <marker id="arrowstart" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="3" markerHeight="3">
-          <circle cx="5" cy="5" r="5" />
-        </marker>
-      </defs>
-      <g id="connectingLine" fill="none" stroke-width="2" marker-start="url(#arrowstart)"
-        marker-end="url(#arrowhead)" opacity="0.7"></g>
-    </svg>
-    <div id="main">
-      <div id="list">
-        <div data-short="BOB">Bob-omb Battlefield</div>
-        <div data-short="WF">Whomp's Fortress</div>
-        <div data-short="JRB">Jolly Roger Bay</div>
-        <div data-short="CCM">Cool, Cool Mountain</div>
-        <div data-short="BBH">Big Boo's Haunt</div>
-        <div data-short="HMC">Hazy Maze Cave</div>
-        <div data-short="LLL">Lethal Lava Land</div>
-        <div data-short="SSL">Shifting Sand Land</div>
-        <div data-short="DDD">Dire, Dire Docks</div>
-        <div data-short="SL">Snowman's Land</div>
-        <div data-short="WDW">Wet-Dry World</div>
-        <div data-short="TTM">Tall, Tall Mountain</div>
-        <div data-short="THI">Tiny, Huge Island</div>
-        <div data-short="TTC">Tick Tock Clock</div>
-        <div data-short="RR">Rainbow Ride</div>
-        <div data-short="BitDW">Bowser in the Dark World</div>
-        <div data-short="BitFS">Bowser in the Fire Sea</div>
-        <div data-short="BitS">Bowser in the Sky</div>
-        <div data-short="Slide">Slide</div>
-        <div data-short="Aqua">Aquarium</div>
-        <div data-short="WMotR">Over Rainbow</div>
-        <div data-short="WC">Wing cap</div>
-        <div data-short="VC">Vanish cap</div>
-        <div data-short="MC">Metal cap</div>
-      </div>
-      <div id="others">
-        <div >Toad 1</div>
-        <div >Toad 2</div>
-        <div >Toad 3</div>
-        <div >Mips 1</div>
-        <div >Mips 2</div>
-      </div>
-      <div id="count1">#: <span id="x1"></span></div>
-      <div id="count2">#: <span id="x2"></span></div>
-    </div>
-  </div>
-  <input id="displayBtn" type="button" value="show/hide display"/>
-  <input id="nightBtn" type="button" value="toggle night mode"/>
-  <input id="shortBtn" type="button" value="toggle short names"/>
-  <input id="toggleTipsBtn" type="button" value="show coontrols"/>
-  <div id="toggles">
-    <input id="toggleOthersBtn" type="button" value="hide Toads and Mips"/>
-    <input id="toggleBitSBtn" type="button" value="hide BitS"/>
-  </div>
-  <div id="colors">
-    <label for="mark1ColorPicker">Color 1:</label> <input data-jscolor="{preset:'dark'}" id="mark1ColorPicker" />
-    <label for="mark2ColorPicker">Color 2:</label> <input data-jscolor="{preset:'dark'}" id="mark2ColorPicker" />
-    <input type="button" value="reset colors" id="resetColorsBtn" />
-  </div>
-  <div id="tooltips" class="hidden">
-    <ul>
-      <li>Left Mouse Button hold & drag to connect stages.</li>
-      <li>Middle Mouse Button to mark/unmark a stage green, Right Mouse Button to mark/unmark a stage red</li>
-      <li>Ctrl + Middle Mouse Button to disconnect a path, this will disconnect the stage connected to the one clicked, for example if you have BOB→WF→JRB→BBH→HMC→LLL and you hold Ctrl and click with the middle mouse button on JRB you'll get two paths: BBH→HMC→LLL and BOB→WF→JRB</li>
-      <li>Ctrl + Left clicking a stage that is not in a path will put it in its own path, looping back to itself.</li>
-    </ul>
-  </div>
+  This has been moved to <a href="https://demki.github.io/sm64leveltracker/">https://demki.github.io/sm64leveltracker/</a>, if this does not redirect you automatically try clicking the link.
 </body>
 
 </html>
