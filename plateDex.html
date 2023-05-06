@@ -147,6 +147,36 @@
         randomize(list);
       });
 
+      const contentDiv = document.getElementById("content");
+
+      const widthInput = document.getElementById("widthInput");
+      const heightInput = document.getElementById("heightInput");
+
+      const contentSizeObserver = new MutationObserver(() => 
+      {
+        setStoredSize(contentDiv.style.width, contentDiv.style.height);
+        setInputSize(contentDiv.style.width, contentDiv.style.height, widthInput, heightInput);
+      });
+
+      contentSizeObserver.observe(contentDiv, {attributes: true, attributeFilter: ["style"]});
+
+      if(localStorage.getItem("platedex-contentWidth") && localStorage.getItem("platedex-contentHeight"))
+      {
+        setSize(localStorage.getItem("platedex-contentWidth"), localStorage.getItem("platedex-contentHeight"), contentDiv);
+      }
+
+      widthInput.addEventListener("change", (ev) => {
+        const width = !widthInput.value ? "" : widthInput.value + "px";
+        const height = !heightInput.value ? "" : heightInput.value + "px";
+        setSize(width, height, contentDiv);  
+      })
+      heightInput.addEventListener("change", (ev) => {
+        const width = !widthInput.value ? "" : widthInput.value + "px";
+        const height = !heightInput.value ? "" : heightInput.value + "px";
+        setSize(width, height, contentDiv);  
+      })
+
+
       let darkMode = localStorage.getItem("darkMode") == JSON.stringify(true);
       if(darkMode) {
         document.body.classList.add("darkMode");
@@ -203,6 +233,28 @@
         }
       });
     });
+    function setStoredSize(width, height) {
+      localStorage.setItem("platedex-contentWidth", width);
+      localStorage.setItem("platedex-contentHeight", height);
+    }
+
+    function setSize(width, height, div) {
+      div.style.setProperty("width", width);
+      div.style.setProperty("height", height);
+      if(!width)
+      {
+        div.style.removeProperty("width");
+      }
+      if(!height)
+      {
+        div.style.removeProperty("height");
+      }
+    }
+
+    function setInputSize(width, height, widthInput, heightInput) {
+      widthInput.value = Number.parseFloat(width);
+      heightInput.value = Number.parseFloat(height);
+    }
   </script>
 </head>
 
@@ -282,6 +334,10 @@
     <input type="button" id="darkModeButton" value="Toggle Dark Mode" />
     <input type="button" id="pixiePlateButton" value="Toggle Pixie Plate" />
     <input type="button" id="sepLineButton" value="Toggle Separator Line" />
+  </div>
+  <div id="size">
+    <label for="widthInput">Width:</label> <input type="number" min="0" step="1" id="widthInput" />
+    <label for="heightInput">Height:</label> <input type="number" min="0" step="1"  id="heightInput" />
   </div>
 </body>
 
