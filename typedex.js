@@ -66,7 +66,7 @@ window.addEventListener("load", () => {
   const toggleDarkBtn = document.getElementById("toggleDarkBtn");
   if (toggleDarkBtn) toggleDarkBtn.addEventListener("click", toggleX("Dark"));
 
-  nightMode = localStorage.getItem("typedex-nightMode") === "true";
+  nightMode = (localStorage.getItem("typedex-nightMode") || "true") === "true";
   hiddenX["Fairy"] = localStorage.getItem("typedex-hiddenFairy") === "true";
   hiddenX["Steel"] = localStorage.getItem("typedex-hiddenSteel") === "true";
   hiddenX["Normal"] = localStorage.getItem("typedex-hiddenNormal") === "true";

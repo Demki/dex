@@ -19,7 +19,7 @@
       --color3: green;
     }
 
-    body.darkMode {
+    body.nightMode {
       --background: hsl(260, 9%, 10%);
       --backgroundLowOp: hsla(260, 9%, 10%, 0.9);
       --foreground: hsl(260, 4%, 90%);
@@ -177,21 +177,21 @@
       })
 
 
-      let darkMode = localStorage.getItem("darkMode") == JSON.stringify(true);
-      if(darkMode) {
-        document.body.classList.add("darkMode");
+      let nightMode = (localStorage.getItem("nightMode") || "true") === "true";
+      if(nightMode) {
+        document.body.classList.add("nightMode");
       }
       else {
-        document.body.classList.remove("darkMode");
+        document.body.classList.remove("nightMode");
       }
-      document.getElementById("darkModeButton").addEventListener("click", () => {
-        darkMode = !darkMode;
-        localStorage.setItem("darkMode", JSON.stringify(darkMode));
-        if(darkMode) {
-          document.body.classList.add("darkMode");
+      document.getElementById("nightModeButton").addEventListener("click", () => {
+        nightMode = !nightMode;
+        localStorage.setItem("nightMode", JSON.stringify(nightMode));
+        if(nightMode) {
+          document.body.classList.add("nightMode");
         }
         else {
-          document.body.classList.remove("darkMode");
+          document.body.classList.remove("nightMode");
         }
       });
 
@@ -331,7 +331,7 @@
     <input type="button" id="setSeedButton" value="Set seed" />
   </div>
   <div>
-    <input type="button" id="darkModeButton" value="Toggle Dark Mode" />
+    <input type="button" id="nightModeButton" value="Toggle Night Mode" />
     <input type="button" id="pixiePlateButton" value="Toggle Pixie Plate" />
     <input type="button" id="sepLineButton" value="Toggle Separator Line" />
   </div>
