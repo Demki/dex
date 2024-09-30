@@ -23,7 +23,7 @@
       --background: hsl(260, 9%, 10%);
       --backgroundLowOp: hsla(260, 9%, 10%, 0.9);
       --foreground: hsl(260, 4%, 90%);
-      
+
       --midColor: hsl(260, 4%, 30%);
       --hoverColor: hsl(240, 50%, 50%);
 
@@ -50,7 +50,7 @@
       grid-auto-rows: 1fr;
       grid-gap: 3px;
       overflow: auto;
-      margin-bottom:5px;
+      margin-bottom: 5px;
       counter-reset: ucount;
     }
 
@@ -118,8 +118,8 @@
 
       arr.forEach(x => list.removeChild(x));
       const sep = list.getElementsByClassName("grid-separator")[0];
-      arr.forEach((x,i) => {
-        if(i < arr.length-1) list.insertBefore(x, sep);
+      arr.forEach((x, i) => {
+        if (i < arr.length - 1) list.insertBefore(x, sep);
         else list.appendChild(x);
       });
     }
@@ -152,33 +152,31 @@
       const widthInput = document.getElementById("widthInput");
       const heightInput = document.getElementById("heightInput");
 
-      const contentSizeObserver = new MutationObserver(() => 
-      {
+      const contentSizeObserver = new MutationObserver(() => {
         setStoredSize(contentDiv.style.width, contentDiv.style.height);
         setInputSize(contentDiv.style.width, contentDiv.style.height, widthInput, heightInput);
       });
 
-      contentSizeObserver.observe(contentDiv, {attributes: true, attributeFilter: ["style"]});
+      contentSizeObserver.observe(contentDiv, { attributes: true, attributeFilter: ["style"] });
 
-      if(localStorage.getItem("platedex-contentWidth") && localStorage.getItem("platedex-contentHeight"))
-      {
+      if (localStorage.getItem("platedex-contentWidth") && localStorage.getItem("platedex-contentHeight")) {
         setSize(localStorage.getItem("platedex-contentWidth"), localStorage.getItem("platedex-contentHeight"), contentDiv);
       }
 
       widthInput.addEventListener("change", (ev) => {
         const width = !widthInput.value ? "" : widthInput.value + "px";
         const height = !heightInput.value ? "" : heightInput.value + "px";
-        setSize(width, height, contentDiv);  
+        setSize(width, height, contentDiv);
       })
       heightInput.addEventListener("change", (ev) => {
         const width = !widthInput.value ? "" : widthInput.value + "px";
         const height = !heightInput.value ? "" : heightInput.value + "px";
-        setSize(width, height, contentDiv);  
+        setSize(width, height, contentDiv);
       })
 
 
-      let nightMode = (localStorage.getItem("nightMode") || "true") === "true";
-      if(nightMode) {
+      let nightMode = (localStorage.getItem("platedex-nightMode") || "true") === "true";
+      if (nightMode) {
         document.body.classList.add("nightMode");
       }
       else {
@@ -186,8 +184,8 @@
       }
       document.getElementById("nightModeButton").addEventListener("click", () => {
         nightMode = !nightMode;
-        localStorage.setItem("nightMode", JSON.stringify(nightMode));
-        if(nightMode) {
+        localStorage.setItem("platedex-nightMode", JSON.stringify(nightMode));
+        if (nightMode) {
           document.body.classList.add("nightMode");
         }
         else {
@@ -195,9 +193,9 @@
         }
       });
 
-      let pixiePlate = localStorage.getItem("pixiePlate") == JSON.stringify(true);
+      let pixiePlate = localStorage.getItem("platedex-pixiePlate") == JSON.stringify(true);
       const pixieDiv = document.getElementById("Pixie").parentElement;
-      if(pixiePlate) {
+      if (pixiePlate) {
         pixieDiv.classList.add("removed");
       }
       else {
@@ -205,18 +203,18 @@
       }
       document.getElementById("pixiePlateButton").addEventListener("click", () => {
         pixiePlate = !pixiePlate;
-        localStorage.setItem("pixiePlate", JSON.stringify(pixiePlate));
-        if(pixiePlate) {
+        localStorage.setItem("platedex-pixiePlate", JSON.stringify(pixiePlate));
+        if (pixiePlate) {
           pixieDiv.classList.add("removed");
         }
         else {
           pixieDiv.classList.remove("removed");
         }
       });
-      
-      let sepLine = localStorage.getItem("sepLine") == JSON.stringify(true);
-      const sepLineDiv = document.getElementById("sepLine");
-      if(sepLine) {
+
+      let sepLine = localStorage.getItem("platedex-sepLine") == JSON.stringify(true);
+      const sepLineDiv = document.getElementById("platedex-sepLine");
+      if (sepLine) {
         sepLineDiv.classList.add("removed");
       }
       else {
@@ -224,8 +222,8 @@
       }
       document.getElementById("sepLineButton").addEventListener("click", () => {
         sepLine = !sepLine;
-        localStorage.setItem("sepLine", JSON.stringify(sepLine));
-        if(sepLine) {
+        localStorage.setItem("platedex-sepLine", JSON.stringify(sepLine));
+        if (sepLine) {
           sepLineDiv.classList.add("removed");
         }
         else {
@@ -241,12 +239,10 @@
     function setSize(width, height, div) {
       div.style.setProperty("width", width);
       div.style.setProperty("height", height);
-      if(!width)
-      {
+      if (!width) {
         div.style.removeProperty("width");
       }
-      if(!height)
-      {
+      if (!height) {
         div.style.removeProperty("height");
       }
     }
@@ -337,7 +333,7 @@
   </div>
   <div id="size">
     <label for="widthInput">Width:</label> <input type="number" min="0" step="1" id="widthInput" />
-    <label for="heightInput">Height:</label> <input type="number" min="0" step="1"  id="heightInput" />
+    <label for="heightInput">Height:</label> <input type="number" min="0" step="1" id="heightInput" />
   </div>
 </body>
 

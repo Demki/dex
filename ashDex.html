@@ -5,35 +5,75 @@
   <meta charset="UTF-8">
   <title>Ash dex</title>
   <style>
-    #content {
-      width: 300px;
-      height: 170px;
-      padding: 10px;
-      border: 1px solid grey;
-      resize: both;
-      overflow: auto;
+    body {
+      --background: hsl(0, 0%, 100%);
+      --backgroundLowOp: hsla(0, 0%, 100%, 0.733);
+      --foreground: hsl(0, 0%, 0%);
+
+      --midColor: hsl(0, 0%, 50%);
+      --hoverColor: hsl(240, 100%, 25%);
+
+      --color-1: blue;
+      --color1: black;
+      --color2: rgb(255, 51, 51);
+      --color3: green;
+    }
+
+    body.nightMode {
+      --background: hsl(260, 9%, 10%);
+      --backgroundLowOp: hsla(260, 9%, 10%, 0.9);
+      --foreground: hsl(260, 4%, 90%);
+
+      --midColor: hsl(260, 4%, 30%);
+      --hoverColor: hsl(240, 50%, 50%);
+
+      --inputBGColor: hsl(260, 9%, 15%);
+
+      --color1: hsl(0, 0%, 69%);
+      --color2: hsl(0, 100%, 43%);
+      --color3: hsl(300, 70%, 50%);
+    }
+
+    body {
+      background-color: var(--background);
+      color: var(--foreground);
     }
 
     #list {
-      text-align: center;
+      width: 360px;
+      height: 260px;
+      padding: 10px;
+      border: 1px solid var(--midColor);
+      resize: both;
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+      grid-auto-rows: max-content;
       grid-gap: 3px;
+      overflow: auto;
+      margin-bottom: 5px;
       counter-reset: ucount;
+      align-content: start;
+      text-align: center;
     }
 
-    #list input {
+
+    #list input[type=checkbox] {
       display: none;
     }
 
     #list label {
-      display: block;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
       transition: box-shadow .250s ease-in;
     }
 
     input:checked~label {
       counter-increment: ucount;
-      box-shadow: inset 0 0 0 100px red;
+      box-shadow: inset 0 0 0 100px var(--color2);
       font-weight: bold;
     }
 
@@ -43,14 +83,15 @@
       -webkit-user-select: none;
       -ms-user-select: none;
       user-select: none;
-      border: 1px solid black;
+      border: 1px solid var(--foreground);
       display: grid;
       grid-template-rows: 1fr auto;
+      aspect-ratio: 1/1;
     }
 
     #list label img {
-      width: 24px;
-      height: 24px;
+      width: 33%;
+      height: 33%;
       margin-top: 2px;
     }
 
@@ -59,52 +100,160 @@
       text-overflow: ellipsis;
       overflow: hidden;
     }
-
-    #count {
-      margin-top: 1px;
-    }
-
-    #x::after {
-      content: counter(ucount);
-    }
   </style>
+  <script src="base64js.min.js"></script>
+  <script src="prng.js"></script>
+  <script>
+    let rand = null;
+    let orig = null;
+    function randomize(list) {
+      const arr = Array.from(orig);
+      if (rand) {
+        shuffle(rand, arr);
+      }
+
+      arr.forEach(x => list.removeChild(x));
+      arr.forEach((x, i) => {
+        list.appendChild(x);
+      });
+    }
+
+    window.addEventListener("load", () => {
+      const seedText = document.getElementById("seedText");
+      const list = document.getElementById("list");
+      orig = Array.from(list.children).filter(x => !x.classList.contains("grid-separator"));
+      document.getElementById("genSeedButton").addEventListener("click", () => {
+        const seed = generateId(10);
+        const seedF = xmur3(seed);
+        rand = sfc32(seedF(), seedF(), seedF(), seedF());
+        seedText.value = seed;
+        randomize(list);
+      });
+      document.getElementById("setSeedButton").addEventListener("click", () => {
+        const seed = seedText.value;
+        if (seed) {
+          const seedF = xmur3(seed);
+          rand = sfc32(seedF(), seedF(), seedF(), seedF());
+        }
+        else {
+          rand = null;
+        }
+        randomize(list);
+      });
+
+      const contentDiv = document.getElementById("list");
+
+      const widthInput = document.getElementById("widthInput");
+      const heightInput = document.getElementById("heightInput");
+
+      const contentSizeObserver = new MutationObserver(() => {
+        setStoredSize(contentDiv.style.width, contentDiv.style.height);
+        setInputSize(contentDiv.style.width, contentDiv.style.height, widthInput, heightInput);
+      });
+
+      contentSizeObserver.observe(contentDiv, { attributes: true, attributeFilter: ["style"] });
+
+      if (localStorage.getItem("ashdex-contentWidth") && localStorage.getItem("ashdex-contentHeight")) {
+        setSize(localStorage.getItem("ashdex-contentWidth"), localStorage.getItem("ashdex-contentHeight"), contentDiv);
+      }
+
+      widthInput.addEventListener("change", (ev) => {
+        const width = !widthInput.value ? "" : widthInput.value + "px";
+        const height = !heightInput.value ? "" : heightInput.value + "px";
+        setSize(width, height, contentDiv);
+      })
+      heightInput.addEventListener("change", (ev) => {
+        const width = !widthInput.value ? "" : widthInput.value + "px";
+        const height = !heightInput.value ? "" : heightInput.value + "px";
+        setSize(width, height, contentDiv);
+      })
+
+
+      let nightMode = (localStorage.getItem("ashdex-nightMode") || "true") === "true";
+      if (nightMode) {
+        document.body.classList.add("nightMode");
+      }
+      else {
+        document.body.classList.remove("nightMode");
+      }
+      document.getElementById("nightModeButton").addEventListener("click", () => {
+        nightMode = !nightMode;
+        localStorage.setItem("ashdex-nightMode", JSON.stringify(nightMode));
+        if (nightMode) {
+          document.body.classList.add("nightMode");
+        }
+        else {
+          document.body.classList.remove("nightMode");
+        }
+      });
+
+    });
+    function setStoredSize(width, height) {
+      localStorage.setItem("ashdex-contentWidth", width);
+      localStorage.setItem("ashdex-contentHeight", height);
+    }
+
+    function setSize(width, height, div) {
+      div.style.setProperty("width", width);
+      div.style.setProperty("height", height);
+      if (!width) {
+        div.style.removeProperty("width");
+      }
+      if (!height) {
+        div.style.removeProperty("height");
+      }
+    }
+
+    function setInputSize(width, height, widthInput, heightInput) {
+      widthInput.value = Number.parseFloat(width);
+      heightInput.value = Number.parseFloat(height);
+    }
+  </script>
 </head>
 
 <body>
-  <div id="content">
-    <div id="list">
-      <div><input type="checkbox" id="Blue_Flute"><label for="Blue_Flute">
-          <img src="ashes/Blue_Flute.png" alt="Blue_Flute" />
-          <div>Blue Flute</div>
-        </label></div>
-      <div><input type="checkbox" id="Red_Flute"><label for="Red_Flute">
-          <img src="ashes/Red_Flute.png" alt="Red_Flute" />
-          <div>Red Flute</div>
-        </label></div>
-      <div><input type="checkbox" id="Yellow_Flute"><label for="Yellow_Flute">
-          <img src="ashes/Yellow_Flute.png" alt="Yellow_Flute" />
-          <div>Yellow Flute</div>
-        </label></div>
-      <div><input type="checkbox" id="Black_Flute"><label for="Black_Flute">
-          <img src="ashes/Black_Flute.png" alt="Black_Flute" />
-          <div>Black Flute</div>
-        </label></div>
-      <div><input type="checkbox" id="White_Flute"><label for="White_Flute">
-          <img src="ashes/White_Flute.png" alt="White_Flute" />
-          <div>White Flute</div>
-        </label></div>
-      <div><input type="checkbox" id="PrettyChair"><label for="PrettyChair">
-          <img src="ashes/PrettyChair.png" alt="PrettyChair" />
-          <div>Pretty Chair</div>
-        </label></div>
-        <div><input type="checkbox" id="PrettyDesk"><label for="PrettyDesk">
-          <img src="ashes/PrettyDesk.png" alt="PrettyDesk" />
-          <div>Pretty Desk</div>
-        </label></div>
-    </div>
-    <div id="count">#: <span id="x"></span></div>
+  <div id="list">
+    <div><input type="checkbox" id="Blue_Flute"><label for="Blue_Flute">
+        <img src="ashes/Blue_Flute.png" alt="Blue_Flute" />
+        <div>Blue Flute</div>
+      </label></div>
+    <div><input type="checkbox" id="Red_Flute"><label for="Red_Flute">
+        <img src="ashes/Red_Flute.png" alt="Red_Flute" />
+        <div>Red Flute</div>
+      </label></div>
+    <div><input type="checkbox" id="Yellow_Flute"><label for="Yellow_Flute">
+        <img src="ashes/Yellow_Flute.png" alt="Yellow_Flute" />
+        <div>Yellow Flute</div>
+      </label></div>
+    <div><input type="checkbox" id="Black_Flute"><label for="Black_Flute">
+        <img src="ashes/Black_Flute.png" alt="Black_Flute" />
+        <div>Black Flute</div>
+      </label></div>
+    <div><input type="checkbox" id="White_Flute"><label for="White_Flute">
+        <img src="ashes/White_Flute.png" alt="White_Flute" />
+        <div>White Flute</div>
+      </label></div>
+    <div><input type="checkbox" id="PrettyChair"><label for="PrettyChair">
+        <img src="ashes/PrettyChair.png" alt="PrettyChair" />
+        <div>Pretty Chair</div>
+      </label></div>
+    <div><input type="checkbox" id="PrettyDesk"><label for="PrettyDesk">
+        <img src="ashes/PrettyDesk.png" alt="PrettyDesk" />
+        <div>Pretty Desk</div>
+      </label></div>
   </div>
-
+  <div>
+    Seed: <input type="text" id="seedText" />
+    <input type="button" id="genSeedButton" value="Random Seed" />
+    <input type="button" id="setSeedButton" value="Set seed" />
+  </div>
+  <div>
+    <input type="button" id="nightModeButton" value="Toggle Night Mode" />
+  </div>
+  <div id="size">
+    <label for="widthInput">Width:</label> <input type="number" min="0" step="1" id="widthInput" />
+    <label for="heightInput">Height:</label> <input type="number" min="0" step="1" id="heightInput" />
+  </div>
 </body>
 
 </html>
