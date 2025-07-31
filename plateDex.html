@@ -135,7 +135,8 @@
         seedText.value = seed;
         randomize(list);
       });
-      document.getElementById("setSeedButton").addEventListener("click", () => {
+
+      function setSeed() { 
         const seed = seedText.value;
         if (seed) {
           const seedF = xmur3(seed);
@@ -145,6 +146,15 @@
           rand = null;
         }
         randomize(list);
+      }
+
+      document.getElementById("setSeedButton").addEventListener("click", setSeed);
+      seedText.addEventListener("keydown", (e) => {
+        switch(e.key) {
+          case "Enter":
+            setSeed();
+            break;
+        }
       });
 
       const contentDiv = document.getElementById("content");
@@ -213,7 +223,7 @@
       });
 
       let sepLine = localStorage.getItem("platedex-sepLine") == JSON.stringify(true);
-      const sepLineDiv = document.getElementById("platedex-sepLine");
+      const sepLineDiv = document.getElementById("sepLine");
       if (sepLine) {
         sepLineDiv.classList.add("removed");
       }
