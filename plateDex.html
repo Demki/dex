@@ -65,6 +65,7 @@
     }
 
     #list label {
+        position: relative;
       display: block;
       transition: box-shadow .250s ease-in;
     }
@@ -112,12 +113,14 @@
 
     .counters div:is([data-count]) {
         --count: attr(data-count);
-        &:not([data-count='1']) {
-        label::after {
-            display: inline;
-          content: " (" var(--count) ") ";
-        }
-        }
+        /* &:not([data-count='1']) { */
+            label::after {
+              content: "×" var(--count);
+              top: 0;
+              right: 2px;
+              position: absolute;
+            }
+        /* } */
     }
   </style>
   <script src="base64js.min.js"></script>
